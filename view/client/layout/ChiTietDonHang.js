@@ -2,7 +2,11 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 const ChiTietDonHang = ({ route }) => {
-  // Lấy thông tin đơn hàng từ route
+  // Kiểm tra nếu 'order' không tồn tại
+  if (!route || !route.params || !route.params.order) {
+    return <Text>Thông tin đơn hàng không khả dụng</Text>;
+  }
+
   const { order } = route.params;
 
   const renderProductItem = ({ item }) => (
