@@ -15,8 +15,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Main">
+            <Stack.Screen name ="DonHang" component={DonHang}/>
        <Stack.Screen name ="User" component={User}/>
-         <Stack.Screen name ="DonHang" component={DonHang}/>
           <Stack.Screen name ="ChiTietDonHang" component={ChiTietDonHang}/>
         <Stack.Screen name="Default" component={Default} />
         <Stack.Screen name="Sub" component={SubScreen} />
