@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Sử dụng FontAwesome từ Expo
 
 const User = () => {
@@ -10,7 +10,8 @@ const User = () => {
     email: 'nguyenvana@example.com',
     address: '123 Đường ABC, Thành phố XYZ',
     phoneNumber: '037147258',
-    rank: 'Bạc',
+    rank: 'Vàng',
+    avatar: require('../../../assets/test1.png')
   });
 
   // Trạng thái để biết người dùng có đang ở chế độ chỉnh sửa hay không
@@ -35,7 +36,10 @@ const User = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thông tin người dùng</Text>
-
+      {/* Hiển thị avatar */}
+      <View style={styles.avatarContainer}>
+        <Image source={userInfo.avatar} style={styles.avatar} />
+      </View>
       {/* Họ tên */}
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Họ tên:</Text>
@@ -121,12 +125,14 @@ const User = () => {
         </Text>
       </View>
 
-      {/* Hiển thị nút "Chỉnh sửa" hoặc "Lưu" */}
-      {isEditing ? (
-        <Button title="Lưu thông tin" onPress={handleSavePress} />
-      ) : (
-        <Button title="Chỉnh sửa thông tin" onPress={handleEditPress} />
-      )}
+      {/* Nút "Chỉnh sửa" hoặc "Lưu" nằm ở dưới cùng */}
+      <View style={styles.buttonContainer}>
+        {isEditing ? (
+          <Button title="Lưu thông tin" onPress={handleSavePress} />
+        ) : (
+          <Button title="Chỉnh sửa thông tin" onPress={handleEditPress} />
+        )}
+      </View>
     </View>
   );
 };
@@ -136,6 +142,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#f5f5f5',
+    justifyContent: 'space-between', // Thêm để đẩy nút xuống dưới
+  },
+  avatarContainer: {
+    alignItems: 'center', // Căn giữa
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50, // Để tạo hình tròn
   },
   title: {
     fontSize: 24,
@@ -171,6 +187,9 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     paddingVertical: 8,
+  },
+  buttonContainer: {
+    marginTop: 20, // Thêm khoảng cách nếu cần
   },
 });
 

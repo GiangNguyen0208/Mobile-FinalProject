@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, Image } from 'react-native';
 
 const ChiTietDonHang = ({ route, navigation }) => {
-  // Kiểm tra nếu 'order' không tồn tại
   if (!route || !route.params || !route.params.order) {
     return <Text>Thông tin đơn hàng không khả dụng</Text>;
   }
@@ -11,21 +10,26 @@ const ChiTietDonHang = ({ route, navigation }) => {
 
   const renderProductItem = ({ item }) => (
     <View style={styles.productContainer}>
-      <Text style={styles.productText}>{safeString(item.productName)}</Text>
-      <Text style={styles.productText}>
-        {`$${safeString(item.productPrice)} x ${safeString(item.quantity)}`}
-      </Text>
+      {/* Kiểm tra nếu item.image là một chuỗi URI hoặc một đối tượng require */}
+      <Image
+        source={typeof item.image === 'string' ? { uri: item.image } : item.image}
+        style={styles.productImage}
+      />
+      <View style={styles.productInfo}>
+        <Text style={styles.productText}>{safeString(item.productName)}</Text>
+        <Text style={styles.productText}>
+          {`$${safeString(item.productPrice)} x ${safeString(item.quantity)}`}
+        </Text>
+      </View>
     </View>
   );
 
-  // Hàm kiểm tra và trả về giá trị chuỗi
   const safeString = (value) => {
     return value !== undefined && value !== null ? String(value) : '';
   };
 
   const handlePayment = () => {
-    // Chuyển đến trang thanh toán
-    navigation.navigate('ThanhToan', { order }); // Truyền dữ liệu đơn hàng nếu cần
+    navigation.navigate('ThanhToan', { order });
   };
 
   return (
@@ -44,7 +48,6 @@ const ChiTietDonHang = ({ route, navigation }) => {
         keyExtractor={(item) => item.productId}
       />
 
-      {/* Nút thanh toán */}
       <Button title="Thanh Toán" onPress={handlePayment} />
     </View>
   );
@@ -68,9 +71,18 @@ const styles = StyleSheet.create({
   },
   productContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     paddingHorizontal: 10,
     marginBottom: 5,
+  },
+  productImage: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  productInfo: {
+    flexDirection: 'column',
   },
   productText: {
     fontSize: 16,
