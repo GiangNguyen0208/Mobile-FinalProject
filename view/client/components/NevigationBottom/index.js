@@ -1,31 +1,33 @@
 // import React from 'react';
 import * as React from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
-import routes from '../../../../routes/index'; // Import the routes object
+import { BottomNavigation } from 'react-native-paper';
+import { useNavigate } from 'react-router-dom';
 
-const NavigationBottom = () => {
+const NavigationBottom = ({ navRoutes }) => {
+  const navigate = useNavigate();
   const [index, setIndex] = React.useState(0);
-  const [navRoutes] = React.useState([
-    { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
-    { key: 'orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline' },
-    { key: 'likes', title: 'Wishlist', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-    { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
-    { key: 'info', title: 'MyPersonal', focusedIcon: 'account', unfocusedIcon: 'account-outline' },
-  ]);
+
+  const handleIndexChange = (newIndex) => {
+    setIndex(newIndex);
+    const selectedRoute = navRoutes[newIndex]; 
+    if (selectedRoute) {
+      navigate(selectedRoute.path);
+    }
+  }
 
   const renderScene = BottomNavigation.SceneMap({
-    home: () => routes.children.find(route => route.path === '/').element, // Home route
-    orders: () => routes.children.find(route => route.path === '/orders').element, // Orders route
-    likes: () => routes.children.find(route => route.path === '/likes').element, // Wishlists route
-    notifications: () => routes.children.find(route => route.path === '/notifications').element, // Notifications route
-    info: () => routes.children.find(route => route.path === '/info').element // MyPersonals route
+    home: () => navRoutes.find(route => route.path === '/').element, // Use navRoutes prop
+    orders: () => navRoutes.find(route => route.path === '/orders').element,
+    likes: () => navRoutes.find(route => route.path === '/likes').element,
+    notifications: () => navRoutes.find(route => route.path === '/notifications').element,
+    info: () => navRoutes.find(route => route.path === '/info').element
   });
 
   return (
     <BottomNavigation
       style={{ backgroundColor: 'white', height: 60 }}
       navigationState={{ index, routes: navRoutes }}
-      onIndexChange={setIndex}
+      onIndexChange={handleIndexChange}
       renderScene={renderScene}
     />
   );

@@ -1,6 +1,7 @@
 import Default from "../view/client/layout/default";
 import Home from "../view/client/pages/home/index";
 import Info from "../view/client/pages/Info/index";
+import Login from "../view/client/pages/login";
 import Notifications from "../view/client/pages/notifications/index";
 import Order from "../view/client/pages/order/index";
 import WishList from "../view/client/pages/wishlist/index";
@@ -14,46 +15,25 @@ const routes = {
             element: <Home />
         },
         {
-            path: "/orders",
-            element: <Order/>
+            path: "orders",
+            element: <Order />
         },
         {
-            path: "/likes",
-            element: <WishList/>
+            path: "likes",
+            element: <WishList />
         },
         {
-            path: "/notifications",
-            element: <Notifications/>
+            path: "notifications",
+            element: <Notifications />
         },
         {
-            path: "/info",
-            element: <Info/>
+            path: "info",
+            element: <Info />
+        },
+        {
+            path: "login",
+            element: <Login />
         }
-        // {
-        //     path: "/login",
-        //     element: <Login/>
-        // },
-        // {
-        //     element: <PrivateRouter/>,
-        //     children: [
-        //         {
-        //             path: "/orders",
-        //             element: <Order/>
-        //         },
-        //         {
-        //             path: "/likes",
-        //             element: <WishList/>
-        //         },
-        //         {
-        //             path: "/notifications",
-        //             element: <Notifications/>
-        //         },
-        //         {
-        //             path: "/info",
-        //             element: <Info/>
-        //         },
-        //     ]
-        // }
     ]
 };
 
