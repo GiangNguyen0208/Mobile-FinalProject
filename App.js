@@ -1,23 +1,20 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Default from './view/client/layout/default';
-import Login from './view/client/pages/login';
-
-// Create a Stack Navigator
-const Stack = createStackNavigator();
+import routes from './routes';
+import { BrowserRouter as Route, Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    // <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen name="Default" component={Default} />
-          <Stack.Screen name="login" component={Login} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    // </AuthProvider>/
+    <Router>
+      <Routes>
+        {routes.children.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element}/>
+        ))}
+      </Routes>
+    </Router>
+
   );
 }
+
+
 
 export default App;
