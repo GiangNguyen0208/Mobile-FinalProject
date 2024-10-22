@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, Button, Image } from 'react-native';
 
 const ChiTietDonHang = ({ route, navigation }) => {
+  // Kiểm tra nếu route hoặc route.params không có thông tin đơn hàng
   if (!route || !route.params || !route.params.order) {
     return <Text>Thông tin đơn hàng không khả dụng</Text>;
   }
@@ -10,7 +11,6 @@ const ChiTietDonHang = ({ route, navigation }) => {
 
   const renderProductItem = ({ item }) => (
     <View style={styles.productContainer}>
-      {/* Kiểm tra nếu item.image là một chuỗi URI hoặc một đối tượng require */}
       <Image
         source={typeof item.image === 'string' ? { uri: item.image } : item.image}
         style={styles.productImage}
@@ -28,7 +28,9 @@ const ChiTietDonHang = ({ route, navigation }) => {
     return value !== undefined && value !== null ? String(value) : '';
   };
 
+  // Hàm xử lý điều hướng sang trang ThanhToan.js
   const handlePayment = () => {
+    // Chuyển sang trang ThanhToan với tham số order
     navigation.navigate('ThanhToan', { order });
   };
 
@@ -42,12 +44,14 @@ const ChiTietDonHang = ({ route, navigation }) => {
       <Text style={styles.orderDetailText}>Địa chỉ nhận: {safeString(order.deliveryAddress)}</Text>
       <Text style={styles.orderDetailText}>Số điện thoại: {safeString(order.phoneNumber)}</Text>
 
+      {/* Danh sách sản phẩm trong đơn hàng */}
       <FlatList
         data={order.products}
         renderItem={renderProductItem}
-        keyExtractor={(item) => item.productId}
+        keyExtractor={(item) => item.productId.toString()}
       />
 
+      {/* Nút "Thanh Toán" */}
       <Button title="Thanh Toán" onPress={handlePayment} />
     </View>
   );
