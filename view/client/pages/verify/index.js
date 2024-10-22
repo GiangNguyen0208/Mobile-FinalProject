@@ -1,11 +1,47 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity, Platform} from 'react-native';
 import COLORS from "../../../../constants/COLORS";
-import Button from "../../components/Button";
+import Button from "../../../client/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell} from "react-native-confirmation-code-field";
+// //////////
+const styles = StyleSheet.create({
+    root: {flex: 1, padding: 20},
+    title: {textAlign: 'center', fontSize: 30},
+    codeFieldRoot: {marginTop: 20,
+        marginHorizontal: 49,
 
-const Login = ({navigation}) => {
+    },
+    cell: {
+        width: 70,
+        height: 70,
+        lineHeight: 70,
+        fontSize: 50,
+        borderWidth: 3,
+        borderColor: COLORS.blue,
+        textAlign: 'center', // Căn giữa theo chiều ngang
+        justifyContent: 'center', // Căn giữa theo chiều dọc
+        alignItems: 'center',    // Đảm bảo ô căn giữa nội dung
+        borderRadius:5,
+        color:COLORS.blue
+    },
+    focusCell: {
+        borderColor: '#000',
+
+    },
+});
+
+const CELL_COUNT = 4;
+const Verify = ({navigation}) => {
     const [isPasswordShown, setIsPasswordShow] = useState(false);
+    const [isConformPasswordShown, setIsConformPasswordShow] = useState(false);
+
+    const [value, setValue] = useState('');
+    const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+        value,
+        setValue,
+    });
     return (
         <View style={{
             flex: 1,
@@ -39,7 +75,7 @@ const Login = ({navigation}) => {
                     fontSize: 100,
                     fontWeight: 500,
                 }}>
-                    Hello
+                    Verify
                 </Text>
                 <Text
                     style={{
@@ -47,7 +83,7 @@ const Login = ({navigation}) => {
                         fontSize: 20,
                         fontWeight: 500
                     }}>
-                    Sign in to your account.
+                    Confirm your code and password
                 </Text>
             </View>
             {/**/}
@@ -55,25 +91,38 @@ const Login = ({navigation}) => {
                 style={{
                     backgroundColor: COLORS.white,
                     position: "relative",
-                    bottom: 400,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
+                    bottom: 450
+
                 }}
             >
-                <Image
-                    source={require("../../../../assets/icons8-user-30.png")}
-                />
-                <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10
-                    }}
-                    placeholder="Enter user name"
+                <Text style={{
+                    color:COLORS.blue,
+                    position:"absolute",
+                    left:35,
+                    top:90,
+                    fontWeight:700
+
+                }}>
+                    Enter your code you just receive.
+                </Text>
+                <CodeField
+                    ref={ref}
+                    value={value}
+                    onChangeText={setValue}
+                    cellCount={CELL_COUNT}
+                    rootStyle={styles.codeFieldRoot}
+                    keyboardType="number-pad"
+                    textContentType="oneTimeCode"
+                    autoComplete={Platform.select({android: 'sms-otp', default: 'one-time-code'})}
+                    testID="my-code-input"
+                    renderCell={({index, symbol, isFocused}) => (
+                        <Text
+                            key={index}
+                            style={[styles.cell, isFocused && styles.focusCell]}
+                            onLayout={getCellOnLayoutHandler(index)}>
+                            {symbol || (isFocused ? <Cursor/> : null)}
+                        </Text>
+                    )}
                 />
             </View>
 
@@ -102,7 +151,7 @@ const Login = ({navigation}) => {
                         left: 10,
 
                     }}
-                    placeholder="Enter password"
+                    placeholder="Create password"
                     secureTextEntry={isPasswordShown}
                 />
                 <TouchableOpacity
@@ -120,20 +169,46 @@ const Login = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             {/*    */}
-            <View style={{
-                position: 'relative',
-                bottom: 400,
-                left: 350,
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 500
-                }}>
+            <View
 
-                    Forgot your password?
-                </Text>
+                style={{
+                    backgroundColor: COLORS.white,
+                    position: "absolute",
+                    bottom: 290,
+                    flexDirection: 'row',
+                    borderRadius: 20,
+                    marginHorizontal: 40,
+                    elevation: 10,
+                    marginVertical: 20,
+                    padding: 20
+                }}
+            >
+                <Image
+                    source={require("../../../../assets/icons8-lock-30.png")}
+                />
+                <TextInput
+                    style={{
+                        flex: 1,
+                        fontSize: 20,
+                        left: 10,
 
-
+                    }}
+                    placeholder="Confirm password"
+                    secureTextEntry={isConformPasswordShown}
+                />
+                <TouchableOpacity
+                    onPress={() => setIsConformPasswordShow(!isConformPasswordShown)}
+                >
+                    {
+                        isConformPasswordShown == true ? (
+                            <Ionicons name="eye" size={24} color={COLORS.black}
+                            />
+                        ) : (
+                            <Ionicons name="eye-off" size={24} color={COLORS.black}
+                            />
+                        )
+                    }
+                </TouchableOpacity>
             </View>
             {/*    */}
             <View style={{
@@ -147,7 +222,7 @@ const Login = ({navigation}) => {
             {/*    */}
             <View style={{
                 position: "absolute",
-                top: 750,
+                top: 790,
                 left: 300
             }}>
                 <Button
@@ -162,7 +237,7 @@ const Login = ({navigation}) => {
             {/*    */}
             <View style={{
                 position: "absolute",
-                top: 770,
+                top: 810,
                 left: 300,
 
             }}>
@@ -171,13 +246,13 @@ const Login = ({navigation}) => {
                     fontWeight: 700
                 }}>
 
-                    Sign up
+                    Confirm
                 </Text>
             </View>
             <View style={{
                 position: "absolute",
                 top: 900,
-                left: 200
+                left: 250
             }}>
                 <Text style={{
                     fontSize: 25,
@@ -185,25 +260,13 @@ const Login = ({navigation}) => {
                     right: 60
 
                 }}>
-                    Don't have an account?
+                    Let's go to the Hello.
                 </Text>
-                <Pressable
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text style={{
-                        fontSize: 25,
-                        fontWeight: 500,
-                        left: 205,
-                        bottom: 35,
-                        color: COLORS.blue,
-                        textDecorationLine: "underline"
-                    }}>
-                        Create
-                    </Text>
-                </Pressable>
+
             </View>
         </View>
 
     );
 }
 
-export default Login;
+export default Verify;
