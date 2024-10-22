@@ -1,10 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
+import {Button, View} from 'react-native';
 import { Appbar } from 'react-native-paper';
 import SearchBox from '../components/search';
 import styles from '../../../public/client/stylesheet/default.style';
-
-const Default = ({ children }) => {
+import ProductList from "../pages/ProductList";
+const Default = ({ navigation }) => {
+  const goShop=()=>{
+    navigation.navigate('Shop')
+  }
   return (
     <>
       <View style={styles.container}>
@@ -14,12 +17,16 @@ const Default = ({ children }) => {
         <View style={styles.searchContainer}>
           <SearchBox placeholder="Tìm kiếm món ăn..." />
         </View>
-        <View style={styles.content}>
-          {children}
+        <View>
+          <Button title={"to go shop"} onPress={goShop}></Button>
         </View>
+        <View style={styles.content}>
+          <ProductList navigation={navigation} ></ProductList>
+        </View>
+
       </View>
     </>
-    
+
   );
 };
 
