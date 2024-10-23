@@ -1,84 +1,13 @@
-<<<<<<< HEAD
-// view/client/pages/login/Login.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-// import { useAuth } from '../../context/AuthContext'; // Adjust the path as necessary
-import { useNavigation } from '@react-navigation/native';
-
-export default function Login() {
-  // const { login } = useAuth(); // Get the login function from context
-  const navigation = useNavigation(); // For navigation
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  // const handleSubmit = async () => {
-  //   if (!username || !password) {
-  //     Alert.alert('Please enter both username and password');
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     // Replace with your actual login logic
-  //     await login({ username, password }); // Call login function with user data
-  //     navigation.navigate('Home'); // Redirect to Home or another screen after login
-  //   } catch (error) {
-  //     Alert.alert('Login failed', error.message || 'Please try again');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {/* <Button title={loading ? "Logging in..." : "Login"} onPress={handleSubmit} disabled={loading} /> */}
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    width: '100%',
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    marginBottom: 12,
-  },
-});
-=======
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
-import COLORS from "../../../../constants/COLORS";
-import Button from "../../components/Button";
+import LinearGradient from "react-native-linear-gradient";
+import COLORS from "../../constants/COLORS";
+import COLOR from "../../constants/COLORS";
+import Button from "../client/components/Button";
+import ButtonText from "../client/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 const Login = ({navigation}) => {
-    const [isPasswordShown, setIsPasswordShow] = useState(false);
+    const [isPasswordShown, setIsPasswordShow]= useState(false);
     return (
         <View style={{
             flex: 1,
@@ -90,7 +19,7 @@ const Login = ({navigation}) => {
             }}>
                 <View>
                     <Image
-                        source={require("../../../../assets/Vector 1.png")}
+                        source={require("../../assets/Vector 1.png")}
                         style={{
                             bottom: 60,
                             right: 40
@@ -138,7 +67,7 @@ const Login = ({navigation}) => {
                 }}
             >
                 <Image
-                    source={require("../../../../assets/icons8-user-30.png")}
+                    source={require("../../assets/icons8-user-30.png")}
                 />
                 <TextInput
                     style={{
@@ -166,7 +95,7 @@ const Login = ({navigation}) => {
                 }}
             >
                 <Image
-                    source={require("../../../../assets/icons8-lock-30.png")}
+                    source={require("../../assets/icons8-lock-30.png")}
                 />
                 <TextInput
                     style={{
@@ -178,19 +107,19 @@ const Login = ({navigation}) => {
                     placeholder="Enter password"
                     secureTextEntry={isPasswordShown}
                 />
-                <TouchableOpacity
-                    onPress={() => setIsPasswordShow(!isPasswordShown)}
-                >
-                    {
-                        isPasswordShown == true ? (
-                            <Ionicons name="eye" size={24} color={COLORS.black}
-                            />
-                        ) : (
-                            <Ionicons name="eye-off" size={24} color={COLORS.black}
-                            />
-                        )
-                    }
-                </TouchableOpacity>
+               <TouchableOpacity
+               onPress={()=> setIsPasswordShow(!isPasswordShown)}
+               >
+                {
+                    isPasswordShown ==true?(
+                        <Ionicons name="eye" size={24} color={COLORS.black}
+                                  />
+                    ):(
+                        <Ionicons name="eye-off" size={24} color={COLORS.black}
+                                 />
+                    )
+                }
+               </TouchableOpacity>
             </View>
             {/*    */}
             <View style={{
@@ -214,7 +143,7 @@ const Login = ({navigation}) => {
                 top: 850
             }}>
                 <Image
-                    source={require("../../../../assets/Vector 3.png")}/>
+                    source={require("../../assets/Vector 3.png")}/>
             </View>
 
             {/*    */}
@@ -224,54 +153,54 @@ const Login = ({navigation}) => {
                 left: 300
             }}>
                 <Button
-                    onPress={() => navigation.navigate("Register")}
+                    onPress={()=>navigation.navigate("Register")}
                     title="Sign in"
                     style={{
-                        left: 120
+                        left:120
                     }}>
                 </Button>
 
             </View>
-            {/*    */}
+        {/*    */}
             <View style={{
-                position: "absolute",
-                top: 770,
-                left: 300,
+                position:"absolute",
+                top:770,
+                left:300,
 
             }}>
                 <Text style={{
-                    fontSize: 30,
-                    fontWeight: 700
+                    fontSize:30,
+                    fontWeight:700
                 }}>
 
                     Sign up
                 </Text>
             </View>
             <View style={{
-                position: "absolute",
-                top: 900,
-                left: 200
+                position:"absolute",
+                top:900,
+                left:200
             }}>
                 <Text style={{
-                    fontSize: 25,
-                    fontWeight: 500,
-                    right: 60
+                  fontSize:25,
+                    fontWeight:500,
+                    right:60
 
                 }}>
                     Don't have an account?
                 </Text>
                 <Pressable
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text style={{
-                        fontSize: 25,
-                        fontWeight: 500,
-                        left: 205,
-                        bottom: 35,
-                        color: COLORS.blue,
-                        textDecorationLine: "underline"
-                    }}>
-                        Create
-                    </Text>
+                onPress={()=>navigation.navigate("Register")}>
+                <Text  style={{
+                    fontSize:25,
+                    fontWeight:500,
+                    left:205,
+                    bottom:35,
+                    color:COLORS.blue,
+                    textDecorationLine:"underline"
+                }} >
+                    Create
+                </Text>
                 </Pressable>
             </View>
         </View>
@@ -280,4 +209,3 @@ const Login = ({navigation}) => {
 }
 
 export default Login;
->>>>>>> 21130312

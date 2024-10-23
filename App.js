@@ -1,23 +1,38 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import Default from './view/client/layout/default';
-import Login from './view/client/pages/login';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-// Create a Stack Navigator
+import Login from "./view/screen/Login";
+import Register from "./view/screen/Register";
+import Verify from "./view/screen/Verify";
+
+
 const Stack = createStackNavigator();
 
 function App() {
-  return (
-    // <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen name="Default" component={Default} />
-          <Stack.Screen name="login" component={Login} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    // </AuthProvider>/
-  );
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Login">
+                <Stack.Screen
+                    name="Login"
+                    component={Login} // Đảm bảo đây là thành phần hợp lệ
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Register"
+                    component={Register} // Đảm bảo đây là thành phần hợp lệ
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Verify"
+                    component={Verify} // Đảm bảo đây là thành phần hợp lệ
+                    options={{headerShown: false}}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+
 }
 
 export default App;
