@@ -5,6 +5,7 @@ import Login from "../view/client/pages/login";
 import Notifications from "../view/client/pages/notifications/index";
 import Order from "../view/client/pages/order/index";
 import WishList from "../view/client/pages/wishlist/index";
+import ProductDetail from "../view/client/pages/ProductDetail";
 
 const routes = {
     path: "/",
@@ -33,6 +34,10 @@ const routes = {
         {
             path: "login",
             element: <Login />
+        },
+        {
+            path: "detail",
+            element: <ProductDetail />
         }
     ]
 };

@@ -4,7 +4,7 @@ import { BrowserRouter as Route, Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <Router>
+    <Router >
       <Routes>
         {routes.children.map((route) => (
           <Route key={route.path} path={route.path} element={route.element}/>
