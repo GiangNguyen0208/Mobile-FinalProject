@@ -229,28 +229,6 @@ const VoucherTwo = () => {
     );
 };
 
-// const CategoryList = () => {
-//     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-//     const renderCate = ({ item }) => (
-//
-//         <TouchableOpacity style={[styles.cateContainer,styles.row,selectedCategoryId === item.id && styles.selected]} onPress={() => setSelectedCategoryId(item.id)}>
-//             <Text style={[styles.cateName,selectedCategoryId === item.id && {color:'#E95322',}]} numberOfLines={1} ellipsizeMode="tail">
-//                 {item.name}
-//             </Text>
-//         </TouchableOpacity>
-//
-//     );
-//
-//     return (
-//         <FlatList
-//             data={categories}
-//             renderItem={renderCate}
-//             keyExtractor={item => item.id.toString()}
-//             horizontal={true} // Đặt chiều nằm ngang
-//             showsHorizontalScrollIndicator={false} // Ẩn thanh cuộn ngang
-//         />
-//     );
-// };
 
 const styles = StyleSheet.create({
 

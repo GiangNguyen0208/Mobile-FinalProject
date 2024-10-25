@@ -84,8 +84,17 @@ export default function ProductList({navigation}) {
                 data={voucherData}
                 renderItem={({ item, index }) => (
                     <View>
-
-
+                        <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
+                            Nhập "{item.code}": {item.description}
+                        </Text>
+                        <Text>{item.minimumOrderValue}</Text>
+                        <Text>{item.orderStartTime} {item.orderEndTime}</Text>
+                        <Text>{item.deliveryStartTime} {item.deliveryEndTime}</Text>
+                        <Text>{item.applicableFor}</Text>
+                        <Text>{item.notApplicableFor}</Text>
+                        <Text>{item.expirationDate}</Text>
+                        <Text>Số lượng có hạn</Text>
+                        <Text>{item.note}</Text>
                     </View>
                 )}
                 keyExtractor={item => item.id.toString()}
