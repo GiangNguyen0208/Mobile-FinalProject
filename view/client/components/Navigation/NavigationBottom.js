@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { BottomNavigation } from 'react-native-paper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const NavigationBottom = ({ onNavigate }) => {
-  const [index, setIndex] = React.useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
   const navRoutes = [
     { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline', path: '/' },
     { key: 'orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline', path: '/orders' },
@@ -12,10 +13,15 @@ const NavigationBottom = ({ onNavigate }) => {
     { key: 'info', title: 'MyPersonal', focusedIcon: 'account', unfocusedIcon: 'account-outline', path: '/info' },
   ];
 
+  // Determine the current index based on the current path
+  const currentIndex = navRoutes.findIndex(route => route.path === location.pathname);
+  const [index, setIndex] = React.useState(currentIndex >= 0 ? currentIndex : 0);
+
   const handleIndexChange = (newIndex) => {
-    console.log("Navigating to:", navRoutes[newIndex].path); // Debug log
+    console.log("Navigating to:", navRoutes[newIndex].path); 
     setIndex(newIndex);
     onNavigate(navRoutes[newIndex].path);
+    navigate(navRoutes[newIndex].path); // Ensure navigation happens
   };
 
   return (
@@ -23,9 +29,9 @@ const NavigationBottom = ({ onNavigate }) => {
       style={{ backgroundColor: 'white', height: 60 }}
       navigationState={{ index, routes: navRoutes }}
       onIndexChange={handleIndexChange}
-      renderScene={() => null}
+      renderScene={() => null} // You can implement this if needed
     >
-      {navRoutes.map((route, i) => (
+      {navRoutes.map((route) => (
         <BottomNavigation.Bar
             key={route.key}
             title={route.title} 

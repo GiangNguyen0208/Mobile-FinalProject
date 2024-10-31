@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native';
-import List from "../../components/ListItem/List";
+import List from "../../components/ListItem/ListVertical";
 
 const News = () => {
-
+    // Test data
     const news = [
         {
             id: 1,

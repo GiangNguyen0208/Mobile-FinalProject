@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Item = ({ image, title, description, date }) => {
+const Item = ({ image, title, description, date, onPress }) => {
+    // Ensure image is a valid string URL or a local image
+    const imageSource = typeof image === 'string' ? { uri: image } : image;
+
     return (
-        <View style={styles.container}>
-            <Image source={{ uri: image }} style={styles.image} />
+        <TouchableOpacity onPress={onPress} style={styles.container}>
+            <Image source={imageSource} style={styles.image} />
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>
                 <Text style={styles.date}>{date}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

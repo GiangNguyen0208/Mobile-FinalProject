@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import List from '../../components/ListItem/List';
+import List from '../../components/ListItem/ListVertical';
 
 const Promotions = () => {
     const promotions = [
