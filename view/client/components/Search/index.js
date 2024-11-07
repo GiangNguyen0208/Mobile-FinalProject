@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-import styles from '../../../public/client/stylesheet/search.style';
+
+import styles from '../../../../public/client/stylesheet/search.style';
 
 const SearchBox = ({ placeholder }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -20,7 +21,5 @@ const SearchBox = ({ placeholder }) => {
     </View>
   );
 };
-
-
 
 export default SearchBox;
