@@ -21,12 +21,14 @@ const NavigationBottom = ({ navRoutes }) => {
     likes: () => navRoutes.find(route => route.path === '/likes').element,
     notifications: () => navRoutes.find(route => route.path === '/notifications').element,
     info: () => navRoutes.find(route => route.path === '/info').element
+
   });
 
   return (
     <BottomNavigation
       style={{ backgroundColor: 'white', height: 60 }}
       navigationState={{ index, routes: navRoutes }}
+
       onIndexChange={handleIndexChange}
       renderScene={renderScene}
     />
