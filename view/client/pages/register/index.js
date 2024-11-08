@@ -1,12 +1,11 @@
-
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
-import COLORS from "../../../../constants/COLORS";
-import Button from "../../components/Button";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
-const Login = ({navigation}) => {
-    const [isPasswordShown, setIsPasswordShow] = useState(false);
+import COLORS from "../../../../constants/COLORS";
+
+import Button from "../../components/Button";
+
+const Register = ({navigation}) => {
     return (
         <View style={{
             flex: 1,
@@ -32,23 +31,23 @@ const Login = ({navigation}) => {
                 position: 'relative',
                 justifyContent: 'center', // Căn giữa theo chiều ngang
                 alignItems: 'center', // Căn giữa theo chiều dọc,
-                bottom: 350
+                bottom: 390
 
             }}>
                 <Text style={{
                     color: COLORS.black,
-                    fontSize: 100,
+                    fontSize: 90,
                     fontWeight: 500,
                 }}>
-                    Hello
+                    Register
                 </Text>
                 <Text
                     style={{
-                        top: 10,
+
                         fontSize: 20,
                         fontWeight: 500
                     }}>
-                    Sign in to your account.
+                    Create your account.
                 </Text>
             </View>
             {/**/}
@@ -56,7 +55,7 @@ const Login = ({navigation}) => {
                 style={{
                     backgroundColor: COLORS.white,
                     position: "relative",
-                    bottom: 400,
+                    bottom: 500,
                     flexDirection: 'row',
                     borderRadius: 20,
                     marginHorizontal: 40,
@@ -84,7 +83,7 @@ const Login = ({navigation}) => {
                 style={{
                     backgroundColor: COLORS.white,
                     position: "relative",
-                    bottom: 400,
+                    bottom: 500,
                     flexDirection: 'row',
                     borderRadius: 20,
                     marginHorizontal: 40,
@@ -94,7 +93,13 @@ const Login = ({navigation}) => {
                 }}
             >
                 <Image
-                    source={require("../../../../assets/icons8-lock-30.png")}
+                    source={require("../../../../assets/icons8-phone-number-50.png")}
+                    style={{
+                        bottom: 5,
+                        width:30,
+                        height:30
+
+                    }}
                 />
                 <TextInput
                     style={{
@@ -103,40 +108,76 @@ const Login = ({navigation}) => {
                         left: 10,
 
                     }}
-                    placeholder="Enter password"
-                    secureTextEntry={isPasswordShown}
+                    placeholder="Enter phone number"
+                    keyboardType="number-pad"
                 />
-                <TouchableOpacity
-                    onPress={() => setIsPasswordShow(!isPasswordShown)}
-                >
-                    {
-                        isPasswordShown == true ? (
-                            <Ionicons name="eye" size={24} color={COLORS.black}
-                            />
-                        ) : (
-                            <Ionicons name="eye-off" size={24} color={COLORS.black}
-                            />
-                        )
-                    }
-                </TouchableOpacity>
-            </View>
-            {/*    */}
-            <View style={{
-                position: 'relative',
-                bottom: 400,
-                left: 350,
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 500
-                }}>
-
-                    Forgot your password?
-                </Text>
-
 
             </View>
             {/*    */}
+            <View
+
+                style={{
+                    backgroundColor: COLORS.white,
+                    position: "absolute",
+                    bottom: 390,
+                    flexDirection: 'row',
+                    borderRadius: 20,
+                    marginHorizontal: 40,
+                    elevation: 10,
+                    marginVertical: 20,
+                    padding: 20
+                }}
+            >
+                <Image
+                    source={require("../../../../assets/icons8-name-tag-30.png")}
+                    style={{
+
+                    }}
+                />
+                <TextInput
+                    style={{
+                        flex: 1,
+                        fontSize: 20,
+                        left: 10,
+                    }}
+                    placeholder="First name"
+
+                />
+
+            </View>
+            {/**/}
+            <View
+
+                style={{
+                    backgroundColor: COLORS.white,
+                    position: "absolute",
+                    bottom: 280,
+                    flexDirection: 'row',
+                    borderRadius: 20,
+                    marginHorizontal: 40,
+                    elevation: 10,
+                    marginVertical: 20,
+                    padding: 20
+                }}
+            >
+                <Image
+                    source={require("../../../../assets/icons8-name-tag-30.png")}
+                    style={{
+
+                    }}
+                />
+                <TextInput
+                    style={{
+                        flex: 1,
+                        fontSize: 20,
+                        left: 10,
+                    }}
+                    placeholder="Last name"
+
+                />
+
+            </View>
+            {/**/}
             <View style={{
                 position: "absolute",
                 top: 850
@@ -148,12 +189,12 @@ const Login = ({navigation}) => {
             {/*    */}
             <View style={{
                 position: "absolute",
-                top: 750,
+                top: 800,
                 left: 300
             }}>
                 <Button
-                    onPress={() => navigation.navigate("Register")}
-                    title="Sign in"
+                    title="Sign up"
+                    onPress={()=>navigation.navigate("Verify")}
                     style={{
                         left: 120
                     }}>
@@ -163,7 +204,7 @@ const Login = ({navigation}) => {
             {/*    */}
             <View style={{
                 position: "absolute",
-                top: 770,
+                top: 815,
                 left: 300,
 
             }}>
@@ -172,39 +213,46 @@ const Login = ({navigation}) => {
                     fontWeight: 700
                 }}>
 
-                    Sign up
+                    Sign in
                 </Text>
             </View>
             <View style={{
                 position: "absolute",
-                top: 900,
-                left: 200
+                top: 890,
+                left: 180
             }}>
                 <Text style={{
-                    fontSize: 25,
-                    fontWeight: 500,
-                    right: 60
+                    fontSize: 20,
+                    right: 50
 
                 }}>
-                    Don't have an account?
+                    Or create account using social media
                 </Text>
-                <Pressable
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text style={{
-                        fontSize: 25,
-                        fontWeight: 500,
-                        left: 205,
-                        bottom: 35,
-                        color: COLORS.blue,
-                        textDecorationLine: "underline"
-                    }}>
-                        Create
-                    </Text>
-                </Pressable>
+                <View style={{
+                    flexDirection: 'row', // Sắp xếp theo chiều ngang
+                    justifyContent: 'space-between', // Khoảng cách giữa các ảnh
+                    alignItems: 'center', // Căn giữa theo chiều dọc
+                    top:20,
+                    right:40
+                }}>
+                    <Image
+                        style={{  marginHorizontal: 40}}
+                        source={(require("../../../../assets/icons8-facebook-48.png"))}
+                    />
+                    <Image
+                        source={(require("../../../../assets/icons8-instagram-48.png"))}
+                    />
+                    <Image
+                        style={{  marginHorizontal: 40}}
+                        source={(require("../../../../assets/icons8-twitter-48.png"))}
+                    />
+
+
+                </View>
             </View>
         </View>
 
     );
 }
 
-export default Login;
+export default Register;

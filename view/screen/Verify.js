@@ -1,12 +1,13 @@
-
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
-import COLORS from "../../../../constants/COLORS";
-import Button from "../../components/Button";
+import LinearGradient from "react-native-linear-gradient";
+import COLORS from "../../constants/COLORS";
+import COLOR from "../../constants/COLORS";
+import Button from "../client/components/Button";
+import ButtonText from "../client/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
-const Login = ({navigation}) => {
-    const [isPasswordShown, setIsPasswordShow] = useState(false);
+const Verify = ({navigation}) => {
+    const [isPasswordShown, setIsPasswordShow]= useState(false);
     return (
         <View style={{
             flex: 1,
@@ -18,7 +19,7 @@ const Login = ({navigation}) => {
             }}>
                 <View>
                     <Image
-                        source={require("../../../../assets/Vector 1.png")}
+                        source={require("../../assets/Vector 1.png")}
                         style={{
                             bottom: 60,
                             right: 40
@@ -40,7 +41,7 @@ const Login = ({navigation}) => {
                     fontSize: 100,
                     fontWeight: 500,
                 }}>
-                    Hello
+                    Verify
                 </Text>
                 <Text
                     style={{
@@ -48,7 +49,7 @@ const Login = ({navigation}) => {
                         fontSize: 20,
                         fontWeight: 500
                     }}>
-                    Sign in to your account.
+                    Confirm your code and password
                 </Text>
             </View>
             {/**/}
@@ -66,7 +67,7 @@ const Login = ({navigation}) => {
                 }}
             >
                 <Image
-                    source={require("../../../../assets/icons8-user-30.png")}
+                    source={require("../../assets/icons8-dialing-number-30.png")}
                 />
                 <TextInput
                     style={{
@@ -74,7 +75,7 @@ const Login = ({navigation}) => {
                         fontSize: 20,
                         left: 10
                     }}
-                    placeholder="Enter user name"
+                    placeholder="Enter code"
                 />
             </View>
 
@@ -94,7 +95,7 @@ const Login = ({navigation}) => {
                 }}
             >
                 <Image
-                    source={require("../../../../assets/icons8-lock-30.png")}
+                    source={require("../../assets/icons8-lock-30.png")}
                 />
                 <TextInput
                     style={{
@@ -103,17 +104,59 @@ const Login = ({navigation}) => {
                         left: 10,
 
                     }}
-                    placeholder="Enter password"
+                    placeholder="Create password"
                     secureTextEntry={isPasswordShown}
                 />
                 <TouchableOpacity
-                    onPress={() => setIsPasswordShow(!isPasswordShown)}
+                    onPress={()=> setIsPasswordShow(!isPasswordShown)}
                 >
                     {
-                        isPasswordShown == true ? (
+                        isPasswordShown ==true?(
                             <Ionicons name="eye" size={24} color={COLORS.black}
                             />
-                        ) : (
+                        ):(
+                            <Ionicons name="eye-off" size={24} color={COLORS.black}
+                            />
+                        )
+                    }
+                </TouchableOpacity>
+            </View>
+            {/*    */}
+            <View
+
+                style={{
+                    backgroundColor: COLORS.white,
+                    position: "absolute",
+                    bottom: 290,
+                    flexDirection: 'row',
+                    borderRadius: 20,
+                    marginHorizontal: 40,
+                    elevation: 10,
+                    marginVertical: 20,
+                    padding: 20
+                }}
+            >
+                <Image
+                    source={require("../../assets/icons8-lock-30.png")}
+                />
+                <TextInput
+                    style={{
+                        flex: 1,
+                        fontSize: 20,
+                        left: 10,
+
+                    }}
+                    placeholder="Confirm password"
+                    secureTextEntry={isPasswordShown}
+                />
+                <TouchableOpacity
+                    onPress={()=> setIsPasswordShow(!isPasswordShown)}
+                >
+                    {
+                        isPasswordShown ==true?(
+                            <Ionicons name="eye" size={24} color={COLORS.black}
+                            />
+                        ):(
                             <Ionicons name="eye-off" size={24} color={COLORS.black}
                             />
                         )
@@ -122,89 +165,61 @@ const Login = ({navigation}) => {
             </View>
             {/*    */}
             <View style={{
-                position: 'relative',
-                bottom: 400,
-                left: 350,
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 500
-                }}>
-
-                    Forgot your password?
-                </Text>
-
-
-            </View>
-            {/*    */}
-            <View style={{
                 position: "absolute",
                 top: 850
             }}>
                 <Image
-                    source={require("../../../../assets/Vector 3.png")}/>
+                    source={require("../../assets/Vector 3.png")}/>
             </View>
 
             {/*    */}
             <View style={{
                 position: "absolute",
-                top: 750,
+                top: 790,
                 left: 300
             }}>
                 <Button
-                    onPress={() => navigation.navigate("Register")}
+                    onPress={()=>navigation.navigate("Register")}
                     title="Sign in"
                     style={{
-                        left: 120
+                        left:120
                     }}>
                 </Button>
 
             </View>
             {/*    */}
             <View style={{
-                position: "absolute",
-                top: 770,
-                left: 300,
+                position:"absolute",
+                top:810,
+                left:300,
 
             }}>
                 <Text style={{
-                    fontSize: 30,
-                    fontWeight: 700
+                    fontSize:30,
+                    fontWeight:700
                 }}>
 
-                    Sign up
+                    Confirm
                 </Text>
             </View>
             <View style={{
-                position: "absolute",
-                top: 900,
-                left: 200
+                position:"absolute",
+                top:900,
+                left:250
             }}>
                 <Text style={{
-                    fontSize: 25,
-                    fontWeight: 500,
-                    right: 60
+                    fontSize:25,
+                    fontWeight:500,
+                    right:60
 
                 }}>
-                    Don't have an account?
+                    Let's go to the Hello.
                 </Text>
-                <Pressable
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text style={{
-                        fontSize: 25,
-                        fontWeight: 500,
-                        left: 205,
-                        bottom: 35,
-                        color: COLORS.blue,
-                        textDecorationLine: "underline"
-                    }}>
-                        Create
-                    </Text>
-                </Pressable>
+
             </View>
         </View>
 
     );
 }
 
-export default Login;
+export default Verify;
