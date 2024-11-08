@@ -10,6 +10,7 @@ import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
 import foodData from '../partials/Food/food';
 import optionData from '../partials/Option/options';
+import debounce from 'lodash.debounce'; // Optionally use lodash for debouncing
 
 const Default = () => {
   const navigate = useNavigate();
@@ -44,6 +45,11 @@ const Default = () => {
     // Navigate or perform any action with the item
   };
 
+  const handleSearch = (query) => {
+    console.log('Searching for:', query);
+    // Implement your search logic here
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {showOutlet ? (
@@ -56,7 +62,7 @@ const Default = () => {
           {/* <Header header="Home Page" onLogin={() => navigate('/login')} /> */}
           
           <View style={styles.searchContainer}>
-            <SearchBox placeholder="Search Food..." />
+            <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
           </View>
           {/* OnBoarding */}
           <View style={styles.onboarding}>
