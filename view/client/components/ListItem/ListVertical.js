@@ -8,7 +8,7 @@ const List = ({ items }) => {
             {items.length > 0 ? (
                 items.map((item) => (
                     <Item 
-                        key={item.id} // Ensure each item has a unique key
+                        key={item.id}
                         image={item.image}
                         title={item.title}
                         description={item.description}
@@ -16,7 +16,7 @@ const List = ({ items }) => {
                     />
                 ))
             ) : (
-                <Text>No anounce.</Text> // Handle empty state
+                <Text>No announcements.</Text>
             )}
         </View>
     );
