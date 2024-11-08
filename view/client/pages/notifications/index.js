@@ -1,34 +1,50 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Appbar, IconButton } from 'react-native-paper';
-import NavigationBottom from '../../components/NevigationBottom';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const Notifications = () => {
+    const navigation = useNavigate();
+    const [index, setIndex] = React.useState(0);
+    const [isOptionSelected, setIsOptionSelected] = React.useState(false);
+    const optionRoutes = [
+      { key: 'promotions', title: 'Promotions', description: "Latest promotions and offers", focusedIcon: 'star', unfocusedIcon: 'star-outline', icon: "star", path: 'promotions' },
+      { key: 'news', title: 'News', description: "No news yet", focusedIcon: 'newspaper', unfocusedIcon: 'newspaper-outline', icon: "newspaper", path: 'news' }
+    ];
+
+    const handleIndexChange = (newIndex) => {
+      const selectedRoute = optionRoutes[newIndex];
+      console.log("Navigating to:", "/notifications/" + selectedRoute.path);
+      setIndex(newIndex);
+      setIsOptionSelected(true);
+      navigation(`/notifications/${selectedRoute.path}`);
+    };
+
+    const renderOption = (route, i) => (
+      <View style={styles.item} key={route.key}>
+        <IconButton icon={route.icon} size={24} /> 
+        <View style={styles.textContainer}>
+            <Text style={styles.title}>{route.title}</Text>
+            <Text style={styles.description}>{route.description}</Text> 
+        </View>
+        <IconButton icon="arrow-right" size={24} onPress={() => handleIndexChange(i)}/>
+      </View>
+    );
+
     return (
       <>
         <Appbar.Header>
-          <Appbar.Content title="Notifications" /> 
+          <Appbar.Content title={<Text>Notifications</Text>} /> 
           <Appbar.Action icon="cog" onPress={() => { /* Handle settings action */ }} /> 
         </Appbar.Header>
         <View style={styles.container}>
-          <View style={styles.item}>
-              <IconButton icon="star" size={24} /> 
-              <View style={styles.textContainer}>
-                  <Text style={styles.title}>Promotions</Text>
-                  <Text style={styles.description}>Latest promotions and offers</Text> 
-              </View>
-              <IconButton icon="arrow-right" size={24} onPress={() => { /* Handle settings action */ }}/>
-          </View>
-          <View style={styles.item}>
-              <IconButton icon="newspaper" size={24} /> 
-              <View style={styles.textContainer}>
-                  <Text style={styles.title}>News</Text>
-                  <Text style={styles.description}>Latest news updates</Text> 
-              </View>
-              <IconButton icon="arrow-right" size={24} onPress={() => { /* Handle settings action */ }}/>
-          </View>
+          {optionRoutes.map(renderOption)}
         </View>
+        {isOptionSelected && (
+          <View style={styles.outletContainer}>
+            <Outlet />
+          </View>
+        )}
       </>
     );
 }
@@ -61,6 +77,5 @@ const styles = StyleSheet.create({
       color: 'gray',
   }
 });
-
 
 export default Notifications;

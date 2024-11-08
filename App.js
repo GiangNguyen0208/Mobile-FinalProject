@@ -1,17 +1,18 @@
 import React from 'react';
-import routes from './routes';
-import { BrowserRouter as Route, Router, Routes } from 'react-router-dom';
+import { NavigationContainer } from '@react-navigation/native';
+import { NativeRouter } from 'react-router-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AllRoutes } from './view/client/components/AllRoutes'; 
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <Routes>
-        {routes.children.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element}/>
-        ))}
-      </Routes>
-    </Router>
-
+    <SafeAreaProvider> 
+      <NativeRouter>
+        <NavigationContainer>
+          <AllRoutes /> 
+        </NavigationContainer>
+      </NativeRouter>
+    </SafeAreaProvider>
   );
 }
 
