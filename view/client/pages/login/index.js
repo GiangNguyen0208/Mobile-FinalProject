@@ -1,283 +1,58 @@
-<<<<<<< HEAD
-// view/client/pages/login/Login.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-// import { useAuth } from '../../context/AuthContext'; // Adjust the path as necessary
-import { useNavigation } from '@react-navigation/native';
-
-export default function Login() {
-  // const { login } = useAuth(); // Get the login function from context
-  const navigation = useNavigation(); // For navigation
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  // const handleSubmit = async () => {
-  //   if (!username || !password) {
-  //     Alert.alert('Please enter both username and password');
-  //     return;
-  //   }
-
-  //   setLoading(true);
-  //   try {
-  //     // Replace with your actual login logic
-  //     await login({ username, password }); // Call login function with user data
-  //     navigation.navigate('Home'); // Redirect to Home or another screen after login
-  //   } catch (error) {
-  //     Alert.alert('Login failed', error.message || 'Please try again');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {/* <Button title={loading ? "Logging in..." : "Login"} onPress={handleSubmit} disabled={loading} /> */}
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 16,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 16,
-  },
-  input: {
-    width: '100%',
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    marginBottom: 12,
-  },
-});
-=======
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import COLORS from "../../../../constants/COLORS";
 import Button from "../../components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
     const [isPasswordShown, setIsPasswordShow] = useState(false);
     return (
-        <View style={{
-            flex: 1,
-            backgroundColor: COLORS.white
-        }}
-        >
-            <View style={{
-                flex: 1
-            }}>
+        <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+            <View style={{ flex: 1 }}>
                 <View>
                     <Image
                         source={require("../../../../assets/Vector 1.png")}
-                        style={{
-                            bottom: 60,
-                            right: 40
-                        }}
+                        style={{ bottom: 60, right: 40 }}
                     />
                 </View>
             </View>
-
-            <View style={{
-                flex: 1,
-                position: 'relative',
-                justifyContent: 'center', // Căn giữa theo chiều ngang
-                alignItems: 'center', // Căn giữa theo chiều dọc,
-                bottom: 350
-
-            }}>
-                <Text style={{
-                    color: COLORS.black,
-                    fontSize: 100,
-                    fontWeight: 500,
-                }}>
-                    Hello
-                </Text>
-                <Text
-                    style={{
-                        top: 10,
-                        fontSize: 20,
-                        fontWeight: 500
-                    }}>
-                    Sign in to your account.
-                </Text>
+            <View style={{ flex: 1, position: 'relative', justifyContent: 'center', alignItems: 'center', bottom: 350 }}>
+                <Text style={{ color: COLORS.black, fontSize: 100, fontWeight: '500' }}>Hello</Text>
+                <Text style={{ top: 10, fontSize: 20, fontWeight: '500' }}>Sign in to your account.</Text>
             </View>
-            {/**/}
-            <View
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "relative",
-                    bottom: 400,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
-                <Image
-                    source={require("../../../../assets/icons8-user-30.png")}
-                />
-                <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10
-                    }}
-                    placeholder="Enter user name"
-                />
+            {/* Username Input */}
+            <View style={{ backgroundColor: COLORS.white, position: "relative", bottom: 400, flexDirection: 'row', borderRadius: 20, marginHorizontal: 40, elevation: 10, marginVertical: 20, padding: 20 }}>
+                <Image source={require("../../../../assets/icons8-user-30.png")} />
+                <TextInput style={{ flex: 1, fontSize: 20, left: 10 }} placeholder="Enter user name" />
             </View>
-
-            {/*    */}
-            <View
-
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "relative",
-                    bottom: 400,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
-                <Image
-                    source={require("../../../../assets/icons8-lock-30.png")}
-                />
-                <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10,
-
-                    }}
-                    placeholder="Enter password"
-                    secureTextEntry={isPasswordShown}
-                />
-                <TouchableOpacity
-                    onPress={() => setIsPasswordShow(!isPasswordShown)}
-                >
-                    {
-                        isPasswordShown == true ? (
-                            <Ionicons name="eye" size={24} color={COLORS.black}
-                            />
-                        ) : (
-                            <Ionicons name="eye-off" size={24} color={COLORS.black}
-                            />
-                        )
-                    }
+            {/* Password Input */}
+            <View style={{ backgroundColor: COLORS.white, position: "relative", bottom: 400, flexDirection: 'row', borderRadius: 20, marginHorizontal: 40, elevation: 10, marginVertical: 20, padding: 20 }}>
+                <Image source={require("../../../../assets/icons8-lock-30.png")} />
+                <TextInput style={{ flex: 1, fontSize: 20, left: 10 }} placeholder="Enter password" secureTextEntry={isPasswordShown} />
+                <TouchableOpacity onPress={() => setIsPasswordShow(!isPasswordShown)}>
+                    <Ionicons name={isPasswordShown ? "eye" : "eye-off"} size={24} color={COLORS.black} />
                 </TouchableOpacity>
             </View>
-            {/*    */}
-            <View style={{
-                position: 'relative',
-                bottom: 400,
-                left: 350,
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 500
-                }}>
-
-                    Forgot your password?
-                </Text>
-
-
+            {/* Forgot Password */}
+            <View style={{ position: 'relative', bottom: 400, left: 350 }}>
+                <Text style={{ fontSize: 20, fontWeight: '500' }}>Forgot your password?</Text>
             </View>
-            {/*    */}
-            <View style={{
-                position: "absolute",
-                top: 850
-            }}>
-                <Image
-                    source={require("../../../../assets/Vector 3.png")}/>
+            {/* Sign In Button */}
+            <View style={{ position: "absolute", top: 750, left: 300 }}>
+                <Button onPress={() => navigation.navigate("Register")} title="Sign in" style={{ left: 120 }} />
             </View>
-
-            {/*    */}
-            <View style={{
-                position: "absolute",
-                top: 750,
-                left: 300
-            }}>
-                <Button
-                    onPress={() => navigation.navigate("Register")}
-                    title="Sign in"
-                    style={{
-                        left: 120
-                    }}>
-                </Button>
-
+            {/* Sign Up Text */}
+            <View style={{ position: "absolute", top: 770, left: 300 }}>
+                <Text style={{ fontSize: 30, fontWeight: 700 }}>Sign up</Text>
             </View>
-            {/*    */}
-            <View style={{
-                position: "absolute",
-                top: 770,
-                left: 300,
-
-            }}>
-                <Text style={{
-                    fontSize: 30,
-                    fontWeight: 700
-                }}>
-
-                    Sign up
-                </Text>
-            </View>
-            <View style={{
-                position: "absolute",
-                top: 900,
-                left: 200
-            }}>
-                <Text style={{
-                    fontSize: 25,
-                    fontWeight: 500,
-                    right: 60
-
-                }}>
-                    Don't have an account?
-                </Text>
-                <Pressable
-                    onPress={() => navigation.navigate("Register")}>
-                    <Text style={{
-                        fontSize: 25,
-                        fontWeight: 500,
-                        left: 205,
-                        bottom: 35,
-                        color: COLORS.blue,
-                        textDecorationLine: "underline"
-                    }}>
-                        Create
-                    </Text>
+            <View style={{ position: "absolute", top: 900, left: 200 }}>
+                <Text style={{ fontSize: 25, fontWeight: 500, right: 60 }}>Don't have an account?</Text>
+                <Pressable onPress={() => navigation.navigate("Register")}>
+                    <Text style={{ fontSize: 25, fontWeight: 500, left: 205, bottom: 35, color: COLORS.blue, textDecorationLine: "underline" }}>Create</Text>
                 </Pressable>
             </View>
         </View>
-
     );
 }
 
 export default Login;
->>>>>>> 21130312
