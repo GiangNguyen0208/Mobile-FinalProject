@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/KotlinJavaRuntime.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_54_SA_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_54_SA__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/layout/ChiTietDonHang.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/layout/ChiTietDonHang.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -34,8 +35,23 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;tri22&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/GiangNguyen0208/Mobile-FinalProject.git&quot;,
+    &quot;accountId&quot;: &quot;1768ffc0-da9f-4959-a5b5-f92fafb0916b&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -54,15 +70,38 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "21130551",
+    "git-widget-placeholder": "21130576",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/DoAnTTMobile/DoAn/Mobile-FinalProject/view/client/layout"
+    "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\DoAnTTMobile\DoAn\Mobile-FinalProject\view\client\layout" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -72,11 +111,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1728615596812</updated>
+      <workItem from="1731071182510" duration="644000" />
+      <workItem from="1731658464512" duration="1429000" />
+      <workItem from="1731662047681" duration="10000" />
+      <workItem from="1731680816440" duration="45000" />
+      <workItem from="1731682412690" duration="93000" />
+      <workItem from="1731752877253" duration="19000" />
+      <workItem from="1731811162679" duration="5064000" />
     </task>
+    <task id="LOCAL-00001" summary="add uer feature and shop owner function">
+      <option name="closed" value="true" />
+      <created>1731815090621</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731815090621</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="add uer feature and shop owner function" />
+    <option name="LAST_COMMIT_MESSAGE" value="add uer feature and shop owner function" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
