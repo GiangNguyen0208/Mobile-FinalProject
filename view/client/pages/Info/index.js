@@ -1,9 +1,10 @@
 import { Text, View } from 'react-native';
+import User from './User';
 
 const Info = () => {
     return (
       <View>
-        <Text>Info Page</Text>
+        <User />
       </View>
     );
 }

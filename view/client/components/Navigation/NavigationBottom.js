@@ -26,7 +26,7 @@ const NavigationBottom = ({ onNavigate }) => {
 
   return (
     <BottomNavigation
-      style={{ backgroundColor: 'white', height: 60 }}
+      style={{ backgroundColor: '#6200EE', height: 60 }}
       navigationState={{ index, routes: navRoutes }}
       onIndexChange={handleIndexChange}
       renderScene={() => null} // You can implement this if needed
