@@ -11,7 +11,7 @@ const User = () => {
     address: '123 Đường ABC, Thành phố XYZ',
     phoneNumber: '037147258',
     rank: 'Vàng',
-    avatar: require('../../../assets/test1.png')
+    avatar: require('../../../../assets/test1.png')
   });
 
   // Trạng thái để biết người dùng có đang ở chế độ chỉnh sửa hay không
