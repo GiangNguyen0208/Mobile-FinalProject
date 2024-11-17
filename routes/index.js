@@ -1,3 +1,4 @@
+
 import Default from "../view/client/layout/default"; 
 import Info from "../view/client/pages/Info/index"; 
 import Login from "../view/client/pages/login"; 
@@ -14,6 +15,7 @@ import NearMe from "../view/client/pages/wishlist/nearMe.js";
 import Latest from "../view/client/pages/wishlist/latest.js";
 import User from "../view/client/pages/Info/User.js";
 import OrderDetail from "../view/client/pages/order/orderDetail";
+
 
 export const routes = {
     path: "/",
@@ -90,6 +92,10 @@ export const routes = {
                     element: <Latest/>
                 }
             ]
+        },
+        {
+            path: "detail",
+            element: <ProductDetail />
         }
     ]
 };
