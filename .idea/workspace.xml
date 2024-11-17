@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_54_SA_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_54_SA__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/PopularDish.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/VoucherList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +78,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "21130576",
+    "git-widget-placeholder": "Merging 21130576",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
     "node.js.detected.package.eslint": "true",
@@ -78,6 +86,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "vcs.Git",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -117,7 +126,7 @@
       <workItem from="1731680816440" duration="45000" />
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
-      <workItem from="1731811162679" duration="5064000" />
+      <workItem from="1731811162679" duration="5720000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -132,6 +141,22 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="4de1b32c-20d5-49ac-be69-abf2587bfb75" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="4de1b32c-20d5-49ac-be69-abf2587bfb75">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />

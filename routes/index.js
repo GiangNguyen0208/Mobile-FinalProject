@@ -1,3 +1,4 @@
+
 import Default from "../view/client/layout/default"; 
 import Info from "../view/client/pages/Info/index"; 
 import Login from "../view/client/pages/login"; 
@@ -10,6 +11,7 @@ import Shipping from "../view/client/components/Order/shipping.js";
 import History from "../view/client/components/Order/history.js";
 import Rating from "../view/client/components/Order/rating.js";
 import Draft from "../view/client/components/Order/draft.js";
+
 
 export const routes = {
     path: "/",
@@ -63,9 +65,15 @@ export const routes = {
             path: "/info",
             element: <Info /> 
         },
-        { 
-            path: "/login",
-            element: <Login /> 
+
+        {
+            path: "login",
+            element: <Login />
+        },
+        {
+            path: "detail",
+            element: <ProductDetail />
+
         }
     ]
 };
