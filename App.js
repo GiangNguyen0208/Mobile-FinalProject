@@ -6,6 +6,7 @@ import { AllRoutes } from './view/client/components/AllRoutes';
 
 export default function App() {
   return (
+
     <SafeAreaProvider> 
       <NativeRouter>
         <NavigationContainer>
