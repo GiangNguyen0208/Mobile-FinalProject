@@ -7,7 +7,7 @@ import Button from "../client/components/Button";
 import ButtonText from "../client/components/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
 const Verify = ({navigation}) => {
-    // njlsanvdsalnj
+
     const [isPasswordShown, setIsPasswordShow]= useState(false);
     return (
         <View style={{
