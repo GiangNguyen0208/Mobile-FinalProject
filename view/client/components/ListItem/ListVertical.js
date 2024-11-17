@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import Item from './Item';
 
-const List = ({ items }) => {
+const ListVertical = ({ items }) => {
     return (
         <View style={styles.container}>
             {items.length > 0 ? (
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default List;
+export default ListVertical;

@@ -10,29 +10,32 @@ import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
 import foodData from '../partials/Food/food';
 import optionData from '../partials/Option/options';
-import debounce from 'lodash.debounce'; // Optionally use lodash for debouncing
 
 const Default = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showOutlet, setShowOutlet] = useState(false);
 
+  const navRoutes = [
+    { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline', path: '/' },
+    { key: 'orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline', path: '/orders' },
+    { key: 'likes', title: 'Wishlist', focusedIcon: 'heart', unfocusedIcon: 'heart-outline', path: '/likes' },
+    { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline', path: '/notifications' },
+    { key: 'info', title: 'MyPersonal', focusedIcon: 'account', unfocusedIcon: 'account-outline', path: '/info' },
+  ];
+
   const handleNavigation = (path) => {
     setShowOutlet(true);
     navigate(path);
   }
 
-  // handle next to "/all-items" function
   const handleViewAllItems = () => {
     navigate('/all-items', { state: { items: foodData } });
   };
 
-  // Determine if NavigationBottom should be shown based on the current path
   const shouldShowNavigationBottom = !['/login', '/info'].includes(location.pathname);
 
-  // Effect to reset showOutlet when navigating to certain paths
   useEffect(() => {
-    // Check if the current path is not the default path
     if (location.pathname !== '/') {
       setShowOutlet(true); // Show outlet for all paths except the default
     } else {
@@ -42,18 +45,16 @@ const Default = () => {
 
   const handleItemPress = (item) => {
     console.log('Item pressed:', item);
-    // Navigate or perform any action with the item
   };
 
   const handleSearch = (query) => {
     console.log('Searching for:', query);
-    // Implement your search logic here
   };
 
   return (
     <SafeAreaView style={styles.container}>
       {showOutlet ? (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 10 }}>
           <Outlet />
         </View>
       ) : (
@@ -93,7 +94,7 @@ const Default = () => {
       )}
 
       {/* Navigation Bottom */}
-      <NavigationBottom onNavigate={handleNavigation} />
+      <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} />
     </SafeAreaView>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import COLORS from "../../../../constants/COLORS";
-import Button from "../../components/Button";
+import Button from "../../components/Button/Button";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Login = ({ navigation }) => {
