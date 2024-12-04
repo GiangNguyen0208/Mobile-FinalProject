@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import OrderList from './orderList';
+import OrderItems from '../../pages/order/orderItem';
 
-const History = ({ items }) => {
+const History = ({ orderItems }) => {
   return (
     <View style={styles.container}>
-      <OrderList items={items} /> 
+      <OrderItems orderItems={orderItems} />
     </View>
   );
 };
@@ -13,8 +13,10 @@ const History = ({ items }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    padding: 20,
+    backgroundColor: '#fff',
   },
 });
 
