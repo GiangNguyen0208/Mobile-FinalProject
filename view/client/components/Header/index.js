@@ -8,7 +8,6 @@ export default function Header({ header, onLogin }) {
     return (
         <>
             <Appbar.Header>
-                <IconButton icon='facebook'></IconButton>
                 <IconButton icon='home'></IconButton>
                 <Appbar.Content title={header}/>
                 <Appbar.Action />
@@ -18,6 +17,7 @@ export default function Header({ header, onLogin }) {
                 >
                     Login
                 </Button>
+                
             </Appbar.Header>
         </>
     )

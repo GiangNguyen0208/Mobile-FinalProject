@@ -1,47 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, StyleSheet, Button, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const DonHang = () => {
+const OrderItems = ({ orderItems }) => {
+
+  console.log(orderItems);
+  
   const navigation = useNavigation(); // Hook for navigation
-  const [orderItems, setOrderItems] = useState([
-    {
-      id: '1',
-      name: 'Order 1',
-      price: 100,
-      orderDate: '2024-10-01', // Ngày đặt
-      expectedDeliveryDate: '2024-10-05', // Ngày giao dự kiến
-      deliveryAddress: '123 Đường ABC, Thành phố XYZ', // Địa chỉ nhận
-      phoneNumber: '037147258', // Số điện thoại
-      details: 'Detail for Order 1',
-      products: [
-        { productId: 'p1', productName: 'Product A', productPrice: 50, quantity: 2, image: require('../../../assets/favicon.png') },
-        { productId: 'p2', productName: 'Product B', productPrice: 50, quantity: 1, image: require('../../../assets/test1.png') },
-      ],
-    },
-    {
-      id: '2',
-      name: 'Order 2',
-      price: 60,
-      orderDate: '2024-10-02',
-      expectedDeliveryDate: '2024-10-06',
-      deliveryAddress: '456 Đường DEF, Thành phố XYZ',
-      phoneNumber: '037147259',
-      details: 'Detail for Order 2',
-      products: [
-        { productId: 'p3', productName: 'Product C', productPrice: 30, quantity: 1, image: require('../../../assets/test1.png') },
-        { productId: 'p4', productName: 'Product D', productPrice: 30, quantity: 2, image: require('../../../assets/favicon.png') },
-      ],
-    },
-  ]);
 
   const calculateTotal = () => {
     return orderItems.reduce((total, order) => total + order.price, 0);
   };
 
   const handleViewDetails = (item) => {
-    // Chuyển tới trang chi tiết đơn hàng và truyền dữ liệu đơn hàng qua navigation
-    navigation.navigate('ChiTietDonHang', { order: item });
+    navigation.navigate('orderItem', { orderId: item.id });
   };
 
   const renderProductItem = ({ item }) => (
@@ -56,15 +28,22 @@ const DonHang = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
-      <View>
+      <View style={styles.itemInfo}>
         <Text style={styles.itemText}>{item.name}</Text>
-        <Text style={styles.itemText}>Tổng: ${item.price}</Text>
-        {/* Hiển thị danh sách các sản phẩm trong đơn hàng */}
-        <FlatList
-          data={item.products}
-          renderItem={renderProductItem}
-          keyExtractor={(product) => product.productId}
-        />
+        <Text style={styles.itemText}>Total: ${item.price}</Text>
+        <Text style={styles.itemText}>Order Date: {item.orderDate}</Text>
+        <Text style={styles.itemText}>Expected Delivery: {item.expectedDeliveryDate}</Text>
+        <Text style={styles.itemText}>Delivery Address: {item.deliveryAddress}</Text>
+        {/* Display the list of products in the order */}
+        {item.products && item.products.length > 0 ? (
+          <FlatList
+            data={item.products}
+            renderItem={renderProductItem}
+            keyExtractor={(product) => product.productId}
+          />
+        ) : (
+          <Text style={styles.itemText}>No products available</Text>
+        )}
       </View>
       <Button title="Chi tiết đơn hàng" onPress={() => handleViewDetails(item)} />
     </View>
@@ -77,9 +56,10 @@ const DonHang = () => {
         data={orderItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContainer}
       />
       <View style={styles.totalContainer}>
-        <Text style={styles.totalText}>Tổng tất cả: ${calculateTotal()}</Text>
+        <Text style={styles.totalText}>Total Price: ${calculateTotal()}</Text>
       </View>
     </View>
   );
@@ -97,24 +77,29 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+  listContainer: {
+    paddingBottom: 20,
+  },
   itemContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     marginBottom: 10,
   },
+  itemInfo: {
+    marginBottom: 10,
+  },
   itemText: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   productContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    marginBottom: 5,
+    paddingVertical: 5,
   },
   productImage: {
     width: 50,
@@ -134,4 +119,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DonHang;
+export default OrderItems;

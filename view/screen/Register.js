@@ -4,7 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 import COLORS from "../../constants/COLORS";
 import COLOR from "../../constants/COLORS";
 import Button from "../client/components/Button";
-import ButtonText from "../client/components/Button";
+import ButtonText from "../client/components/ButtonText";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Register = ({navigation}) => {

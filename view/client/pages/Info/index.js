@@ -1,11 +1,11 @@
-import { Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import User from './User';
 
 const Info = () => {
-    return (
-      <View>
-        <Text>Info Page</Text>
-      </View>
-    );
+  return (
+      <User />
+  );
 }
 
 export default Info;
