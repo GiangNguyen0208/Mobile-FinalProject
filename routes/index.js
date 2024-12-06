@@ -15,87 +15,104 @@ import NearMe from "../view/client/pages/wishlist/nearMe.js";
 import Latest from "../view/client/pages/wishlist/latest.js";
 import User from "../view/client/pages/Info/User.js";
 import OrderDetail from "../view/client/pages/order/orderDetail";
+import { createBrowserRouter } from "react-router-dom";
 
 
-export const routes = {
-    path: "/",
-    element: <Default />,
-    children: [
+export const routes = [
+    {
+      path: "/",
+      element: <Default />,
+      isPrivate: false,
+      children: [
         { 
-            path: "/",
-            element: <Default /> 
+          path: "/",
+          element: <Default />,
+          isPrivate: false,
         },
         { 
-            path: "/orders",
-            element: <Order /> ,
-            children: [
-                {
-                    path: "shipping",
-                    element: <Shipping />
-                },
-                {
-                    path: "history",
-                    element: <History />,
-                    children: [
-                   {
-                       path: "orderItem/:orderId",
-                       element: <OrderDetail />
-                   }
-               ]
-                },
-                {
-                    path: "rating",
-                    element: <Rating />
-                },
-                {
-                    path: "draft",
-                    element: <Draft />
-                },
-            ]
+          path: "/login",
+          element: <Login />,
+          isPrivate: false,
         },
         { 
-            path: "/likes",
-            element: <WishList /> 
-        },
-        { 
-            path: "/notifications",
-            element: <Notifications />,
-            children: [
+          path: "/orders",
+          element: <Order />,
+          isPrivate: true,
+          children: [
+            {
+              path: "shipping",
+              element: <Shipping />,
+              isPrivate: true,
+            },
+            {
+              path: "history",
+              element: <History />,
+              isPrivate: true,
+              children: [
                 {
-                    path: "promotions",
-                    element: <Promotions/>
-                },
-                {
-                    path: "news",
-                    element: <News />
+                  path: "orderItem/:orderId",
+                  element: <OrderDetail />,
+                  isPrivate: true,
                 }
-            ]
+              ]
+            },
+            {
+              path: "rating",
+              element: <Rating />,
+              isPrivate: true,
+            },
+            {
+              path: "draft",
+              element: <Draft />,
+              isPrivate: true,
+            },
+          ]
         },
         { 
-            path: "/info",
-            element: <Info /> 
+          path: "/likes",
+          element: <WishList />,
+          isPrivate: true,
         },
         { 
-            path: "/login",
-            element: <Login /> 
+          path: "/notifications",
+          element: <Notifications />,
+          isPrivate: true,
+          children: [
+            {
+              path: "promotions",
+              element: <Promotions />,
+              isPrivate: true,
+            },
+            {
+              path: "news",
+              element: <News />,
+              isPrivate: true,
+            }
+          ]
+        },
+        { 
+          path: "/info",
+          element: <Info />,
+          isPrivate: true,
         },
         {
-            path: "/wishlist",
-            element: <WishList/>,
-            children: [
-                {
-                    path: "nearMe",
-                    element: <NearMe/>
-                },
-                {
-                    path: "latest",
-                    element: <Latest/>
-                }
-            ]
+          path: "/wishlist",
+          element: <WishList />,
+          isPrivate: true,
+          children: [
+            {
+              path: "nearMe",
+              element: <NearMe />,
+              isPrivate: true,
+            },
+            {
+              path: "latest",
+              element: <Latest />,
+              isPrivate: true,
+            }
+          ]
         },
-        {
-            path: "detail",
-            element: <ProductDetail />
-        }
-    ]
-};
+      ]
+    }
+  ];
+  
