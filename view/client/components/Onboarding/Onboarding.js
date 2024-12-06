@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { FlatList, StyleSheet, View, Animated } from 'react-native';
+import { FlatList, StyleSheet, View, Animated, Dimensions } from 'react-native';
 import slides from '../../partials/Slide/slide';
 import OnboardingItem from './OnboardingItem';
 
 export default function OnBoarding() {
-    const [ currentIndex, setCurrentIndex ] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
 
@@ -16,12 +16,12 @@ export default function OnBoarding() {
 
     return (
         <View style={styles.container}>
-            <View style={{ flex: 3 }}>
-                <FlatList 
+            <View style={styles.flatlistContainer}>
+                <FlatList
                     data={slides}
                     renderItem={({ item }) => <OnboardingItem item={item} />}
                     horizontal
-                    showsHorizontalScrollIndicator
+                    showsHorizontalScrollIndicator={false}
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
@@ -35,7 +35,7 @@ export default function OnBoarding() {
                 />
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -43,5 +43,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#fff",
+    },
+    flatlistContainer: {
+        width: Dimensions.get('window').width,  // Đảm bảo FlatList chiếm toàn bộ chiều rộng màn hình
+        height: 200, // Đặt chiều cao cụ thể cho FlatList nếu cần thiết
     },
 });

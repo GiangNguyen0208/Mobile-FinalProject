@@ -70,6 +70,7 @@ const Order = () => {
     { key: 'rating', title: 'Rating', path: '/orders/rating' },
     { key: 'draft', title: 'Draft', path: '/orders/draft' },
   ];
+  
 
   return (
     <View style={styles.container}>
@@ -78,7 +79,6 @@ const Order = () => {
       <Status selectedOption={selectedOption} />
       {renderSelectedComponent() || <Text>No content available</Text>}
       <RecommendedProducts />
-      <Text style={{ textAlign: 'center', marginTop: 20 }}>End of Order Section</Text>
     </View>
   );
 };

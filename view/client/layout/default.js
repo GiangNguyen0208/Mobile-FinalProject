@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import OnBoarding from '../components/Onboarding/Onboarding';
 import Header from '../components/Header';
@@ -10,6 +10,8 @@ import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
 import foodData from '../partials/Food/food';
 import optionData from '../partials/Option/options';
+import ListVertical from '../components/ListItem/ListVertical';
+import Item from '../components/ListItem/Item';
 
 const Default = () => {
   const navigate = useNavigate();
@@ -54,19 +56,18 @@ const Default = () => {
   return (
     <SafeAreaView style={styles.container}>
       {showOutlet ? (
-        <View style={{ flex: 10 }}>
+        <View style={{ flex: 15 }}>
           <Outlet />
         </View>
       ) : (
-        <View style={{ flex: 4 }}>
-          {/* Header */}
-          {/* <Header header="Home Page" onLogin={() => navigate('/login')} /> */}
-          
-          <View style={styles.searchContainer}>
+        <ScrollView style={styles.containerScrollView}>
+          <View style={styles.contentContainer}>
+          {/* Search */}
+          <View>
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
           </View>
           {/* OnBoarding */}
-          <View style={styles.onboarding}>
+          <View>
             <OnBoarding />
           </View>
           {/* Intro */}
@@ -77,24 +78,34 @@ const Default = () => {
           <View>
             <View style={styles.collectionHeader}>
               <Text style={styles.collectionTitle}>Collections</Text>
-              <Text 
-                style={styles.viewAllText}
-                // onPress={handleViewAllItems}
-              >
-                Views All
-              </Text>
+              <Text style={styles.viewAllText}>Views All</Text>
             </View>
             <ListHorizontal items={foodData} onItemPress={handleItemPress} />
           </View>
 
-          <View>
-            <Text>Welcome to the App Food!</Text>
-          </View>
+          <View style={styles.container}>
+            {foodData.length > 0 ? (
+                foodData.map((item) => (
+                    <Item 
+                        key={item.id}
+                        image={item.image}
+                        title={item.title}
+                        description={item.description}
+                        date={item.date}
+                    />
+                ))
+            ) : (
+                <Text>No announcements.</Text>
+            )}
         </View>
+        </View>
+        </ScrollView>
       )}
 
       {/* Navigation Bottom */}
-      <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} />
+      <View style={styles.navigationBottomContainer}>
+        <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} />
+      </View>
     </SafeAreaView>
   );
 };

@@ -4,8 +4,7 @@ import { View, Text, FlatList, StyleSheet, Button, Image } from 'react-native';
 const OrderDetail = ({ route, navigation }) => {
   const { orderId } = route.params;
 
-  // Fetch or find the order details using the orderId
-  const order = findOrderById(orderId); // Implement this function to get order details
+  const order = findOrderById(orderId);
 
   if (!order) {
     return <Text>Thông tin đơn hàng không khả dụng</Text>;
