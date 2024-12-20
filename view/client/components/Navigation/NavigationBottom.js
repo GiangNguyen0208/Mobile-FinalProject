@@ -1,38 +1,104 @@
-import * as React from 'react';
-import { BottomNavigation } from 'react-native-paper';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { View, Platform } from 'react-native'
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { AntDesign, Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { COLORS } from '../../../../constants'
 
-const NavigationBottom = ({ onNavigate, navRoutes }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  
-  const currentIndex = navRoutes.findIndex(route => route.path === location.pathname);
-  const [index, setIndex] = React.useState(currentIndex >= 0 ? currentIndex : 0);
+import { useTheme } from '../../../../themes/ThemeProvider';
+import Default from '../../layout/default'
+import Order from '../../pages/order'
+import WishList from '../../pages/wishlist'
+import Notifications from '../../pages/notifications'
+import Info from '../../pages/Info'
 
-  const handleIndexChange = (newIndex) => {
-    console.log("Navigating to:", navRoutes[newIndex].path); 
-    setIndex(newIndex);
-    onNavigate(navRoutes[newIndex].path);
-    navigate(navRoutes[newIndex].path); // Ensure navigation happens
-  };
+const Tab = createBottomTabNavigator()
 
-  return (
-    <BottomNavigation
-      style={{ backgroundColor: '#6200EE', height: 60, flex: 1 }}
-      navigationState={{ index, routes: navRoutes }}
-      onIndexChange={handleIndexChange}
-      renderScene={() => null} // You can implement this if needed
-    >
-      {navRoutes.map((route) => (
-        <BottomNavigation.Bar
-            key={route.key}
-            title={route.title} 
-            focusedIcon={route.focusedIcon} 
-            unfocusedIcon={route.unfocusedIcon} 
-        />
-      ))}
-    </BottomNavigation>
-  );
-};
+const BottomTabNavigation = () => {
+    const { colors } = useTheme();
+    return (
+        <Tab.Navigator screenOptions={{
+            tabBarShowLabel: false,
+            headerShown: false,
+            tabBarStyle: {
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                left: 0,
+                elevation: 0,
+                height: 60,
+                backgroundColor: "#fff",
+              },
+        }}>
+            <Tab.Screen
+                name="Default"
+                component={Default}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <MaterialCommunityIcons name="home-variant" size={24} color="black" />
+                            </View>
+                        )
+                    },
+                }}
+            />
 
-export default NavigationBottom;
+            <Tab.Screen
+                name="Orders"
+                component={Order}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <Entypo name="shopping-cart" size={24} color="black" />
+                            </View>
+                        )
+                    },
+                }}
+            />
+
+            <Tab.Screen
+                name="WishList"
+                component={WishList}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <AntDesign name="heart" size={24} color="black" />
+                            </View>
+                        )
+                    },
+                }}
+            />
+
+            <Tab.Screen
+                name="Notifications"
+                component={Notifications}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <Ionicons name="notifications" size={24} color="black" />
+                            </View>
+                        )
+                    },
+                }}
+            />
+            <Tab.Screen
+                name="Info"
+                component={Info}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View>
+                                <MaterialCommunityIcons name="account-box" size={24} color="black" />
+                            </View>
+                        )
+                    },
+                }}
+            />
+        </Tab.Navigator>
+    )
+}
+
+export default BottomTabNavigation

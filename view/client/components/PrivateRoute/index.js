@@ -1,20 +1,15 @@
-import { useEffect } from 'react';
-import { View, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Navigate } from "react-router-dom";
+import { AuthContext } from "../../../context/Auth/AuthContext";
+import { useContext, useState } from "react";
+// import { useAuth } from "../../../../hooks/useAuth";
 
-export default function PrivateRouter({ children }) {
-    const isLogin = false;
-    const navigation = useNavigation();
+const PrivateRouter = ({ children, path}) => {
+  const { isLoggedIn, isPrivate } = useContext(AuthContext);
 
-    useEffect(() => {
-        if (!isLogin) {
-            navigation.navigate("login"); 
-        }
-    }, [isLogin, navigation]);
+  if (isPrivate && !isLoggedIn) {
+    return <Navigate to="/login" state={state} />;
+  }
+  return children;
+};
 
-    if (!isLogin) {
-        return null;
-    }
-
-    return <View>{children}</View>; // Render children if logged in
-}
+export default PrivateRouter;

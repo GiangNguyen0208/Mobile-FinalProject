@@ -1,66 +1,103 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import Shipping from '../Order/shipping';
+import History from '../Order/history';
+import Rating from '../Order/rating';
+import Draft from '../Order/draft';
+import { useTheme } from '../../../../themes/ThemeProvider';
 
-const NavigationTop = ({ onSelectOption, navRoutes, title }) => {
-  const navigate = useNavigate();
-  const [selectedKey, setSelectedKey] = useState(null);
-  
-  const handleNavigation = (path, key) => {
-    navigate(path);
-    onSelectOption(key);
-  };
+const Tab = createBottomTabNavigator();
+
+const NavigationTop = () => {
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.optionsContainer}>
-        {navRoutes.map((route) => (
-          <TouchableOpacity
-            key={route.key}
-            onPress={() => handleNavigation(route.path, route.key)}
-            style={styles.optionButton}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                selectedKey === route.key && styles.selectedButtonText,
-              ]}
-            >
-              {route.title}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarShowLabel: false,
+        headerShown: false,
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          height: 60,
+          backgroundColor: colors.background || '#fff',
+          elevation: 0,
+        },
+      }}
+    >
+      {/* Tab: Cart */}
+      <Tab.Screen
+        name="Cart"
+        component={Draft}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <FontAwesome5
+                name="cart-arrow-down"
+                size={24}
+                color={focused ? colors.primary : colors.text}
+              />
+            </View>
+          ),
+        }}
+      />
+
+      {/* Tab: Shipping */}
+      <Tab.Screen
+        name="Shipping"
+        component={Shipping}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <FontAwesome5
+                name="shipping-fast"
+                size={24}
+                color={focused ? colors.primary : colors.text}
+              />
+            </View>
+          ),
+        }}
+      />
+
+      {/* Tab: History */}
+      <Tab.Screen
+        name="History"
+        component={History}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <FontAwesome5
+                name="history"
+                size={24}
+                color={focused ? colors.primary : colors.text}
+              />
+            </View>
+          ),
+        }}
+      />
+
+      {/* Tab: Wishlist */}
+      <Tab.Screen
+        name="Rating"
+        component={Rating}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <MaterialIcons
+                name="star-rate"
+                size={24}
+                color={focused ? colors.primary : colors.text}
+              />
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    backgroundColor: '#FFFFFF',
-  },
-  title: {
-    color: 'Black',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  optionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  optionButton: {
-    padding: 8,
-  },
-  buttonText: {
-    color: 'black',
-  },
-  selectedButtonText: {
-    color: 'orange',
-  },
-});
 
 export default NavigationTop;
