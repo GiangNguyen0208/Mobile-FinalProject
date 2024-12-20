@@ -1,9 +1,21 @@
 import axiosInstance from "./axiosInstance";
 
-const authApi = {
-    login: (data) => axiosInstance.post("/auth/token", data),
-    register: (data) => axiosInstance.post("/auth/register/", data),
-    logout: () => axiosInstance.post("/auth/logout"),
+export const loginApi = async ({username, password}) => {
+    try {
+        const response = await axiosInstance.post("/auth/token", { username, password });
+        return response.data;
+    } catch (error) {
+        console.error("Login API Error", error); // Log error chi tiết
+        throw error;
+    }
 };
 
-export default authApi;
+export const introspectApi = async (token) => {
+    try {
+        const response = await axiosInstance.post("/auth/introspect", token);
+        return response.data;
+    } catch (error) {
+        console.error("Register API Error", error); // Log error chi tiết
+        throw error;
+    }
+};

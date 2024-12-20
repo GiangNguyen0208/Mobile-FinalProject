@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { NativeRouter, Router } from 'react-router-native';
+import { NativeRouter } from 'react-router-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AllRoutes } from './view/client/components/AllRoutes'; 
 import { AuthProvider } from './view/context/Auth/AuthContext';
+import AppNavigator from './routes';
 
 
 export default function App() {
   return (
     <SafeAreaProvider> 
-      <NativeRouter>
-        <NavigationContainer>
-          <AuthProvider>
-            <AllRoutes />
-          </AuthProvider>
-        </NavigationContainer>
-      </NativeRouter>
+      <AuthProvider>
+        <NativeRouter>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </NativeRouter>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }

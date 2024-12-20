@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, ScrollView } from 'react-native';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import OnBoarding from '../components/Onboarding/Onboarding';
 import Header from '../components/Header';
 import Intro from '../components/Intro/Intro';
@@ -12,38 +12,29 @@ import foodData from '../partials/Food/food';
 import optionData from '../partials/Option/options';
 import ListVertical from '../components/ListItem/ListVertical';
 import Item from '../components/ListItem/Item';
+import { Outlet } from 'react-router-native';
 
 const Default = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigation = useNavigation();
+  const route = useRoute();
   const [showOutlet, setShowOutlet] = useState(false);
 
   const navRoutes = [
-    { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline', path: '/' },
-    { key: 'orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline', path: '/orders' },
-    { key: 'likes', title: 'Wishlist', focusedIcon: 'heart', unfocusedIcon: 'heart-outline', path: '/likes' },
-    { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline', path: '/notifications' },
-    { key: 'info', title: 'MyPersonal', focusedIcon: 'account', unfocusedIcon: 'account-outline', path: '/info' },
+    { key: 'home', name: 'Default', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
+    { key: 'orders', name: 'Orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline' },
+    { key: 'likes', name: 'Likes', title: 'Wishlist', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
+    { key: 'notifications', name: 'Notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
+    { key: 'info', name: 'Info', title: 'My Personal', focusedIcon: 'account', unfocusedIcon: 'account-outline' },
   ];
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (name) => {
     setShowOutlet(true);
-    navigate(path);
+    navigation.navigate(name); // Dùng navigation.navigate thay vì useNavigate
   }
 
-  const handleViewAllItems = () => {
-    navigate('/all-items', { state: { items: foodData } });
-  };
-
-  const shouldShowNavigationBottom = !['/login', '/info'].includes(location.pathname);
-
   useEffect(() => {
-    if (location.pathname !== '/') {
-      setShowOutlet(true); // Show outlet for all paths except the default
-    } else {
-      setShowOutlet(false); // Hide outlet for the default path
-    }
-  }, [location.pathname]); // Run effect when the pathname changes
+    setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
+  }, [route.name]);
 
   const handleItemPress = (item) => {
     console.log('Item pressed:', item);
@@ -55,57 +46,55 @@ const Default = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Nội dung chính */}
       {showOutlet ? (
-        <View style={{ flex: 15 }}>
-          <Outlet />
-        </View>
+        <ScrollView style={styles.containerScrollView}>
+          <View style={{ flex: 15 }}>
+            <Outlet />
+          </View>
+        </ScrollView>
       ) : (
         <ScrollView style={styles.containerScrollView}>
           <View style={styles.contentContainer}>
-          {/* Search */}
-          <View>
+            {/* Search */}
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
-          </View>
-          {/* OnBoarding */}
-          <View>
+
+            {/* OnBoarding */}
             <OnBoarding />
-          </View>
-          {/* Intro */}
-          <View>
+
+            {/* Intro */}
             <Intro items={optionData} onItemPress={handleItemPress} />
-          </View>
-          {/* List Horizontal */}
-          <View>
+
+            {/* List Horizontal */}
             <View style={styles.collectionHeader}>
               <Text style={styles.collectionTitle}>Collections</Text>
-              <Text style={styles.viewAllText}>Views All</Text>
+              <Text style={styles.viewAllText}>View All</Text>
             </View>
-            <ListHorizontal items={foodData} onItemPress={handleItemPress} />
-          </View>
 
-          <View style={styles.container}>
-            {foodData.length > 0 ? (
+            <ListHorizontal items={foodData} onItemPress={handleItemPress} />
+
+            {/* List Items */}
+            <View style={styles.container}>
+              {foodData.length > 0 ? (
                 foodData.map((item) => (
-                    <Item 
-                        key={item.id}
-                        image={item.image}
-                        title={item.title}
-                        description={item.description}
-                        date={item.date}
-                    />
+                  <Item
+                    key={item.id}
+                    image={item.image}
+                    title={item.title}
+                    description={item.description}
+                    date={item.date}
+                  />
                 ))
-            ) : (
-                <Text>No announcements.</Text>
-            )}
-        </View>
-        </View>
+              ) : (
+                <Text>Can't upload data from db.</Text>
+              )}
+            </View>
+          </View>
         </ScrollView>
       )}
 
       {/* Navigation Bottom */}
-      <View style={styles.navigationBottomContainer}>
-        <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} />
-      </View>
+      {/* <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} /> */}
     </SafeAreaView>
   );
 };

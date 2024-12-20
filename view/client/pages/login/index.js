@@ -1,30 +1,54 @@
 import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import COLORS from "../../../../constants/COLORS";
+import COLORS from "../../../../constants/theme";
 import Button from "../../components/Button/Button";
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from "../../../../hooks/Auth/AuthContext";
 import { AuthContext } from "../../../context/Auth/AuthContext";
-
+import { loginApi } from "../../../../api/authApi"; 
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const { width } = Dimensions.get("window");
 
 const Login = ({ setIsPrivateRoutes }) => {
+    const location = useLocation();
     const [isPasswordShown, setIsPasswordShow] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const { login } = useContext(AuthContext);
-    const navigation = useNavigation();  // Get navigation function
+    const [redirectToDefault, setRedirectToDefault] = useState(false);
+    const navigate = useNavigate();  // Get navigation function
 
-    const handleLogin = () => {
-        if (username === 'user' && password === 'password') {
-            login();
-            navigation.navigate("/");
-        } else {
-            alert("Invalid !");
+
+    const handleLogin = async () => {
+        setLoading(true); // Bắt đầu loading.
+
+        // Tạo đối tượng user login
+        const userLogin = {
+            username: username,
+            password: password
+        };
+
+        try {
+            // Gọi API đăng nhập
+            const data = await loginApi(userLogin);
+            console.log("Login successful:", data); 
+
+            // Lưu token vào context và điều hướng
+            login(data.token);
+            navigate("/");
+        } catch (error) {
+            // Hiển thị lỗi nếu có
+            alert("Login failed! Check your username and password.");
+            console.error("Login Error:", error);
+        } finally {
+            setLoading(false); // Dừng trạng thái loading
         }
     };
+
+    if (redirectToDefault) {
+        return <Navigate to={defaultScreen} />;
+      }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -75,7 +99,12 @@ const Login = ({ setIsPrivateRoutes }) => {
             </TouchableOpacity>
 
             {/* Sign In Button */}
-            <Button title="Sign In" onPress={handleLogin} style={styles.signInButton} />
+            <Button 
+                title={loading ? "Signing in..." : "Sign In"}
+                onPress={handleLogin} 
+                style={styles.signInButton}
+                disabled={loading} 
+            />
 
             {/* Sign Up Section */}
             <View style={styles.signUpContainer}>

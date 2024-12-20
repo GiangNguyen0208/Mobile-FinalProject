@@ -1,51 +1,39 @@
-import { routes } from "../../../../routes/index";
+import { routes as initialRoutes, routes  } from "../../../../routes/index";
 import { Navigate, useRoutes } from "react-router-dom";
 import { AuthContext } from "../../../context/Auth/AuthContext";
-// import { useAuth } from "../../../../hooks/useAuth";
 import PrivateRouter from "../PrivateRoute";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export const AllRoutes = () => {
-  const { isLoggedIn } = useContext(AuthContext); 
+  const { isLoggedIn } = useContext(AuthContext);
+  const [ updatedRoutes, setUpdatedRoutes ] = useState(initialRoutes);
+  
 
-  // Hàm thêm PrivateRouter cho các routes có isPrivate
-  const wrapWithPrivateRouter = (routesObject) => {
-    return routesObject.map((route) => {
-      const wrappedRoute = { ...route };
-
-      if (route.isPrivate) {
-        wrappedRoute.element = <PrivateRouter>{route.element}</PrivateRouter>;
-      }
-
-      if (route.children) {
-        wrappedRoute.children = wrapWithPrivateRouter(route.children);
-      }
-      
-      return wrappedRoute;
-    });
-  };
-
-  // Hàm kiểm tra trạng thái đăng nhập và chuyển hướng nếu cần
-  const updateRoutes = (routes) => {
+  const updateRoutes  = (routes) => {
     return routes.map((route) => {
-      if (route.isPrivate && !isLoggedIn) {
-        return { ...route, element: <Navigate to="/login" /> };
+      const updatedRoute = { ...route };
+
+      // Nếu người dùng đã đăng nhập, cập nhật isPrivate cho từng route
+      if (route.isPrivate !== undefined) {
+        updatedRoute.isPrivate = !isLoggedIn ? route.isPrivate : false;
       }
-      
+
+      // Kiểm tra và cập nhật các route con nếu có
       if (route.children) {
-        route.children = updateRoutes(route.children); 
+        updatedRoute.children = updateRoutes(route.children);
       }
-      
-      return route;
+
+      return updatedRoute;
     });
   };
-
-  // Áp dụng cả hai hàm trên
-  const wrappedRoutes = wrapWithPrivateRouter(routes);
-  const finalRoutes = updateRoutes(wrappedRoutes);
+ 
+  useEffect(() => {
+    const modifiedRoutes = updateRoutes(initialRoutes);
+    setUpdatedRoutes(modifiedRoutes);
+  }, [isLoggedIn])
 
   // Kết hợp các routes thành components
-  const elements = useRoutes(finalRoutes);
+  const elements = useRoutes(updatedRoutes);
 
   return <>{elements}</>;
 };
