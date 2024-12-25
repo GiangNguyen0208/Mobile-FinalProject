@@ -5,50 +5,53 @@ import COLORS from "../../../../constants/theme";
 import Button from "../../components/Button/Button";
 import { AuthContext } from "../../../context/Auth/AuthContext";
 import { loginApi } from "../../../../api/authApi"; 
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNavigation } from '@react-navigation/native';
+import BottomTabNavigation from "../../components/Navigation/NavigationBottom";
 
 const { width } = Dimensions.get("window");
 
 const Login = ({ setIsPrivateRoutes }) => {
-    const location = useLocation();
     const [isPasswordShown, setIsPasswordShow] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useContext(AuthContext);
-    const [redirectToDefault, setRedirectToDefault] = useState(false);
-    const navigate = useNavigate();  // Get navigation function
 
 
     const handleLogin = async () => {
-        setLoading(true); // Bắt đầu loading.
-
-        // Tạo đối tượng user login
+        const navigation = useNavigation();
+        setLoading(true);
+      
         const userLogin = {
-            username: username,
-            password: password
+          username: username,
+          password: password,
         };
-
+      
         try {
-            // Gọi API đăng nhập
-            const data = await loginApi(userLogin);
-            console.log("Login successful:", data); 
-
-            // Lưu token vào context và điều hướng
-            login(data.token);
-            navigate("/");
-        } catch (error) {
-            // Hiển thị lỗi nếu có
+          const data = await loginApi(userLogin); // Gọi API đăng nhập
+      
+          if (data.code === 1000 && data.result.token) {
+            console.log("Login successful:", data);
+      
+            login(data);
+      
+            // navigation.reset({
+            //   index: 0,
+            //   routes: [{ name: "BottomTabNavigation" }],
+            // });
+            navigation.replace("BottomTabNavigation");
+          } else {
             alert("Login failed! Check your username and password.");
-            console.error("Login Error:", error);
+          }
+        } catch (error) {
+          alert("Login failed! Check your username and password.");
+          console.error("Login Error:", error);
         } finally {
-            setLoading(false); // Dừng trạng thái loading
+          setLoading(false);
         }
-    };
+      };
+      
 
-    if (redirectToDefault) {
-        return <Navigate to={defaultScreen} />;
-      }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginVertical: 10,
         paddingHorizontal: 20,
-        paddingVertical: 15,
+        paddingVertical: 23,
         elevation: 5,
     },
     inputIcon: {

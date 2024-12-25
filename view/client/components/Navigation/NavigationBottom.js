@@ -15,6 +15,7 @@ const Tab = createBottomTabNavigator()
 
 const BottomTabNavigation = () => {
     const { colors } = useTheme();
+
     return (
         <Tab.Navigator screenOptions={{
             tabBarShowLabel: false,
@@ -34,11 +35,7 @@ const BottomTabNavigation = () => {
                 component={Default}
                 options={{
                     tabBarIcon: ({ focused }) => {
-                        return (
-                            <View>
-                                <MaterialCommunityIcons name="home-variant" size={24} color="black" />
-                            </View>
-                        )
+                        return (<View><MaterialCommunityIcons name="home-variant" size={24} color="black" /></View>)
                     },
                 }}
             />
@@ -49,10 +46,7 @@ const BottomTabNavigation = () => {
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <View>
-                                <Entypo name="shopping-cart" size={24} color="black" />
-                            </View>
-                        )
+                            <View><Entypo name="shopping-cart" size={24} color="black" /></View>)
                     },
                 }}
             />
@@ -63,10 +57,7 @@ const BottomTabNavigation = () => {
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (
-                            <View>
-                                <AntDesign name="heart" size={24} color="black" />
-                            </View>
-                        )
+                            <View><AntDesign name="heart" size={24} color="black" /></View>)
                     },
                 }}
             />
