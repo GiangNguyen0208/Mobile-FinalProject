@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
 
-import COLORS from "../../../../constants/COLORS";
+import COLORS from "../../../../constants/theme";
 
-import Button from "../../components/Button";
+import Button from "../../components/Button/Button";
 
 const Register = ({navigation}) => {
     return (
