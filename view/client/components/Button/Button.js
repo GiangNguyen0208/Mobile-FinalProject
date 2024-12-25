@@ -8,7 +8,7 @@ const Button = (props) => {
             onPress={props.onPress} // Xử lý sự kiện nhấn
         >
             <Image
-                source={require("../../../assets/Group 3.png")} // Đường dẫn đến hình ảnh của bạn
+                source={require("../../../../assets/Group 3.png")} // Đường dẫn đến hình ảnh của bạn
                 style={styles.image} // Áp dụng style cho ảnh
             />
         </TouchableOpacity>

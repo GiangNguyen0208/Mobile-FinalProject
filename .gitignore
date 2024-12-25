@@ -33,3 +33,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# URL_NET_ADDRESS
+api/constant.js
