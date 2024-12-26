@@ -44,7 +44,7 @@ import AppNavigator from './routes';
 
 export default function App() {
   return (
-    <SafeAreaProvider> 
+    <SafeAreaProvider>
       <AuthProvider>
         <NativeRouter>
           <AppNavigator />
@@ -52,7 +52,11 @@ export default function App() {
       </AuthProvider>
     </SafeAreaProvider>
   );
+<<<<<<< HEAD
 >>>>>>> d22a77ba4d1351ffa713c2be823477db3f6a887b
 }
 
 export default App;
+=======
+}
+>>>>>>> 7c5d7ab5399922491fb31006a5dd09f349a4f751
