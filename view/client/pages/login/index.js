@@ -9,48 +9,41 @@ import { useNavigation } from '@react-navigation/native';
 import BottomTabNavigation from "../../components/Navigation/NavigationBottom";
 
 const { width } = Dimensions.get("window");
-
 const Login = ({ setIsPrivateRoutes }) => {
     const [isPasswordShown, setIsPasswordShow] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useContext(AuthContext);
-
+    const navigation = useNavigation(); // Chuyển lên đây
 
     const handleLogin = async () => {
-        const navigation = useNavigation();
         setLoading(true);
-      
+
         const userLogin = {
-          username: username,
-          password: password,
+            username: username,
+            password: password,
         };
-      
+
         try {
-          const data = await loginApi(userLogin); // Gọi API đăng nhập
-      
-          if (data.code === 1000 && data.result.token) {
-            console.log("Login successful:", data);
-      
-            login(data);
-      
-            // navigation.reset({
-            //   index: 0,
-            //   routes: [{ name: "BottomTabNavigation" }],
-            // });
-            navigation.replace("BottomTabNavigation");
-          } else {
-            alert("Login failed! Check your username and password.");
-          }
+            const data = await loginApi(userLogin); // Gọi API đăng nhập
+
+            if (data.code === 1000 && data.result.token) {
+                console.log("Login successful:", data);
+
+                login(data);
+
+                navigation.replace("BottomTabNavigation");
+            } else {
+                alert("Login failed! Check your username and password.");
+            }
         } catch (error) {
-          alert("Login failed! Check your username and password.");
-          console.error("Login Error:", error);
+            alert("Login failed! Check your username and password.");
+            console.error("Login Error:", error);
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-      };
-      
+    };
 
 
     return (

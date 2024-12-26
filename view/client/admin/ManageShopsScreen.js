@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet, Alert, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const shops = [
   { id: '1', name: 'Shop A', location: 'Hanoi' },
@@ -9,14 +10,15 @@ const shops = [
 
 const ManageShopsScreen = () => {
   const [shopList, setShopList] = useState(shops);
+  const navigation = useNavigation(); // Hook để điều hướng
 
   const handleDelete = (shopId) => {
     Alert.alert(
       'Xác nhận',
       'Bạn có chắc chắn muốn xóa cửa hàng này?',
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => deleteShop(shopId) },
+        { text: 'Hủy', style: 'cancel' },
+        { text: 'Xóa', style: 'destructive', onPress: () => deleteShop(shopId) },
       ]
     );
   };
@@ -27,56 +29,49 @@ const ManageShopsScreen = () => {
 
   const handleEdit = (shopId) => {
     Alert.alert('Chỉnh sửa cửa hàng', `Chỉnh sửa thông tin của cửa hàng ID: ${shopId}`);
-    // Thực hiện logic chỉnh sửa ở đây, có thể dùng một modal để chỉnh sửa
   };
 
-  // Hàm để thêm cửa hàng mới
+  const handleManage = (shop) => {
+    navigation.navigate('ManageShopProducts', { shopName: shop.name });
+  };
+
   const handleAddShop = () => {
-    Alert.alert(
-      'Thêm cửa hàng',
-      'Nhập thông tin cửa hàng mới',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => addShop() },
-      ]
-    );
-  };
-
-  // Hàm thêm cửa hàng mới vào danh sách
-  const addShop = () => {
-    const newShop = { id: (shopList.length + 1).toString(), name: 'Shop D', location: 'Nha Trang' };
+    const newShop = { id: (shopList.length + 1).toString(), name: `Shop ${String.fromCharCode(65 + shopList.length)}`, location: 'Địa điểm mới' };
     setShopList([...shopList, newShop]);
   };
 
-  // Lấy chiều rộng màn hình và tính toán 80% chiều rộng
   const screenWidth = Dimensions.get('window').width;
-  const containerWidth = screenWidth * 0.8; // 80% of screen width
 
   return (
-    <View style={[styles.container, { width: containerWidth }]}>
-      <Text style={styles.title}>Quản lý Shop</Text>
+    <View style={[styles.container, { width: screenWidth * 0.9 }]}>
+      <Text style={styles.title}>Quản lý Cửa hàng</Text>
+
       <FlatList
         data={shopList}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.shopItem}>
-            <Text style={styles.shopName}>{item.name}</Text>
-            <Text>{item.location}</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={() => handleEdit(item.id)}>
-                <Button title="Chỉnh sửa" />
+            <View>
+              <Text style={styles.shopName}>{item.name}</Text>
+              <Text style={styles.shopLocation}>{item.location}</Text>
+            </View>
+            <View style={styles.buttonGroup}>
+              <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleEdit(item.id)}>
+                <Text style={styles.buttonText}>Chỉnh sửa</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                <Button title="Xóa" color="red" />
+              <TouchableOpacity style={[styles.button, styles.manageButton]} onPress={() => handleManage(item)}>
+                <Text style={styles.buttonText}>Quản lý</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(item.id)}>
+                <Text style={styles.buttonText}>Xóa</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
       />
 
-      {/* Button to add new shop */}
       <TouchableOpacity style={styles.addButton} onPress={handleAddShop}>
-        <Text style={styles.addButtonText}>Thêm cửa hàng</Text>
+        <Text style={styles.addButtonText}>Thêm cửa hàng mới</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,37 +80,76 @@ const ManageShopsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    alignSelf: 'center', // Center the container horizontally
+    paddingVertical: 20,
+    alignSelf: 'center',
+    paddingLeft : 15,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#333',
   },
   shopItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    marginBottom: 10,
-  },
-  shopName: {
-    fontWeight: 'bold',
-  },
-  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 10,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+  shopName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  shopLocation: {
+    fontSize: 14,
+    color: '#666',
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  editButton: {
+    backgroundColor: '#FFA726',
+  },
+  manageButton: {
+    backgroundColor: '#29B6F6',
+  },
+  deleteButton: {
+    backgroundColor: '#EF5350',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   addButton: {
     marginTop: 20,
-    padding: 15,
-    backgroundColor: '#4CAF50',
-    borderRadius: 5,
+    paddingVertical: 15,
+    backgroundColor: '#66BB6A',
+    borderRadius: 8,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
   addButtonText: {
-    color: 'white',
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
