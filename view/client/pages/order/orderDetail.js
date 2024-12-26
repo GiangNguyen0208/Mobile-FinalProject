@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Button, Image } from 'react-native';
 
-const ChiTietDonHang = ({ route, navigation }) => {
-  // Kiểm tra nếu route hoặc route.params không có thông tin đơn hàng
-  if (!route || !route.params || !route.params.order) {
+const OrderDetail = ({ route, navigation }) => {
+  const { orderId } = route.params;
+
+  const order = findOrderById(orderId);
+
+  if (!order) {
     return <Text>Thông tin đơn hàng không khả dụng</Text>;
   }
-
-  const { order } = route.params;
 
   const renderProductItem = ({ item }) => (
     <View style={styles.productContainer}>
@@ -28,31 +29,27 @@ const ChiTietDonHang = ({ route, navigation }) => {
     return value !== undefined && value !== null ? String(value) : '';
   };
 
-  // Hàm xử lý điều hướng sang trang ThanhToan.js
   const handlePayment = () => {
-    // Chuyển sang trang ThanhToan với tham số order
     navigation.navigate('ThanhToan', { order });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Chi Tiết Đơn Hàng</Text>
-      <Text style={styles.orderDetailText}>Mã đơn hàng: {safeString(order.id)}</Text>
-      <Text style={styles.orderDetailText}>Tổng tiền: ${safeString(order.price)}</Text>
-      <Text style={styles.orderDetailText}>Ngày đặt: {safeString(order.orderDate)}</Text>
-      <Text style={styles.orderDetailText}>Ngày giao dự kiến: {safeString(order.expectedDeliveryDate)}</Text>
-      <Text style={styles.orderDetailText}>Địa chỉ nhận: {safeString(order.deliveryAddress)}</Text>
-      <Text style={styles.orderDetailText}>Số điện thoại: {safeString(order.phoneNumber)}</Text>
+      <Text style={styles.title}>Order Detail</Text>
+      <Text style={styles.orderDetailText}>Order ID: {safeString(order.id)}</Text>
+      <Text style={styles.orderDetailText}>Total Price: ${safeString(order.price)}</Text>
+      <Text style={styles.orderDetailText}>Order Date: {safeString(order.orderDate)}</Text>
+      <Text style={styles.orderDetailText}>Received Date: {safeString(order.expectedDeliveryDate)}</Text>
+      <Text style={styles.orderDetailText}>Address : {safeString(order.deliveryAddress)}</Text>
+      <Text style={styles.orderDetailText}>Phone: {safeString(order.phoneNumber)}</Text>
 
-      {/* Danh sách sản phẩm trong đơn hàng */}
       <FlatList
         data={order.products}
         renderItem={renderProductItem}
         keyExtractor={(item) => item.productId.toString()}
       />
 
-      {/* Nút "Thanh Toán" */}
-      <Button title="Thanh Toán" onPress={handlePayment} />
+      <Button title="Payment" onPress={handlePayment} />
     </View>
   );
 };
@@ -93,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChiTietDonHang;
+export default OrderDetail;

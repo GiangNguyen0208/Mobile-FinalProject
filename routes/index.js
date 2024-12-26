@@ -1,79 +1,33 @@
+import React from 'react'; 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js';
+import Login from '../view/client/pages/login/index.js';
+import Register from '../view/client/pages/register/index.js';
+import { useAuth } from '../view/context/Auth/AuthContext.js';
+import { NavigationContainer } from '@react-navigation/native';
 
-import Default from "../view/client/layout/default"; 
-import Info from "../view/client/pages/Info/index"; 
-import Login from "../view/client/pages/login"; 
-import Notifications from "../view/client/pages/notifications/index";  
-import News from "../view/client/pages/notifications/news.js";
-import Promotions from "../view/client/pages/notifications/promotions.js";
-import Order from "../view/client/pages/order/index"; 
-import WishList from "../view/client/pages/wishlist/index"; 
-import Shipping from "../view/client/components/Order/shipping.js";
-import History from "../view/client/components/Order/history.js";
-import Rating from "../view/client/components/Order/rating.js";
-import Draft from "../view/client/components/Order/draft.js";
+const Stack = createNativeStackNavigator();
 
+const AppNavigator = () => {
+  const { isLoggedIn } = useAuth(); // Lấy trạng thái đăng nhập từ context
 
-export const routes = {
-    path: "/",
-    element: <Default />,
-    children: [
-        { 
-            path: "/",
-            element: <Default /> 
-        },
-        { 
-            path: "/orders",
-            element: <Order /> ,
-            children: [
-                {
-                    path: "shipping",
-                    element: <Shipping />
-                },
-                {
-                    path: "history",
-                    element: <History />
-                },
-                {
-                    path: "rating",
-                    element: <Rating />
-                },
-                {
-                    path: "draft",
-                    element: <Draft />
-                },
-            ]
-        },
-        { 
-            path: "/likes",
-            element: <WishList /> 
-        },
-        { 
-            path: "/notifications",
-            element: <Notifications />,
-            children: [
-                {
-                    path: "promotions",
-                    element: <Promotions/>
-                },
-                {
-                    path: "news",
-                    element: <News />
-                }
-            ]
-        },
-        { 
-            path: "/info",
-            element: <Info /> 
-        },
-
-        {
-            path: "login",
-            element: <Login />
-        },
-        {
-            path: "detail",
-            element: <ProductDetail />
-
-        }
-    ]
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isLoggedIn ? (
+          <Stack.Screen 
+            name="BottomTabNavigation" 
+            component={BottomTabNavigation} 
+          />
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name='Register' component={Register} />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
+
+export default AppNavigator;

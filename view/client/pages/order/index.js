@@ -1,44 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import NavigationTop from '../../components/Navigation/NavigationTop';
 import Status from '../../components/Order/status';
 import RecommendedProducts from '../../components/Order/recommendProducts';
-import Shipping from '../../components/Order/shipping';
-import History from '../../components/Order/history';
-import Rating from '../../components/Order/rating';
-import Draft from '../../components/Order/draft';
+import DropDown from '../../components/DropDown/dropDown';
 
 const Order = () => {
-  const [selectedOption, setSelectedOption] = useState('shipping'); 
-
-  // Sample items for demonstration
-  const shippingItems = []; 
-  const historyItems = []; 
-  const ratingItems = []; 
-  const draftItems = []; 
-
-  const renderSelectedComponent = () => {
-    switch (selectedOption) {
-      case 'shipping':
-        return <Shipping items={shippingItems} />;
-      case 'history':
-        return <History items={historyItems} />;
-      case 'rating':
-        return <Rating items={ratingItems} />;
-      case 'draft':
-        return <Draft items={draftItems} />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <NavigationTop onSelectOption={setSelectedOption} />
-      <Status selectedOption={selectedOption} />
-      {renderSelectedComponent() || <Text>No content available</Text>}
-      <RecommendedProducts />
-      <Text style={{ textAlign: 'center', marginTop: 20 }}>End of Order Section</Text>
+      {/* Tiêu đề */}
+      <Text style={styles.title}>My Orders</Text>
+
+      {/* Thanh điều hướng trên cùng */}
+      <View style={styles.navigationTop}>
+        <NavigationTop />
+      </View>
+
+      {/* Nội dung chính */}
+      <View style={styles.mainContent}>
+        {/* Menu thả xuống */}
+        <DropDown />
+
+        {/* Thanh trạng thái */}
+        <Status />
+
+        {/* Sản phẩm được đề xuất */}
+        <RecommendedProducts />
+      </View>
     </View>
   );
 };
@@ -46,7 +34,35 @@ const Order = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#F9FAFB', // Màu nền dịu nhẹ
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333', // Màu chữ đậm
+    textAlign: 'center',
+    marginVertical: 16, // Khoảng cách trên và dưới
+  },
+  navigationTop: {
+    height: 60,
+    backgroundColor: '#FFFFFF', // Màu nền trắng
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB', // Đường viền nhẹ nhàng
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+  },
+  mainContent: {
+    flex: 1,
+    marginTop: 8,
+    paddingHorizontal: 16,
+    backgroundColor: '#FFFFFF', // Nền trắng cho nội dung chính
+    borderRadius: 8, // Bo góc
+    shadowColor: '#000', // Hiệu ứng bóng
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2, // Đổ bóng trên Android
+    paddingVertical: 16,
   },
 });
 
