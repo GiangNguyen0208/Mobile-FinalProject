@@ -34,11 +34,6 @@ const Login = ({ setIsPrivateRoutes }) => {
             console.log("Login successful:", data);
       
             login(data);
-      
-            // navigation.reset({
-            //   index: 0,
-            //   routes: [{ name: "BottomTabNavigation" }],
-            // });
             navigation.replace("BottomTabNavigation");
           } else {
             alert("Login failed! Check your username and password.");

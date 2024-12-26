@@ -5,20 +5,32 @@ import Login from '../view/client/pages/login/index.js';
 import Register from '../view/client/pages/register/index.js';
 import { useAuth } from '../view/context/Auth/AuthContext.js';
 import { NavigationContainer } from '@react-navigation/native';
+import DefaultAdmin from '../view/admin/layout/default.js';
+import DefaultShop from '../view/shopowner/layout/default.js';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
-  const { isLoggedIn } = useAuth(); // Lấy trạng thái đăng nhập từ context
+  const { isLoggedIn, role } = useAuth(); // Lấy trạng thái đăng nhập từ context
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isLoggedIn ? (
-          <Stack.Screen 
-            name="BottomTabNavigation" 
-            component={BottomTabNavigation} 
-          />
+          <>
+          {role === 'ADMIN' && (
+            <Stack.Screen name="Admin" component={DefaultAdmin} />
+          )}
+          {role === 'Shop' && (
+            <Stack.Screen name="Shipper" component={DefaultShop} />
+          )}
+          {role === 'USER' && (
+            <Stack.Screen 
+              name="User" 
+              component={BottomTabNavigation} 
+            />
+          )}
+        </>
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />

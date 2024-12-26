@@ -12,6 +12,7 @@ export const useAuth = () => {
 // AuthProvider component để quản lý trạng thái đăng nhập
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState(null); // Lưu role
   const [token, setToken] = useState(null);
   const [isPrivate, setIsPrivate] = useState(true);
 
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Trích xuất token từ phản hồi API
       const newToken = data.result.token;
-
+      const role = data.result.clientType;
       // Lưu token vào AsyncStorage
       await AsyncStorage.setItem("token", newToken);
 
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       setToken(newToken);
       setIsLoggedIn(true); // Đặt trạng thái đăng nhập thành true
       setIsPrivate(false); // Quyền truy cập thành không riêng tư
+      setRole(role);
     } catch (error) {
       console.error("Error saving token to AsyncStorage:", error);
     }
@@ -61,6 +63,7 @@ export const AuthProvider = ({ children }) => {
       await AsyncStorage.removeItem("token");
       setIsLoggedIn(false); // Đặt trạng thái đăng nhập thành false
       setIsPrivate(true); // Đặt quyền truy cập thành riêng tư
+      setRole(null);
     } catch (error) {
       console.error("Error removing token from AsyncStorage:", error);
     }

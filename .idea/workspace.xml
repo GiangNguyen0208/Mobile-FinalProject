@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change afterPath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/components/PopularDish.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/VoucherList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,9 +64,10 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging 21130576",
+    "git-widget-placeholder": "21130338",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/SubjectProject/Mobile/MyProjectBE/mobile",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -108,7 +95,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
       </set>
     </attachedChunks>
   </component>
@@ -127,6 +114,7 @@
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
+      <workItem from="1735180260050" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -168,7 +156,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
