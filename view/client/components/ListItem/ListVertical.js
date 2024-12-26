@@ -1,24 +1,27 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, FlatList } from 'react-native';
 import Item from './Item';
 
-const List = ({ items }) => {
+const ListVertical = ({ items }) => {
+    const renderItem = ({ item }) => (
+        <Item
+            image={item.image}
+            title={item.title}
+            description={item.description}
+            date={item.date}
+            onPress={() => onItemPress(item)} // Pass the onPress function
+        />
+    );
+
     return (
-        <View style={styles.container}>
-            {items.length > 0 ? (
-                items.map((item) => (
-                    <Item 
-                        key={item.id}
-                        image={item.image}
-                        title={item.title}
-                        description={item.description}
-                        date={item.date}
-                    />
-                ))
-            ) : (
-                <Text>No announcements.</Text>
-            )}
-        </View>
+        <FlatList
+            data={items}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContainer}
+            ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
+        />
     );
 };
 
@@ -29,4 +32,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default List;
+export default ListVertical;
