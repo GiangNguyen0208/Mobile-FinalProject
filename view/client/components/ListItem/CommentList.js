@@ -4,6 +4,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import ListHorizontal from "./ListHorizontal";
 
 
 export default function VoucherList({navigation}) {
@@ -90,9 +91,10 @@ export default function VoucherList({navigation}) {
             </View>
         );
     };
-    
+
     return (
         <View style={styles.container}>
+            <ListHorizontal data/>
             <FlatList
                 data={comments}
                 renderItem={({ item, index }) => (

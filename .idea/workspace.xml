@@ -4,19 +4,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change afterPath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/components/PopularDish.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductList.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/client/pages/VoucherList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add user feature and shop owner function">
+      <change afterPath="$PROJECT_DIR$/view/client/components/Button/BackBtn.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/Rating/StartRender.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_55_SA__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_55_SA__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/Cart/AddToCardModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/DropDown/dropDown.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/DropDown/dropDown.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ItemCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/CommentList.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/CommentList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/ItemCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/ItemCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/ListHorizontal.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/ListHorizontal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/ListVertical.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/ListVertical.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/Modal/AddToCardModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/Modal/AddToCardModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/pages/ProductList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/pages/VoucherList.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,36 +77,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Merging 21130576",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;21130576&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/TTMobile/New folder/Mobile-FinalProject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Confirmation&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2024.2.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Rating" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
@@ -126,7 +136,20 @@
       <workItem from="1731680816440" duration="45000" />
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
-      <workItem from="1731811162679" duration="5720000" />
+      <workItem from="1731811162679" duration="12461000" />
+      <workItem from="1732072189441" duration="439000" />
+      <workItem from="1732094494966" duration="6603000" />
+      <workItem from="1732953799303" duration="2409000" />
+      <workItem from="1733106444951" duration="1444000" />
+      <workItem from="1733108038235" duration="2111000" />
+      <workItem from="1733898095461" duration="10449000" />
+      <workItem from="1734247857162" duration="475000" />
+      <workItem from="1734520230832" duration="2855000" />
+      <workItem from="1734664247057" duration="2360000" />
+      <workItem from="1734666776541" duration="78000" />
+      <workItem from="1734667054036" duration="49000" />
+      <workItem from="1735180614880" duration="1234000" />
+      <workItem from="1735183849234" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -155,6 +178,11 @@
             <State />
           </value>
         </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
@@ -162,16 +190,5 @@
     <MESSAGE value="test" />
     <MESSAGE value="add uer feature and shop owner function" />
     <option name="LAST_COMMIT_MESSAGE" value="add uer feature and shop owner function" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

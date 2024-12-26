@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Modal, Button, Image, TouchableOpacity} from 're
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import indexSt from "./index.style";
+import indexSt from "../../../../public/client/stylesheet/index.style";
 const AddToCartModal = ({ item, visible, onClose }) => {
         const [quantity, setQuantity] = useState(1);
 
