@@ -101,11 +101,20 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+<<<<<<< HEAD
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Rating" />
+=======
+
+>>>>>>> main
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
+<<<<<<< HEAD
+=======
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
+
+>>>>>>> main
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
