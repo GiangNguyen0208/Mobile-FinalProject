@@ -67,28 +67,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "21130338",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/SubjectProject/Mobile/MyProjectBE/mobile",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "vcs.Git",
-    "vue.rearranger.settings.migration": "true"
-=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -110,7 +88,6 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
->>>>>>> main
   }
 }</component>
   <component name="RecentsManager">
@@ -187,7 +164,7 @@
     <MESSAGE value="add uer feature and shop owner function" />
     <option name="LAST_COMMIT_MESSAGE" value="add uer feature and shop owner function" />
   </component>
-<<<<<<< HEAD
+  
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -198,6 +175,5 @@
       </breakpoints>
     </breakpoint-manager>
   </component>
-=======
->>>>>>> main
+
 </project>
