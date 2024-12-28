@@ -4,18 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/admin/ManageShopsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/admin/ManageShopsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/pages/Info/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/pages/Info/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/pages/login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/pages/login/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/context/Auth/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/context/Auth/AuthContext.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +68,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;21130551&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;21130312&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/DoAnTTMobile/DoAn/Mobile-FinalProject/view/client/admin&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -105,13 +96,6 @@
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -127,6 +111,9 @@
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
+      <workItem from="1735370077579" duration="173000" />
+      <workItem from="1735370294118" duration="3995000" />
+      <workItem from="1735379655313" duration="649000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -136,21 +123,24 @@
       <option name="project" value="LOCAL" />
       <updated>1731815090621</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1735374183446</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1735374183446</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="4de1b32c-20d5-49ac-be69-abf2587bfb75" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
-        <entry key="4de1b32c-20d5-49ac-be69-abf2587bfb75">
+        <entry key="MAIN">
           <value>
             <State />
           </value>
@@ -161,6 +151,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="add uer feature and shop owner function" />
-    <option name="LAST_COMMIT_MESSAGE" value="add uer feature and shop owner function" />
+    <MESSAGE value="resolve conflict" />
+    <MESSAGE value="AdminProfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="AdminProfile" />
   </component>
 </project>
