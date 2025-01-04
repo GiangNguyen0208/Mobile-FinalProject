@@ -15,7 +15,8 @@ const ManageUsersScreen = () => {
         setUserList(data.result); // Cập nhật state với dữ liệu nhận được
       } catch (error) {
         console.error('Error fetching users:', error);
-        Alert.alert('Lỗi', 'Không thể tải danh sách người dùng');
+        Alert.alert('Lỗi', 'Không thể tải danh sách người dùng ,............');
+
       } finally {
         setLoading(false);
       }
