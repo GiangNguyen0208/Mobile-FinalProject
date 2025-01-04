@@ -34,8 +34,12 @@ const User = () => {
 
   const handleLogout = async () => {
     try {
-      await logout(); // Gọi hàm logout từ context
-      navigate('/login'); // Chuyển hướng đến màn hình đăng nhập
+      await logout();
+      await AsyncStorage.removeItem("token");
+      setIsLoggedIn(false);
+      setIsPrivate(true);
+      setRole(null);
+      navigate('/login');
       Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
     } catch (error) {
       console.error("Logout Failed!", error);

@@ -14,7 +14,7 @@ const Login = ({ setIsPrivateRoutes }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useContext(AuthContext);
+    const { login, role } = useContext(AuthContext);
     const navigation = useNavigation();
 
     const [displayedText, setDisplayedText] = useState(""); // Dùng để hiển thị chữ từng chữ một
@@ -31,6 +31,26 @@ const Login = ({ setIsPrivateRoutes }) => {
         return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
     }, []);
 
+    useEffect(() => {
+        console.log('Role changed:', role);
+        if (role) { // Kiểm tra nếu role đã được cập nhật
+            switch (role) {
+                case 'ADMIN':
+                    navigation.replace("Admin");
+                    break;
+                case 'Shop':
+                    navigation.replace("ShopOwner");
+                    break;
+                case 'USER':
+                    navigation.replace("BottomTabNavigation");
+                    break;
+                default:
+                    alert("Login failed! Check your username and password.");
+                    break;
+            }
+        }
+    }, [role, navigation]); // Theo dõi sự thay đổi của role
+
     const handleLogin = async () => {
         setLoading(true);
 
@@ -40,15 +60,13 @@ const Login = ({ setIsPrivateRoutes }) => {
         };
 
         try {
-            const data = await loginApi(userLogin);
-
-            if (data.code === 1000 && data.result.token) {
-                console.log("Login successful:", data);
-                login(data);
-                navigation.replace("BottomTabNavigation");
-            } else {
-                alert("Login failed! Check your username and password.");
-            }
+          const data = await loginApi(userLogin); // Gọi API đăng nhập
+          
+          if (data.code === 1000 && data.result.token) {
+            login(data); // Cập nhật role và token ngay lập tức
+          } else {
+            alert("Login failed! Check your username and password.");
+          }
         } catch (error) {
             alert("Login failed! Check your username and password.");
             console.error("Login Error:", error);
