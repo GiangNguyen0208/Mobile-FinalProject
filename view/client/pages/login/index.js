@@ -1,21 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import COLORS from "../../../../constants/theme";
 import Button from "../../components/Button/Button";
 import { AuthContext } from "../../../context/Auth/AuthContext";
-import { loginApi } from "../../../../api/authApi"; 
+import { loginApi } from "../../../../api/authApi";
 import { useNavigation } from '@react-navigation/native';
-import BottomTabNavigation from "../../components/Navigation/NavigationBottom";
 
 const { width } = Dimensions.get("window");
+
 const Login = ({ setIsPrivateRoutes }) => {
     const [isPasswordShown, setIsPasswordShow] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useContext(AuthContext);
-    const navigation = useNavigation(); // Chuyển lên đây
+    const navigation = useNavigation();
+
+    const [displayedText, setDisplayedText] = useState(""); // Dùng để hiển thị chữ từng chữ một
+    const fullText = "Welcome to Best Food App";
+
+    useEffect(() => {
+        let index = 0;
+        const interval = setInterval(() => {
+            setDisplayedText((prevText) => prevText + fullText[index]);
+            index += 1;
+            if (index === fullText.length) clearInterval(interval);
+        }, 200);
+
+        return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
+    }, []);
 
     const handleLogin = async () => {
         setLoading(true);
@@ -26,13 +40,11 @@ const Login = ({ setIsPrivateRoutes }) => {
         };
 
         try {
-            const data = await loginApi(userLogin); // Gọi API đăng nhập
+            const data = await loginApi(userLogin);
 
             if (data.code === 1000 && data.result.token) {
                 console.log("Login successful:", data);
-
                 login(data);
-
                 navigation.replace("BottomTabNavigation");
             } else {
                 alert("Login failed! Check your username and password.");
@@ -45,7 +57,6 @@ const Login = ({ setIsPrivateRoutes }) => {
         }
     };
 
-
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {/* Header Image */}
@@ -55,6 +66,8 @@ const Login = ({ setIsPrivateRoutes }) => {
                     style={styles.headerImage}
                     resizeMode="contain"
                 />
+                {/* Đây là phần chứa văn bản trên hình */}
+                <Text style={styles.welcomeTextAboveImage}>{displayedText}</Text>
             </View>
 
             {/* Welcome Section */}
@@ -66,9 +79,9 @@ const Login = ({ setIsPrivateRoutes }) => {
             {/* Username Input */}
             <View style={styles.inputContainer}>
                 <Image source={require("../../../../assets/icons8-user-30.png")} style={styles.inputIcon} />
-                <TextInput 
-                    style={styles.input} 
-                    placeholder="Enter username" 
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter username"
                     value={username}
                     onChangeText={setUsername}
                 />
@@ -95,11 +108,11 @@ const Login = ({ setIsPrivateRoutes }) => {
             </TouchableOpacity>
 
             {/* Sign In Button */}
-            <Button 
+            <Button
                 title={loading ? "Signing in..." : "Sign In"}
-                onPress={handleLogin} 
+                onPress={handleLogin}
                 style={styles.signInButton}
-                disabled={loading} 
+                disabled={loading}
             />
 
             {/* Sign Up Section */}
@@ -112,44 +125,59 @@ const Login = ({ setIsPrivateRoutes }) => {
         </ScrollView>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.lightGray,
         paddingHorizontal: 20,
+        justifyContent: "center",
     },
     headerImageContainer: {
         alignItems: "center",
-        marginTop: 20,
+        marginTop: -130,
+        position: "relative",
     },
     headerImage: {
-        width: width * 1,
-        height: 150,
+        width: "100%",
+        height: 350,
+    },
+    welcomeTextAboveImage: {
+        fontSize: 28,
+        fontWeight: "bold",
+        color: COLORS.primary,
+        textAlign: "center",
+        marginTop: 20, // Đặt dòng chữ dưới ảnh
+        textShadowColor: '#000', // Màu bóng chữ
+        textShadowOffset: { width: 1, height: 1 }, // Điều chỉnh hướng bóng
+        textShadowRadius: 10, // Độ mờ của bóng
     },
     welcomeContainer: {
         alignItems: "center",
         marginVertical: 20,
     },
     welcomeText: {
-        color: COLORS.black,
-        fontSize: 36,
+        color: COLORS.primary,
+        fontSize: 32,
         fontWeight: "bold",
     },
     subWelcomeText: {
         fontSize: 16,
-        color: COLORS.gray,
+        color: COLORS.darkGray,
         marginTop: 5,
     },
     inputContainer: {
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: COLORS.white,
-        borderRadius: 20,
+        borderRadius: 30,
         marginVertical: 10,
         paddingHorizontal: 20,
-        paddingVertical: 23,
-        elevation: 5,
+        paddingVertical: 15,
+        elevation: 3,
+        shadowColor: "#000",
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 8,
     },
     inputIcon: {
         width: 24,
@@ -159,6 +187,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         marginLeft: 10,
+        color: COLORS.darkGray,
     },
     forgotPasswordContainer: {
         alignItems: "flex-end",
@@ -166,11 +195,21 @@ const styles = StyleSheet.create({
     },
     forgotPasswordText: {
         fontSize: 14,
-        color: COLORS.blue,
+        color: COLORS.primary,
         textDecorationLine: "underline",
     },
     signInButton: {
         marginVertical: 20,
+        backgroundColor: COLORS.primary,
+        borderRadius: 30,
+        paddingVertical: 15,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    signInButtonText: {
+        fontSize: 18,
+        color: COLORS.white,
+        fontWeight: "bold",
     },
     signUpContainer: {
         flexDirection: "row",
@@ -180,14 +219,16 @@ const styles = StyleSheet.create({
     },
     signUpPrompt: {
         fontSize: 16,
-        color: COLORS.gray,
+        color: COLORS.darkGray,
     },
     signUpText: {
         fontSize: 16,
-        color: COLORS.blue,
+        color: COLORS.primary,
         fontWeight: "bold",
         marginLeft: 5,
     },
 });
+
+
 
 export default Login;
