@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigate } from 'react-router-native'; // Dùng useNavigate thay vì useHistory
-import { useAuth } from "../../../context/Auth/AuthContext"; // Thêm useAuth
+import { useNavigate } from 'react-router-native';
+import { AuthContext } from "../../../context/Auth/AuthContext"; // Import AuthContext
+
 const User = () => {
   const [userInfo, setUserInfo] = useState({
     name: 'Nguyen Van A',
@@ -16,7 +16,8 @@ const User = () => {
   });
 
   const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate(); // Khởi tạo navigate từ react-router-native
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext); // Sử dụng useContext để lấy logout từ AuthContext
 
   const handleChange = (key, value) => {
     setUserInfo({ ...userInfo, [key]: value });
@@ -31,10 +32,16 @@ const User = () => {
     Alert.alert('Thông báo', 'Thông tin của bạn đã được cập nhật!');
   };
 
-const handleLogout = () => {
-    logout(); // Gọi hàm logout từ context
+  const handleLogout = async () => {
+    try {
+      await logout(); // Gọi hàm logout từ context
+      navigate('/login'); // Chuyển hướng đến màn hình đăng nhập
+      Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
+    } catch (error) {
+      console.error("Logout Failed!", error);
+      Alert.alert('Lỗi', 'Không thể đăng xuất. Vui lòng thử lại.');
+    }
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Thông tin người dùng</Text>
