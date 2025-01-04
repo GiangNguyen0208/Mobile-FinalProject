@@ -13,7 +13,7 @@ const Home = ({navigation}) => {
             </View>
             <View style={[styles.banner]}>
                 <Image
-                    source={require('../img/img.png')}
+                    // source={require('../img/img.png')}
                     style={[styles.image,{borderRadius: 15}]}
                     resizeMode="contain"
                 />
@@ -23,7 +23,7 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            source={require('../img/order-food.png')}
+                            // source={require('../img/order-food.png')}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -31,7 +31,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            source={require('../img/star.png')}
+                            // source={require('../img/star.png')}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -39,7 +39,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Menu')} >
                         <Image
-                            source={require('../img/menu.png')}
+                            // source={require('../img/menu.png')}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -49,7 +49,7 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function,]}>
                         <Image
-                            source={require('../img/help-desk.png')}
+                            // source={require('../img/help-desk.png')}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -57,7 +57,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            source={require('../img/voucher.png')}
+                            // source={require('../img/voucher.png')}
                             style={styles.image}
                             resizeMode="contain"
                         />

@@ -4,6 +4,7 @@ import AdminNavigation from './AdminNavigation';
 import ManageShopsScreen from './ManageShopsScreen';
 import ManageUsersScreen from './ManageUsersScreen';
 import StatisticScreen from './StatisticsScreen';
+import AdminProfile from "./AdminProfile";
 
 export default function AdminScreen() {
   const [currentPage, setCurrentPage] = useState('');
@@ -11,6 +12,8 @@ export default function AdminScreen() {
   // Render nội dung chính theo trang hiện tại
   const renderMainContent = () => {
     switch (currentPage) {
+      case 'Cài đặt':
+        return <AdminProfile/>
       case 'Quản lý shop':
         return <ManageShopsScreen />;
       case 'Quản lý user':
@@ -18,7 +21,7 @@ export default function AdminScreen() {
       case 'Thống kê':
         return <StatisticScreen />;
       default:
-        return <Text style={styles.defaultContent}>Chào mừng đến Admin Panel</Text>;
+        return <AdminProfile/>;
     }
   };
 
