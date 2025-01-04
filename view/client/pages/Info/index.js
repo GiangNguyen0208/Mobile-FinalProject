@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from "../../../../constants"; // Nhớ định nghĩa các màu trong constants
 
 const Info = () => {
@@ -157,6 +157,35 @@ const Info = () => {
                 }}>
 
                     <Image
+                        source={require("../../../../assets/img/icons8-question-mark-48.png")}
+                        style={{
+                            position: "absolute",
+                            top: 200
+                        }}
+                    />
+                    <Text style={{
+                        position: "absolute",
+                        top: 215,
+                        fontWeight: 500,
+                        left: 60
+                    }}> Trung tâm trợ giúp</Text>
+
+                    <Image
+                        source={require("../../../../assets/img/icons8-greater-than-24.png")}
+                        style={{
+                            position: "absolute",
+                            top: 220,
+                            left: 500
+                        }}
+                    />
+                </View>
+                {/*Trung tâm trợ giúp */}
+                <View style={{
+                    position: "absolute",
+                    top: 400,
+                }}>
+
+                    <Image
                         source={require("../../../../assets/img/icons8-mail-48.png")}
                         style={{
                             position: "absolute",
@@ -208,6 +237,37 @@ const Info = () => {
                         }}
                     />
                 </View>
+
+
+                {/*Cài đặt */}
+                <View style={{
+                    position: "absolute",
+                    top: 500,
+                }}>
+
+                    <Image
+                        source={require("../../../../assets/img/icons8-setting-48.png")}
+                        style={{
+                            position: "absolute",
+                            top: 200
+                        }}
+                    />
+                    <Text style={{
+                        position: "absolute",
+                        top: 215,
+                        fontWeight: 500,
+                        left: 60
+                    }}> Cài đặt</Text>
+
+                    <Image
+                        source={require("../../../../assets/img/icons8-greater-than-24.png")}
+                        style={{
+                            position: "absolute",
+                            top: 220,
+                            left: 500
+                        }}
+                    />
+                </View>
                 <View style={{
                     width: 550,  // Chiều dài đường gạch
                     height: 0.4,     // Độ dày của đường gạch
@@ -220,7 +280,7 @@ const Info = () => {
                 }}/>
                 <View style={{
                     width: 550,  // Chiều dài đường gạch
-                    height: 1,     // Độ dày của đường gạch
+                    height: 0.4,     // Độ dày của đường gạch
                     backgroundColor: '#9a9999',  // Màu của đường gạch
                     marginVertical: 20,  // Khoảng cách phía trên và dưới
                     position: "absolute",
@@ -230,12 +290,22 @@ const Info = () => {
                 }}/>
                 <View style={{
                     width: 550,  // Chiều dài đường gạch
-                    height: 1,     // Độ dày của đường gạch
+                    height: 0.4,     // Độ dày của đường gạch
                     backgroundColor: '#9a9999',  // Màu của đường gạch
                     marginVertical: 20,  // Khoảng cách phía trên và dưới
                     position: "absolute",
                     right: 10,
                     top: 380,
+
+                }}/>
+                <View style={{
+                    width: 550,  // Chiều dài đường gạch
+                    height: 0.4,     // Độ dày của đường gạch
+                    backgroundColor: '#9a9999',  // Màu của đường gạch
+                    marginVertical: 20,  // Khoảng cách phía trên và dưới
+                    position: "absolute",
+                    right: 10,
+                    top: 570,
 
                 }}/>
                 <View style={{
@@ -248,13 +318,37 @@ const Info = () => {
                     top: 460,
 
                 }}/>
+                <View style={{
+                    width: 550,  // Chiều dài đường gạch
+                    height: 20,     // Độ dày của đường gạch
+                    backgroundColor: '#dedcdc',  // Màu của đường gạch
+                    marginVertical: 20,  // Khoảng cách phía trên và dưới
+                    position: "absolute",
+                    right: 10,
+                    top: 650,
 
+                }}/>
+                <View>
+                    <TouchableOpacity style={styles.button} >
+                        <Text style={styles.buttonText}>Đăng xuất</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    button: {
+        backgroundColor: '#e74c3c',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 15,
+        alignItems: 'center',
+        width:500,
+        top:800,
+        left:20
+    },
     container: {
         flex: 1,
         padding: 20,

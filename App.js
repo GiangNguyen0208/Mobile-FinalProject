@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context'; // SafeAreaProvider đã được giữ lại
-import AdminScreen from './view/admin/screen/AdminScreen';
+import AdminScreen from './view/client/pages/Info/index';
 import EditProfile from './view/admin/screen/EditProfile';
 import Setting from './view/admin/screen/Setting';
 import { NavigationContainer } from '@react-navigation/native'; // NavigationContainer
