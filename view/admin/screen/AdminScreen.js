@@ -12,7 +12,7 @@ export default function AdminScreen() {
   // Render nội dung chính theo trang hiện tại
   const renderMainContent = () => {
     switch (currentPage) {
-      case 'Cài đặt':
+      case '`Cài đặt`':
         return <AdminProfile/>
       case 'Quản lý shop':
         return <ManageShopsScreen />;
@@ -20,6 +20,7 @@ export default function AdminScreen() {
         return <ManageUsersScreen />;
       case 'Thống kê':
         return <StatisticScreen />;
+
       default:
         return <AdminProfile/>;
     }
