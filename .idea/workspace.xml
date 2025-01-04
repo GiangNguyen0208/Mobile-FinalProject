@@ -97,7 +97,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
       </set>
     </attachedChunks>
   </component>
@@ -116,6 +116,7 @@
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
+      <workItem from="1735180260050" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -153,4 +154,16 @@
     <MESSAGE value="AdminProfile" />
     <option name="LAST_COMMIT_MESSAGE" value="AdminProfile" />
   </component>
+  
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+
 </project>

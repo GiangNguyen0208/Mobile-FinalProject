@@ -4,29 +4,32 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Tạo context
 export const AuthContext = createContext();
 
-// Tạo custom hook useAuth
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// AuthProvider component để quản lý trạng thái đăng nhập
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState(null); // Lưu role
   const [token, setToken] = useState(null);
   const [isPrivate, setIsPrivate] = useState(true);
 
   useEffect(() => {
-    // Kiểm tra trạng thái đăng nhập khi ứng dụng khởi động
     const checkLoginStatus = async () => {
       try {
         const savedToken = await AsyncStorage.getItem("token");
+        // const savedRole = await AsyncStorage.getItem("role");
+
+        // console.log("Saved role:", savedRole);
+
         if (savedToken) {
-          setToken(savedToken); // Lưu token nếu đã tồn tại trong AsyncStorage
-          setIsLoggedIn(true); // Đặt trạng thái đăng nhập thành true
-          setIsPrivate(false); // Đặt quyền truy cập thành không riêng tư
+          setToken(savedToken);
+          // setRole(savedRole);
+          setIsLoggedIn(true); 
+          setIsPrivate(false);
         } else {
-          setIsLoggedIn(false); // Nếu không có token, đăng xuất
-          setIsPrivate(true); // Quyền truy cập là riêng tư
+          setIsLoggedIn(false);
+          setIsPrivate(true);
         }
       } catch (error) {
         console.error("Error reading token from AsyncStorage:", error);
@@ -34,40 +37,56 @@ export const AuthProvider = ({ children }) => {
     };
 
     checkLoginStatus();
-  }, []);
+  }, []); // Chỉ chạy một lần khi ứng dụng khởi động
 
-  // Hàm đăng nhập
   const login = async (data) => {
     try {
-      // Trích xuất token từ phản hồi API
+      console.log("Check call api:", data);
       const newToken = data.result.token;
+      const updateRole = data.result.clientType;
 
-      // Lưu token vào AsyncStorage
+      console.log("Saved role Update:", updateRole);
+
       await AsyncStorage.setItem("token", newToken);
+      await AsyncStorage.setItem("role", updateRole);
 
-      // Cập nhật state
       setToken(newToken);
-      setIsLoggedIn(true); // Đặt trạng thái đăng nhập thành true
-      setIsPrivate(false); // Quyền truy cập thành không riêng tư
+      setRole(updateRole);  // Cập nhật role ngay lập tức
+      setIsLoggedIn(true);
+      setIsPrivate(false);
+
     } catch (error) {
       console.error("Error saving token to AsyncStorage:", error);
     }
   };
 
-  // Hàm đăng xuất
   const logout = async () => {
     try {
-      // Xóa token khỏi AsyncStorage
-      await AsyncStorage.removeItem("token");
-      setIsLoggedIn(false); // Đặt trạng thái đăng nhập thành false
-      setIsPrivate(true); // Đặt quyền truy cập thành riêng tư
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('role');
+      setIsLoggedIn(false);
+      setIsPrivate(true);
+      setRole(null);
     } catch (error) {
       console.error("Error removing token from AsyncStorage:", error);
     }
   };
 
+  const resetAuth = async () => {
+    try {
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem('role');
+      setIsLoggedIn(false);
+      setIsPrivate(true);
+      setRole(null);
+      console.log("Đã xóa token và đặt lại trạng thái đăng nhập.");
+    } catch (error) {
+      console.error("Không thể xóa token:", error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, token, isPrivate }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, role, token, resetAuth }}>
       {children}
     </AuthContext.Provider>
   );
