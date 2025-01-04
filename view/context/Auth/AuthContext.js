@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from '@react-navigation/native'; // Thêm useNavigation
 
 // Tạo context
 export const AuthContext = createContext();
@@ -16,7 +15,6 @@ export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(null); // Lưu role
   const [token, setToken] = useState(null);
   const [isPrivate, setIsPrivate] = useState(true);
-  const navigation = useNavigation(); // Khởi tạo navigation
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -68,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, token, isPrivate }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, token, isPrivate, role }}>
       {children}
     </AuthContext.Provider>
   );

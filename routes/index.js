@@ -19,14 +19,20 @@ const AppNavigator = () => {
         {isLoggedIn ? (
           <>
           {role === 'ADMIN' && (
-            <Stack.Screen name="Admin" component={DefaultAdmin} />
+            <Stack.Screen 
+              name="Admin" 
+              component={DefaultAdmin} 
+            />
           )}
           {role === 'Shop' && (
-            <Stack.Screen name="Shipper" component={DefaultShop} />
+            <Stack.Screen 
+              name="ShopOwner" 
+              component={DefaultShop} 
+            />
           )}
           {role === 'USER' && (
             <Stack.Screen 
-              name="User" 
+              name="BottomTabNavigation" 
               component={BottomTabNavigation} 
             />
           )}

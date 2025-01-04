@@ -32,7 +32,18 @@ const Login = ({ setIsPrivateRoutes }) => {
             console.log("Login successful:", data);
       
             login(data);
-            navigation.replace("BottomTabNavigation");
+            switch (data.result.role) {
+                case 'ADMIN':
+                    navigation.replace("Admin");
+                    break;
+                case 'Shop':
+                    navigation.replace("ShopOwner");
+                    break;
+                case 'USER':
+                default:
+                    navigation.replace("BottomTabNavigation");
+                    break;
+            }
           } else {
             alert("Login failed! Check your username and password.");
           }
