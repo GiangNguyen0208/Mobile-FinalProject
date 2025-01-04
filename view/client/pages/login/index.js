@@ -42,7 +42,7 @@ const Login = ({ setIsPrivateRoutes }) => {
                     navigation.replace("ShopOwner");
                     break;
                 case 'USER':
-                    navigation.replace("BottomTabNavigation");
+                    navigation.replace("User");
                     break;
                 default:
                     alert("Login failed! Check your username and password.");
