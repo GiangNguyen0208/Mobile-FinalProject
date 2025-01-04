@@ -46,6 +46,13 @@ const AdminNavigation = ({ onMenuSelect, currentPage }) => {
       <Animated.View style={[styles.drawer, { width: drawerWidth }]}>
         <View style={styles.menuItemsContainer}>
           <TouchableOpacity
+              onPress={() => handleMenuSelect('Cài đặt')}
+              style={styles.drawerItem}>
+            <Text style={[styles.drawerItemText, currentPage === 'Cài đặt' && styles.selectedMenuItem]}>
+              Hồ sơ
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => handleMenuSelect('Quản lý shop')}
             style={styles.drawerItem}>
             <Text style={[styles.drawerItemText, currentPage === 'Quản lý shop' && styles.selectedMenuItem]}>

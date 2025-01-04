@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button} from 'react-native';
+import {useNavigation} from '@react-navigation/native'; // Import useNavigation
 
 const AdminProfile = () => {
     const adminData = {
@@ -13,7 +13,7 @@ const AdminProfile = () => {
     const navigation = useNavigation(); // Sử dụng useNavigation để lấy navigation
 
     const handleEditProfile = () => {
-        navigation.navigate('EditProfile'); // Điều hướng đến trang EditProfile
+        navigation.navigate("EditProfile"); // Điều hướng đến trang EditProfile
     };
 
     const handleSetting = () => {
@@ -21,22 +21,42 @@ const AdminProfile = () => {
     };
 
     return (
+
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.header}>
-                <Image source={{ uri: adminData.profilePicture }} style={styles.profilePicture} />
+                <Image source={{uri: adminData.profilePicture}} style={styles.profilePicture}/>
                 <Text style={styles.name}>{adminData.name}</Text>
                 <Text style={styles.email}>{adminData.email}</Text>
                 <Text style={styles.role}>{adminData.role}</Text>
             </View>
+            <View style={styles.container2}>
+                <View style={styles.avatarContainer}>
+
+                </View>
+
+                <View style={styles.infoContainer}>
+                    <Text style={styles.label}>Tên: </Text>
+                    <Text style={styles.infor}>ADMIN</Text>
+                </View>
+                <View style={styles.infoContainer}>
+                    <Text style={styles.label}>Email: </Text>
+                    <Text style={styles.infor}>ADMIN@mail.com</Text>
+                </View>
+                <View style={styles.infoContainer}>
+                    <Text style={styles.label}>Số điện thoại: </Text>
+                    <Text style={styles.infor}>0865677047</Text>
+                </View>
+
+
+            </View>
+
 
             <View style={styles.body}>
                 <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
                     <Text style={styles.buttonText}>Edit Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>Manage Users</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleSetting} >
+
+                <TouchableOpacity style={styles.button} onPress={handleSetting}>
                     <Text style={styles.buttonText}>Settings</Text>
                 </TouchableOpacity>
             </View>
@@ -45,11 +65,16 @@ const AdminProfile = () => {
 };
 
 const styles = StyleSheet.create({
+    infor: {
+        top: 5,
+        left: 10,
+        fontWeight:'700'
+    },
     container: {
         flexGrow: 1,
         padding: 36,
 
-        width:600
+        width: 600
     },
     header: {
         alignItems: 'center',
@@ -79,7 +104,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        backgroundColor: '#007bff',
+        backgroundColor: '#e74c3c',
         padding: 15,
         borderRadius: 10,
         marginBottom: 15,
@@ -89,6 +114,42 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    container2: {
+        flex: 1,
+        padding: 20,
+
+    },
+    avatarContainer: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        borderWidth: 3,
+        borderColor: '#ddd',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    infoContainer: {
+        flexDirection: 'row',
+        marginBottom: 15,
+    },
+    label: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        width: 120,
+        marginBottom: 60
+    },
+    value: {
+        fontSize: 18,
+        color: '#555',
     },
 });
 
