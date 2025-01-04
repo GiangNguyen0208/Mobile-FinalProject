@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +112,7 @@
       <workItem from="1731811162679" duration="5720000" />
       <workItem from="1735370077579" duration="173000" />
       <workItem from="1735370294118" duration="3995000" />
-      <workItem from="1735379655313" duration="649000" />
+      <workItem from="1735379655313" duration="1174000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
