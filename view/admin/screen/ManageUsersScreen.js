@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet, Alert, Dimensions } from 'react-native';
-import { getAllUser, addUser, updateUser, deleteUser } from '../../api/adminApi'; // Cập nhật đường dẫn import API
+import { getAllUser, addUser, updateUser, deleteUser } from '../../../api/adminApi'; // Cập nhật đường dẫn import API
 
 const ManageUsersScreen = () => {
   const [userList, setUserList] = useState([]);

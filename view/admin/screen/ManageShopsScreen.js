@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAllShops, addShop, updateShop, deleteShop } from '../../api/adminApi'; // Import API
+import { getAllShops, addShop, updateShop, deleteShop } from '../../../api/adminApi'; // Import API
 
 const ManageShopsScreen = () => {
   const [shopList, setShopList] = useState([]);

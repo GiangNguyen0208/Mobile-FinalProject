@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/adminApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/adminApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/admin/screen/ManageShopsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/admin/screen/ManageShopsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/admin/screen/ManageUsersScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/admin/screen/ManageUsersScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/context/Auth/AuthContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/context/Auth/AuthContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +76,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "21130312",
+    "git-widget-placeholder": "21130551",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/DoAnTTMobile/DoAn/Mobile-FinalProject/view/client/admin",
     "node.js.detected.package.eslint": "true",
@@ -153,16 +164,4 @@
     <MESSAGE value="AdminProfile" />
     <option name="LAST_COMMIT_MESSAGE" value="AdminProfile" />
   </component>
-  
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-
 </project>
