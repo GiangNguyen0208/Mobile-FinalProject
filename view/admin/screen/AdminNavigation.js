@@ -8,9 +8,20 @@ const AdminNavigation = ({ onMenuSelect, currentPage }) => {
   const maxDrawerWidth = screenWidth * 0.25; // 25% of screen width
 
   // Hàm xử lý đăng xuất
-  const handleLogout = () => {
-    Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
-  };
+  const handleLogout = async () => {
+     try {
+       await logout();
+       await AsyncStorage.removeItem("token");
+       setIsLoggedIn(false);
+       setIsPrivate(true);
+       setRole(null);
+       navigate('/login');
+       Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
+     } catch (error) {
+       console.error("Logout Failed!", error);
+       Alert.alert('Lỗi', 'Không thể đăng xuất. Vui lòng thử lại.');
+     }
+   };
 
   // Hàm bật/tắt drawer
   const toggleDrawer = () => {

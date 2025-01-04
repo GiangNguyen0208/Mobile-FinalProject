@@ -14,7 +14,7 @@ const Login = ({ setIsPrivateRoutes }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useContext(AuthContext);
+    const { login, role } = useContext(AuthContext);
     const navigation = useNavigation();
 
     const [displayedText, setDisplayedText] = useState(""); // Dùng để hiển thị chữ từng chữ một
@@ -31,22 +31,10 @@ const Login = ({ setIsPrivateRoutes }) => {
         return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
     }, []);
 
-    const handleLogin = async () => {
-        setLoading(true);
-
-        const userLogin = {
-            username: username,
-            password: password,
-        };
-
-        try {
-          const data = await loginApi(userLogin); // Gọi API đăng nhập
-      
-          if (data.code === 1000 && data.result.token) {
-            console.log("Login successful:", data);
-      
-            login(data);
-            switch (data.result.role) {
+    useEffect(() => {
+        console.log('Role changed:', role);
+        if (role) { // Kiểm tra nếu role đã được cập nhật
+            switch (role) {
                 case 'ADMIN':
                     navigation.replace("Admin");
                     break;
@@ -60,6 +48,22 @@ const Login = ({ setIsPrivateRoutes }) => {
                     alert("Login failed! Check your username and password.");
                     break;
             }
+        }
+    }, [role, navigation]); // Theo dõi sự thay đổi của role
+
+    const handleLogin = async () => {
+        setLoading(true);
+
+        const userLogin = {
+            username: username,
+            password: password,
+        };
+
+        try {
+          const data = await loginApi(userLogin); // Gọi API đăng nhập
+          
+          if (data.code === 1000 && data.result.token) {
+            login(data); // Cập nhật role và token ngay lập tức
           } else {
             alert("Login failed! Check your username and password.");
           }
