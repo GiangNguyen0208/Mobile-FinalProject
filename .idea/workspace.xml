@@ -67,7 +67,7 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "21130312",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/DoAnTTMobile/DoAn/Mobile-FinalProject/view/client/admin",
+    "last_opened_file_path": "C:/Project_frontend_mobile/Mobile-FinalProject/assets/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -75,16 +75,17 @@
     "nodejs_package_manager_path": "yarn",
     "settings.editor.selected.configurable": "vcs.Git",
     "show.migrate.to.gradle.popup": "false",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Project_frontend_mobile\Mobile-FinalProject\assets\img" />
       <recent name="D:\DoAnTTMobile\DoAn\Mobile-FinalProject\view\client\admin" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
