@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, AuthContext } from './view/context/Auth/AuthContext'; // Đảm bảo AuthProvider và AuthContext được import đúng
 import AppNavigator from './routes';
 
+const Stack = createStackNavigator();
 export default function App() {
   return (
     <SafeAreaProvider>
@@ -29,4 +30,5 @@ function MainApp() {
       <AppNavigator isLoggedIn={isLoggedIn} role={role} />
     </NativeRouter>
   );
+
 }
