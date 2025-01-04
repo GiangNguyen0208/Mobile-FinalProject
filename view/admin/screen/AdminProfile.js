@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button} from 'react-native';
-import {useNavigation} from '@react-navigation/native'; // Import useNavigation
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+
+const { width } = Dimensions.get('window'); // Lấy kích thước màn hình
 
 const AdminProfile = () => {
     const adminData = {
@@ -13,68 +15,59 @@ const AdminProfile = () => {
     const navigation = useNavigation(); // Sử dụng useNavigation để lấy navigation
 
     const handleEditProfile = () => {
-        navigation.navigate("EditProfile"); // Điều hướng đến trang EditProfile
+        navigation.navigate('EditProfile'); // Điều hướng đến trang EditProfile
     };
 
     const handleSetting = () => {
-        navigation.navigate('Setting'); // Điều hướng đến trang EditProfile
+        navigation.navigate('Setting'); // Điều hướng đến trang Setting
     };
 
     return (
-
-        <ScrollView contentContainerStyle={styles.container}>
-            <View style={styles.header}>
-                <Image source={{uri: adminData.profilePicture}} style={styles.profilePicture}/>
-                <Text style={styles.name}>{adminData.name}</Text>
-                <Text style={styles.email}>{adminData.email}</Text>
-                <Text style={styles.role}>{adminData.role}</Text>
-            </View>
-            <View style={styles.container2}>
-                <View style={styles.avatarContainer}>
-
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.header}>
+                    <Image source={{ uri: adminData.profilePicture }} style={styles.profilePicture} />
+                    <Text style={styles.name}>{adminData.name}</Text>
+                    <Text style={styles.email}>{adminData.email}</Text>
+                    <Text style={styles.role}>{adminData.role}</Text>
                 </View>
 
-                <View style={styles.infoContainer}>
-                    <Text style={styles.label}>Tên: </Text>
-                    <Text style={styles.infor}>ADMIN</Text>
+                <View style={styles.container2}>
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.label}>Tên: </Text>
+                        <Text style={styles.infor}>ADMIN</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.label}>Email: </Text>
+                        <Text style={styles.infor}>ADMIN@mail.com</Text>
+                    </View>
+                    <View style={styles.infoContainer}>
+                        <Text style={styles.label}>Số điện thoại: </Text>
+                        <Text style={styles.infor}>0865677047</Text>
+                    </View>
                 </View>
-                <View style={styles.infoContainer}>
-                    <Text style={styles.label}>Email: </Text>
-                    <Text style={styles.infor}>ADMIN@mail.com</Text>
+
+                <View style={styles.body}>
+                    <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
+                        <Text style={styles.buttonText}>Edit Profile</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button} onPress={handleSetting}>
+                        <Text style={styles.buttonText}>Settings</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.infoContainer}>
-                    <Text style={styles.label}>Số điện thoại: </Text>
-                    <Text style={styles.infor}>0865677047</Text>
-                </View>
-
-
-            </View>
-
-
-            <View style={styles.body}>
-                <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
-                    <Text style={styles.buttonText}>Edit Profile</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} onPress={handleSetting}>
-                    <Text style={styles.buttonText}>Settings</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    infor: {
-        top: 5,
-        left: 10,
-        fontWeight:'700'
-    },
     container: {
-        flexGrow: 1,
-        padding: 36,
+        flex: 1,
 
-        width: 600
+    },
+    scrollContainer: {
+        padding: 20,
     },
     header: {
         alignItems: 'center',
@@ -87,7 +80,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     name: {
-        fontSize: 24,
+        fontSize: width > 800 ? 30 : 24,
         fontWeight: 'bold',
         color: '#333',
     },
@@ -100,42 +93,8 @@ const styles = StyleSheet.create({
         color: '#999',
         marginTop: 5,
     },
-    body: {
-        marginTop: 20,
-    },
-    button: {
-        backgroundColor: '#e74c3c',
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     container2: {
-        flex: 1,
         padding: 20,
-
-    },
-    avatarContainer: {
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    avatar: {
-        width: 120,
-        height: 120,
-        borderRadius: 60,
-        borderWidth: 3,
-        borderColor: '#ddd',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
     },
     infoContainer: {
         flexDirection: 'row',
@@ -145,11 +104,29 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         width: 120,
-        marginBottom: 60
+        marginTop:30
     },
-    value: {
+    infor: {
         fontSize: 18,
         color: '#555',
+        marginTop:30
+    },
+    body: {
+        marginTop: 200,
+
+    },
+    button: {
+        backgroundColor: '#e74c3c',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 15,
+        alignItems: 'center',
+        width:500
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 
