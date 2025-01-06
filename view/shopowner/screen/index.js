@@ -6,30 +6,30 @@ import axios from 'axios';
 import { getShopById } from '../../../api/adminApi';
 
 const Home = ({navigation,route}) => {
-    const  {id } = route.params;
+    // const  {id } = route.params;
 
-    const [shop, setShop] = useState({});
-    useEffect(() => {
-        const fetchShop = async (id) => {
-            try {
-                const shopData = await getShopById(id); // Gọi API để lấy dữ liệu shop
-                setShop(shopData); // Cập nhật state shop
-                console.log("Shop data fetched successfully:", shopData);
-            } catch (error) {
-                console.error("Error fetching shop data:", error);
-            }
-        };
+    // const [shop, setShop] = useState({});
+    // useEffect(() => {
+    //     const fetchShop = async (id) => {
+    //         try {
+    //             const shopData = await getShopById(id); // Gọi API để lấy dữ liệu shop
+    //             setShop(shopData); // Cập nhật state shop
+        
+    //         } catch (error) {
+    //             console.error("Error fetching shop data:", error);
+    //         }
+    //     };
 
-        if (id) { // Chỉ gọi API nếu id tồn tại
-            fetchShop(id);
-        }
-    }, [id]); // useEffect chạy lại khi id thay đổi
+    //     if (id) { // Chỉ gọi API nếu id tồn tại
+    //         fetchShop(id);
+    //     }
+    // }, [id]); // useEffect chạy lại khi id thay đổi
 
 
     return (
         <SafeAreaView>
             <View style={[styles.row,styles.header]}>
-            <Text style={[styles.shopName]}>{shop.name || 'Loading...'}</Text>
+            <Text style={[styles.shopName]}>name</Text>
                 <View style={[styles.row,styles.personalAndNoti]}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Ionicons name="person-circle-outline" size={24} color="black" />

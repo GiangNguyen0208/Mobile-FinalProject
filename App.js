@@ -6,7 +6,6 @@ import { AuthProvider, AuthContext } from './view/context/Auth/AuthContext'; // 
 import AppNavigator from './routes';
 
 const Stack = createStackNavigator();
-
 export default function App() {
   return (
     <SafeAreaProvider>
@@ -29,10 +28,10 @@ function MainApp() {
 
   return (
     <NativeRouter>
-      {/* <AppNavigator isLoggedIn={isLoggedIn} role={role} /> */}
-      <AppNavigator isLoggedIn={isLoggedIn} role={'role'}/>
+      <AppNavigator isLoggedIn={isLoggedIn} role={role} />
     </NativeRouter>
   );
 
 }
+
 

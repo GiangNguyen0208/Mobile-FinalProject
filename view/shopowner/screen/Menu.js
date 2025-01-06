@@ -4,9 +4,8 @@ import ItemCard from "../../client/components/ListItem/ItemCard";
 import CartIcon from "../../client/components/Cart/CartIcon";
 import ProductList from "../../client/components/ListItem/ProductList";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { URL } from "../../../api/constant";
-import axios from 'axios';
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getListProduct } from "../../../api/adminApi";
 
 class Item {
     constructor(id, name, price, img ,categoryId) {
@@ -18,29 +17,22 @@ class Item {
     }
 }
 
-const Menu = ({navigation,shopName,shopId}) => {
+const Menu = ({navigation}) => {
 
-    const [data, setData] = useState({ products: [], categories: [] });
+    const [product, setProduct] = useState({});
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [shops, products, categories] = await Promise.all([
-                    axios.get('http://' + URL.NET_ADDRESS + ':8080api/v1/products/listProduct/shop/Nhà hàng Lẩu'),
-                    axios.get('http://' + URL.NET_ADDRESS + ':8080/api/v1/categories'),
-                ]);
-                setData({
-                    shops: shops.data,
-                    products: products.data,
-                    categories: categories.data,
-                });
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+    const fetchProduct = async () => {
+        try {
+            const productData = await getListProduct(); // Gọi API để lấy dữ liệu sản phẩm
+            setProduct(productData); // Cập nhật state sản phẩm
+        } catch (error) {
+            console.error("Error fetching product data:", error);
+        }
+    };
 
-        fetchData();
-    }, []);
+    fetchProduct(); // Gọi hàm fetchProduct để lấy dữ liệu sản phẩm
+    }, []); // useEffect chạy một lần khi component mount
 
     const [selectedCategory, setSelectedCategory] = useState('food');
 

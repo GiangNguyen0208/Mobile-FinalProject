@@ -5,8 +5,13 @@ export const getAllUser = async () => {
     return response.data;
 }
 export const getShopById = async (id) => {
-    const response = await axiosInstance.get(`/admin/shop/id/${id}`, {
+    const response = await axiosInstance.get("admin/shop/id",id ,{
         
     });
     return response.data;
 }
+
+export const getListProduct = async () => {
+    const response = await axiosInstance.get("/products/listProduct");
+    return response.data;
+  }
