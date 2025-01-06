@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import OnBoarding from '../components/Onboarding/Onboarding';
-import Header from '../components/Header';
 import Intro from '../components/Intro/Intro';
-import NavigationBottom from '../components/Navigation/NavigationBottom';
 import SearchBox from '../components/Search';
 import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
@@ -13,11 +11,14 @@ import optionData from '../partials/Option/options';
 import ListVertical from '../components/ListItem/ListVertical';
 import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
+import { getAllCategory, getAllProduct } from '../../../api/systemApi';
 
 const Default = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [showOutlet, setShowOutlet] = useState(false);
+  const [foodData, setFoodData] = useState([]); 
+  const [categoryData, setCategoryData] = useState([]);
 
   const navRoutes = [
     { key: 'home', name: 'Default', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
@@ -27,17 +28,42 @@ const Default = () => {
     { key: 'info', name: 'Info', title: 'My Personal', focusedIcon: 'account', unfocusedIcon: 'account-outline' },
   ];
 
-  const handleNavigation = (name) => {
-    setShowOutlet(true);
-    navigation.navigate(name); // Dùng navigation.navigate thay vì useNavigate
-  }
+  // Call API to get all products
+  useEffect(() => {
+    const fetchFoodData = async () => {
+      try {
+        const data = await getAllProduct();
+        const processedData = data.result.map(item => {
+          const base64Image = item.imageUrl
+              ? `data:image/png;base64,${item.imageUrl}`
+              : null;
+          return { ...item, base64Image };
+        });
+        setFoodData(processedData); 
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    };
+    const fetchCategoryData = async () => {
+      try {
+        const data = await getAllCategory();
+        setCategoryData(data); 
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    }
+    fetchFoodData();
+    fetchCategoryData();
+  }, []);
+  
 
   useEffect(() => {
     setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
   }, [route.name]);
 
   const handleItemPress = (item) => {
-    console.log('Item pressed:', item);
+    // console.log(item.base64Image); 
+    console.log('Item pressed:', item.name);
   };
 
   const handleSearch = (query) => {
@@ -63,7 +89,7 @@ const Default = () => {
             <OnBoarding />
 
             {/* Intro */}
-            <Intro items={optionData} onItemPress={handleItemPress} />
+            <Intro items={foodData} onItemPress={handleItemPress} />
 
             {/* List Horizontal */}
             <View style={styles.collectionHeader}>
@@ -79,10 +105,10 @@ const Default = () => {
                 foodData.map((item) => (
                   <Item
                     key={item.id}
-                    image={item.image}
-                    title={item.title}
-                    description={item.description}
-                    date={item.date}
+                    image={item.base64Image} // Thay 'image' bằng 'images'
+                    title={item.name} // Thay 'title' bằng 'name'
+                    description={item.des} // Thay 'description' bằng 'des'
+                    date={item.date} // Đảm bảo trường 'date' tồn tại hoặc loại bỏ nếu không cần thiết
                   />
                 ))
               ) : (
@@ -93,8 +119,6 @@ const Default = () => {
         </ScrollView>
       )}
 
-      {/* Navigation Bottom */}
-      {/* <NavigationBottom onNavigate={handleNavigation} navRoutes={navRoutes} /> */}
     </SafeAreaView>
   );
 };

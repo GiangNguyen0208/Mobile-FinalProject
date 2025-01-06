@@ -4,11 +4,13 @@ import IntroItem from './IntroItem';
 
 const Intro = ({ items, onItemPress }) => {
     // Calculate number of rows needed (5 items per row)
+    const itemsToDisplay = items.slice(0, 10);
+
     const itemsPerRow = 5;
     const rows = [];
     
     for (let i = 0; i < items.length; i += itemsPerRow) {
-        rows.push(items.slice(i, i + itemsPerRow));
+        rows.push(itemsToDisplay.slice(i, i + itemsPerRow));
     }
 
     return (
