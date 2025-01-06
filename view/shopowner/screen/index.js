@@ -1,11 +1,40 @@
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { URL } from "../../../api/constant";
 
-const Home = ({navigation}) => {
+const Home = ({navigation,route}) => {
+    const  {id } = route.params;
+    const [shop, setShop] = useState({});  // Khởi tạo state cho shop
+
+    useEffect(() => {
+        const fetchShopData = async () => {
+            try {
+                // Gọi API để lấy tên shop từ shopId
+                const response = await axios.get(`http://${URL.NET_ADDRESS}:8080/api/v1/admin/shop/id/${id}`);
+                
+                // Giả sử API trả về dữ liệu có tên shop trong trường 'name'
+                const fetchedShop = response.data;
+                console.log('API Response:', response.data);
+                // Cập nhật shop với thông tin trả về
+                setShop(fetchedShop.name); // Giả sử bạn chỉ muốn hiển thị tên shop
+            } catch (error) {
+                console.error('Error fetching shop data:', error);
+            }
+        };
+        if (id) { // Kiểm tra shopId có hợp lệ không
+            fetchShopData(); // Gọi hàm lấy dữ liệu
+        }
+    }, [id]); // useEffect sẽ chạy lại mỗi khi shopId thay đổi
+
+
+
     return (
-        <View>
+        <SafeAreaView>
             <View style={[styles.row,styles.header]}>
-                <Text style={[styles.shopName]}>Shop name</Text>
+            <Text style={[styles.shopName]}>{shop.name || 'Loading...'}</Text>
                 <View style={[styles.row,styles.personalAndNoti]}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Ionicons name="person-circle-outline" size={24} color="black" />
@@ -13,7 +42,7 @@ const Home = ({navigation}) => {
             </View>
             <View style={[styles.banner]}>
                 <Image
-                    // source={require('../img/img.png')}
+                    source={require("./../../../assets/img/img.png")}
                     style={[styles.image,{borderRadius: 15}]}
                     resizeMode="contain"
                 />
@@ -23,7 +52,7 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            // source={require('../img/order-food.png')}
+                            source={require("./../../../assets/img/order-food.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -31,7 +60,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            // source={require('../img/star.png')}
+                            source={require("./../../../assets/img/star.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -39,7 +68,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Menu')} >
                         <Image
-                            // source={require('../img/menu.png')}
+                            source={require("./../../../assets/img/menu.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -49,7 +78,7 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function,]}>
                         <Image
-                            // source={require('../img/help-desk.png')}
+                            source={require("./../../../assets/img/help-desk.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -57,7 +86,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            // source={require('../img/voucher.png')}
+                            source={require("./../../../assets/img/voucher.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -66,7 +95,7 @@ const Home = ({navigation}) => {
                     <View style={[styles.function]}></View>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
