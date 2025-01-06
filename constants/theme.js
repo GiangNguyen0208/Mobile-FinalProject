@@ -10,11 +10,12 @@ export const COLORS = {
     tertiaryBlack: '#202123',
     gray: 'F8F8F8',
     secondaryGray: '#808080',
-    primary: "#007260",
+
     secondary: "#39b68d",
     orange: '#E95322',
     pink : "#f97794",
-    blue: "#623aa2"
+    blue: "#623aa2",
+    beach: " #0000FF",
 }
 
 export const SIZES = {

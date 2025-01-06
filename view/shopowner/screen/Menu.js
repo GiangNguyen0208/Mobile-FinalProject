@@ -1,10 +1,12 @@
 import {TouchableOpacity, View, StyleSheet, FlatList, Text, Modal} from "react-native";
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
 import CartIcon from "../../client/components/Cart/CartIcon";
-import ProductList from "./ProductList";
+import ProductList from "../../client/components/ListItem/ProductList";
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import { URL } from "../../../api/constant";
+import axios from 'axios';
+import { SafeAreaView } from "react-native-safe-area-context";
 
 class Item {
     constructor(id, name, price, img ,categoryId) {
@@ -16,7 +18,30 @@ class Item {
     }
 }
 
-const Menu = ({navigation}) => {
+const Menu = ({navigation,shopName,shopId}) => {
+
+    const [data, setData] = useState({ products: [], categories: [] });
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [shops, products, categories] = await Promise.all([
+                    axios.get('http://' + URL.NET_ADDRESS + ':8080api/v1/products/listProduct/shop/Nhà hàng Lẩu'),
+                    axios.get('http://' + URL.NET_ADDRESS + ':8080/api/v1/categories'),
+                ]);
+                setData({
+                    shops: shops.data,
+                    products: products.data,
+                    categories: categories.data,
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const [selectedCategory, setSelectedCategory] = useState('food');
 
     const foodItems = [
@@ -39,9 +64,7 @@ const Menu = ({navigation}) => {
     ];
 
     const renderFood = () => (
-        // <View style={styles.item}>
-        //     <ItemCard item={item} navigation={navigation} isShopOwner={true}/>
-        // </View>
+   
         <ProductList navigation={navigation} foodItems={foodItems} categories={categories}> isShopOwner={true}</ProductList>
     );
 
@@ -66,7 +89,7 @@ const Menu = ({navigation}) => {
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={[styles.row,{backgroundColor:'white'}]}>
                 <TouchableOpacity style={[styles.funcContainer,styles.row,selectedCategory === 'food' && styles.selected]} onPress={()=>setSelectedCategory('food')}>
                     <Text style={[styles.funcName,selectedCategory === 'food' && {color:'#E95322',}]} numberOfLines={1} ellipsizeMode="tail">
@@ -92,7 +115,7 @@ const Menu = ({navigation}) => {
                         <Text style={{color:"white",fontSize:16,textAlign:'center'}}>Thêm món</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     )};
 
 
