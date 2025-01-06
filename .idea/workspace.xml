@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +115,10 @@
       <workItem from="1731811162679" duration="5720000" />
       <workItem from="1735180260050" duration="8000" />
       <workItem from="1736073926762" duration="5973000" />
-      <workItem from="1736079921338" duration="654000" />
+      <workItem from="1736079921338" duration="774000" />
+      <workItem from="1736084891074" duration="2922000" />
+      <workItem from="1736087899657" duration="4371000" />
+      <workItem from="1736126484066" duration="3867000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -160,6 +167,12 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/App.js</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
