@@ -8,23 +8,15 @@ import DropDown from '../../components/DropDown/dropDown';
 const Order = () => {
   return (
     <View style={styles.container}>
-      {/* Tiêu đề */}
       <Text style={styles.title}>My Orders</Text>
 
-      {/* Thanh điều hướng trên cùng */}
       <View style={styles.navigationTop}>
         <NavigationTop />
       </View>
 
-      {/* Nội dung chính */}
       <View style={styles.mainContent}>
-        {/* Menu thả xuống */}
         <DropDown />
-
-        {/* Thanh trạng thái */}
         <Status />
-
-        {/* Sản phẩm được đề xuất */}
         <RecommendedProducts />
       </View>
     </View>

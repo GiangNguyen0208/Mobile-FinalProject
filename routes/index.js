@@ -6,6 +6,7 @@ import Register from '../view/client/pages/register/index.js';
 import { NavigationContainer } from '@react-navigation/native'; 
 import ShopScreen from '../view/shopowner/screen/index.js'; 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
+import ProductDetail from '../view/client/pages/detail/detail.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             <Stack.Screen name="Register" component={Register} />
           </>
         )}
+        <Stack.Screen name="ProductDetail" component={ProductDetail}  />
       </Stack.Navigator>
     </NavigationContainer>
   );
