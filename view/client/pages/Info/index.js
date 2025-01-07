@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from "../../../../constants"; // Nhớ định nghĩa các màu trong constants
 
-const Info = () => {
+const Info = ({ navigation }) => {
     return (
         <View style={styles.container}>
             {/* Phần đầu (head) */}
@@ -42,7 +42,7 @@ const Info = () => {
                         fontWeight: 500,
                         right: 430
                     }}> Ví Voucher</Text>
-
+                    <TouchableOpacity  onPress={() => navigation.navigate('Voucher')}>
                     <Image
                         source={require("../../../../assets/img/icons8-greater-than-24.png")}
                         style={{
@@ -51,6 +51,7 @@ const Info = () => {
                             left: 500
                         }}
                     />
+                        </TouchableOpacity>
                 </View>
                 {/*shoppe su*/}
 
@@ -258,7 +259,7 @@ const Info = () => {
                         fontWeight: 500,
                         left: 60
                     }}> Cài đặt</Text>
-
+                    <TouchableOpacity  onPress={() => navigation.navigate('SettingsUser')}>
                     <Image
                         source={require("../../../../assets/img/icons8-greater-than-24.png")}
                         style={{
@@ -267,6 +268,7 @@ const Info = () => {
                             left: 500
                         }}
                     />
+                        </TouchableOpacity>
                 </View>
                 <View style={{
                     width: 550,  // Chiều dài đường gạch

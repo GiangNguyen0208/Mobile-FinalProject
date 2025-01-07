@@ -20,31 +20,31 @@ const AddressForm = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Street</Text>
+            <Text style={styles.label}>Địa chỉ</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter street"
+                placeholder="Địa chỉ"
                 value={street}
                 onChangeText={setStreet}
             />
-            <Text style={styles.label}>City</Text>
+            <Text style={styles.label}>Quận/huyện</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter city"
+                placeholder="Quận/huyện"
                 value={city}
                 onChangeText={setCity}
             />
-            <Text style={styles.label}>State</Text>
+            <Text style={styles.label}>Thành phố</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter state"
+                placeholder="Thành phố"
                 value={state}
                 onChangeText={setState}
             />
-            <Text style={styles.label}>Zipcode</Text>
+            <Text style={styles.label}>Mã bưu điện</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Enter zipcode"
+                placeholder="Mã bưu điện"
                 value={zipcode}
                 onChangeText={setZipcode}
                 keyboardType="numeric"
