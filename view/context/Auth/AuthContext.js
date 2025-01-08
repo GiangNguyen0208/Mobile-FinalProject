@@ -18,14 +18,14 @@ export const AuthProvider = ({ children }) => {
     const checkLoginStatus = async () => {
       try {
         const savedToken = await AsyncStorage.getItem("token");
-        // const savedRole = await AsyncStorage.getItem("role");
+         const savedRole = await AsyncStorage.getItem("role");
 
         // console.log("Saved role:", savedRole);
 
         if (savedToken) {
           setToken(savedToken);
-          // setRole(savedRole);
-          setIsLoggedIn(true); 
+           setRole(savedRole);
+          setIsLoggedIn(true);
           setIsPrivate(false);
         } else {
           setIsLoggedIn(false);

@@ -1,13 +1,14 @@
-import {TouchableOpacity, View, StyleSheet, FlatList, Text, Modal} from "react-native";
-import React, {useState} from "react";
+import { TouchableOpacity, View, StyleSheet, FlatList, Text, Modal } from "react-native";
+import React, { useState, useEffect } from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
 import CartIcon from "../../client/components/Cart/CartIcon";
-import ProductList from "./ProductList";
+import ProductList from "../../client/components/ListItem/ProductList";
 import AntDesign from '@expo/vector-icons/AntDesign';
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import { getListProductByShopName, getListCategoryByShopId } from "../../../api/adminApi";
 
 class Item {
-    constructor(id, name, price, img ,categoryId) {
+    constructor(id, name, price, img, categoryId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -16,107 +17,120 @@ class Item {
     }
 }
 
-const Menu = ({navigation}) => {
+const Menu = ({ navigation }) => {
     const [selectedCategory, setSelectedCategory] = useState('food');
+    const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
+    const [category, setCategory] = useState([]); 
+    const shopName = 'Nhà hàng Lẩu'
+    const shopId = 4;
+    useEffect(() => {
+        const fetchProductsAndCategories = async () => {
+            try {
+                // Gọi API lấy dữ liệu sản phẩm theo tên shop
+                const productsData = await getListProductByShopName(shopName);
+                // Gọi API lấy dữ liệu danh mục theo shop ID
+                const categoryData = await getListCategoryByShopId(shopId);
 
-    const foodItems = [
-        new Item(1, 'Item 1', 29.99,  require('../../../assets/img/order-food.png'),1),
-        new Item(2, 'Item 2', 19.99,  require('../../../assets/img/order-food.png'),2),
-        new Item(3, 'Item 3', 39.99,  require('../../../assets/img/order-food.png'),3),
-        new Item(4, 'Item 1', 29.99,  require('../../../assets/img/order-food.png'),1),
-        new Item(5, 'Item 2', 19.99,  require('../../../assets/img/order-food.png'),2),
-        new Item(6, 'Item 3', 39.99,  require('../../../assets/img/order-food.png'),3),
-        new Item(7, 'Item 1', 29.99,  require('../../../assets/img/order-food.png'),1),
-        new Item(8, 'Item 2', 19.99,  require('../../../assets/img/order-food.png'),2),
-        new Item(9, 'Item 3', 39.99,  require('../../../assets/img/order-food.png'),3),
-        new Item(10, 'Item 1', 29.99,  require('../../../assets/img/order-food.png'),1),
-    ];
+                // Lấy danh sách kết quả từ API (đảm bảo dữ liệu không undefined)
+                const productsArray = productsData.result || [];
+                const categoryArray = categoryData.result || [];
 
-    const categories = [
-        { id: 1, name: 'Bánh' },
-        { id: 2, name: 'Nước' },
-        { id: 3, name: 'Khác' },
-    ];
+                // Cập nhật state
+                setProducts(productsArray);
+                setCategory(categoryArray);
+            } catch (error) {
+                console.error("Error fetching product or category data:", error);
+            }
+        };
 
-    const renderFood = () => (
-        // <View style={styles.item}>
-        //     <ItemCard item={item} navigation={navigation} isShopOwner={true}/>
-        // </View>
-        <ProductList navigation={navigation} foodItems={foodItems} categories={categories}> isShopOwner={true}</ProductList>
-    );
+        fetchProductsAndCategories(); // Gọi hàm fetchProductsAndCategories
+    }, [shopName, shopId]);
 
-    const renderCategory = () => {
-        const renCate = ({item}) => (
-            <TouchableOpacity style={[styles.cateContainer, styles.row, ]}>
-                <Text style={[styles.cateName, ]}
-                    numberOfLines={1} ellipsizeMode="tail">
-                    {item.name}
-                </Text>
-                <AntDesign name="right" size={24} color="black" />
-            </TouchableOpacity>
-        );
+    useEffect(() => {
+        console.log("Fetched products data:", products); // Log dữ liệu của products
+    }, [products]);
 
-        return (
-            <FlatList
-                data={categories}
-                renderItem={renCate}
-                keyExtractor={item => item.id.toString()}
-            />
-        );
+    useEffect(() => {
+        console.log("Fetched category data:", category); // Log dữ liệu của category
+    }, [category]); // Sửa lại đây để theo dõi sự thay đổi của category
+
+
+    const handleAddFood = () => {
+        console.log("Thêm món mới");
+        // Thêm logic để xử lý khi người dùng nhấn "Thêm món"
+    };
+    
+    const handleAddCategory = () => {
+        console.log("Thêm danh mục mới");
+        // Thêm logic để xử lý khi người dùng nhấn "Thêm danh mục"
     };
 
+
+   
+    const renderFood = ({ item }) => (
+        <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={true}></ItemCard>
+    );
+
+    const renderCategory = ({ item }) => (
+        <View style={{ padding: 10, borderBottomWidth: 1 }}>
+            <Text>{item.name}</Text>
+        </View>
+    );
+
+
     return (
-        <View>
-            <View style={[styles.row,{backgroundColor:'white'}]}>
-                <TouchableOpacity style={[styles.funcContainer,styles.row,selectedCategory === 'food' && styles.selected]} onPress={()=>setSelectedCategory('food')}>
-                    <Text style={[styles.funcName,selectedCategory === 'food' && {color:'#E95322',}]} numberOfLines={1} ellipsizeMode="tail">
+        <SafeAreaView>
+            <View style={[styles.row, { backgroundColor: 'white' }]}>
+                <TouchableOpacity style={[styles.funcContainer, styles.row, selectedCategory === 'food' && styles.selected]} onPress={() => setSelectedCategory('food')}>
+                    <Text style={[styles.funcName, selectedCategory === 'food' && { color: '#E95322', }]} numberOfLines={1} ellipsizeMode="tail">
                         Món
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.funcContainer,styles.row,selectedCategory === 'category' && styles.selected]} onPress={()=>setSelectedCategory('category')}>
-                    <Text style={[styles.funcName,selectedCategory === 'category' && {color:'#E95322',}]} numberOfLines={1} ellipsizeMode="tail">
+                <TouchableOpacity style={[styles.funcContainer, styles.row, selectedCategory === 'category' && styles.selected]} onPress={() => setSelectedCategory('category')}>
+                    <Text style={[styles.funcName, selectedCategory === 'category' && { color: '#E95322', }]} numberOfLines={1} ellipsizeMode="tail">
                         Danh mục
                     </Text>
                 </TouchableOpacity>
             </View>
 
             <FlatList
-                data={selectedCategory === 'food' ? foodItems : categories}
+                data={selectedCategory === 'food' ? products : category}
                 renderItem={selectedCategory === 'food' ? renderFood : renderCategory}
-                keyExtractor={(item) => item.id.toString()}
-                style={{height:'100%'}}
+                keyExtractor={(item) =>  item.name}
+                style={{ height: '100%' }}
                 contentContainerStyle={{ paddingBottom: 120 }}
             />
             <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.addFoodBtn}>
-                        <Text style={{color:"white",fontSize:16,textAlign:'center'}}>Thêm món</Text>
+                <TouchableOpacity style={styles.addFoodBtn}  onPress={selectedCategory === 'food' ? handleAddFood : handleAddCategory}>
+                    <Text style={{ color: "white", fontSize: 16, textAlign: 'center' }}>{selectedCategory === 'food' ? 'Thêm món' : 'Thêm danh mục'}</Text>
                 </TouchableOpacity>
             </View>
-        </View>
-    )};
+        </SafeAreaView>
+    )
+};
 
 
 const styles = StyleSheet.create({
-    row:{
+    row: {
         flexDirection: 'row',
 
     },
-    funcContainer:{
+    funcContainer: {
         height: 56,
-        marginHorizontal:8,
-        alignItems:'center',
+        marginHorizontal: 8,
+        alignItems: 'center',
     },
-    funcName:{
-        fontSize:16,
+    funcName: {
+        fontSize: 16,
         paddingHorizontal: 70,
     },
-    selected:{
+    selected: {
         borderBottomWidth: 1,
         borderBottomColor: '#E95322',
     },
-    item:{
-        backgroundColor:'white',
-        borderBottomWidth:0.5,
+    item: {
+        backgroundColor: 'white',
+        borderBottomWidth: 0.5,
     },
     btnContainer: {
         width: '100%',
@@ -124,15 +138,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         elevation: 5,
         height: 120,
-        position:'absolute',
-        bottom:0,
+        position: 'absolute',
+        bottom: 0,
     },
-    addFoodBtn:{
-        width:'95%',
-        paddingVertical:8,
+    addFoodBtn: {
+        width: '95%',
+        paddingVertical: 8,
         marginVertical: 14,
         backgroundColor: '#E95322',
-        borderRadius:8,
+        borderRadius: 8,
     },
 })
 export default Menu;

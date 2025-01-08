@@ -3,12 +3,14 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 import Item from './Item'; // Import the Item component
 
 const ListHorizontal = ({ items, onItemPress }) => {
+
     const renderItem = ({ item }) => (
         <Item
             image={item.base64Image}
             title={item.title}
             description={item.description}
             date={item.date}
+            rating={item.rating}
             onPress={() => onItemPress(item)} // Pass the onPress function
         />
     );
