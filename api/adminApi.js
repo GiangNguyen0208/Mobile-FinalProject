@@ -12,13 +12,6 @@ export const getAllUser = async () => {
 //     return response.data;
 // }
 
-
-
-  export const getListCommentByShopId = async (id) => {
-    const response = await axiosInstance.get("/comments/list/shop/"+id);
-    return response.data;
-  };
-
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
     const response = await axiosInstance.post("admin/user/add", userCreationReq);

@@ -23,6 +23,11 @@ export const uploadImageProduct = async (productId, imageFile) => {
     }
 };
 
+export const getListCommentByShopId = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  };
+
 
 export const getListProductByShopId = async (shopId) => {
     const response = await axiosInstance.get(`/shop/${shopId}/products`);

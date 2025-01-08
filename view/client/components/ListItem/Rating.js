@@ -7,11 +7,12 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import ListHorizontal from "./ListHorizontal";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemCard from './ItemCard';
-import { getListCommentByShopId } from "../../../../api/adminApi";
+import { getListCommentByShopId } from "../../../../api/shopApi";
+import { useAuth } from '../../../context/Auth/AuthContext';
 
 export default function VoucherList({ navigation }) {
     const [comments, setComments] = useState([]);
-    const shopId = 4;
+    const [ shopId ] = useAuth();
     useEffect(() => {
         const fetchComments = async () => {
             try {
