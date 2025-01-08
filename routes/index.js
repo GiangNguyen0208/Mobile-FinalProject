@@ -1,10 +1,10 @@
-import React from 'react'; 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
-import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js'; 
-import Login from '../view/client/pages/login/index.js'; 
-import Register from '../view/client/pages/register/index.js'; 
-import { NavigationContainer } from '@react-navigation/native'; 
-import ShopScreen from '../view/shopowner/screen/index.js'; 
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js';
+import Login from '../view/client/pages/login/index.js';
+import Register from '../view/client/pages/register/index.js';
+import { NavigationContainer } from '@react-navigation/native';
+import ShopScreen from '../view/shopowner/screen/index.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 
 const Stack = createNativeStackNavigator();

@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, AuthContext } from './view/context/Auth/AuthContext'; // Đảm bảo AuthProvider và AuthContext được import đúng
 import AppNavigator from './routes';
 
+
 export default function App() {
 
   return (
@@ -34,5 +35,3 @@ function MainApp() {
     </NativeRouter>
   );
 }
-
-
