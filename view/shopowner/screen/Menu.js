@@ -5,7 +5,8 @@ import CartIcon from "../../client/components/Cart/CartIcon";
 import ProductList from "../../client/components/ListItem/ProductList";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getListProductByShopName, getListCategoryByShopId } from "../../../api/adminApi";
+import { getListProductByShopId, getListCategoryByShopId } from "../../../api/shopApi";
+import { useAuth } from "../../context/Auth/AuthContext";
 
 class Item {
     constructor(id, name, price, img, categoryId) {
@@ -21,30 +22,33 @@ const Menu = ({ navigation }) => {
     const [selectedCategory, setSelectedCategory] = useState('food');
     const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
     const [category, setCategory] = useState([]); 
-    const shopName = 'Nhà hàng Lẩu'
-    const shopId = 4;
+    const { shopId } = useAuth();
     useEffect(() => {
+        console.log("ID Shop: " + shopId);
         const fetchProductsAndCategories = async () => {
-            try {
-                // Gọi API lấy dữ liệu sản phẩm theo tên shop
-                const productsData = await getListProductByShopName(shopName);
-                // Gọi API lấy dữ liệu danh mục theo shop ID
-                const categoryData = await getListCategoryByShopId(shopId);
+    try {
+        const productsData = await getListProductByShopId(shopId);
+        const categoryData = await getListCategoryByShopId(shopId);
 
-                // Lấy danh sách kết quả từ API (đảm bảo dữ liệu không undefined)
-                const productsArray = productsData.result || [];
-                const categoryArray = categoryData.result || [];
+        console.log("Products API response:", productsData);
+        console.log("Category API response:", categoryData);
 
-                // Cập nhật state
-                setProducts(productsArray);
-                setCategory(categoryArray);
-            } catch (error) {
-                console.error("Error fetching product or category data:", error);
-            }
-        };
+        const productsArray = productsData.result || [];
+        const categoryArray = categoryData.result || [];
+
+        setProducts(productsArray);
+        setCategory(categoryArray);
+    } catch (error) {
+        if (error.response) {
+            console.error(`Error ${error.response.status}:`, error.response.data);
+        } else {
+            console.error("Error:", error.message);
+        }
+    }
+};
 
         fetchProductsAndCategories(); // Gọi hàm fetchProductsAndCategories
-    }, [shopName, shopId]);
+    }, [shopId]);
 
     useEffect(() => {
         console.log("Fetched products data:", products); // Log dữ liệu của products
@@ -56,8 +60,11 @@ const Menu = ({ navigation }) => {
 
 
     const handleAddFood = () => {
-        console.log("Thêm món mới");
-        // Thêm logic để xử lý khi người dùng nhấn "Thêm món"
+        navigation.navigate('AddProduct', {
+            onAddProduct: (newProduct) => {
+                setProducts((prevProducts) => [...prevProducts, newProduct]);
+            },
+        });
     };
     
     const handleAddCategory = () => {
@@ -96,7 +103,7 @@ const Menu = ({ navigation }) => {
             <FlatList
                 data={selectedCategory === 'food' ? products : category}
                 renderItem={selectedCategory === 'food' ? renderFood : renderCategory}
-                keyExtractor={(item) =>  item.name}
+                keyExtractor={(item) => item.id.toString()} // Chuyển đổi id thành chuỗi
                 style={{ height: '100%' }}
                 contentContainerStyle={{ paddingBottom: 120 }}
             />

@@ -24,6 +24,16 @@ export const uploadImageProduct = async (productId, imageFile) => {
 };
 
 
+export const getListProductByShopId = async (shopId) => {
+    const response = await axiosInstance.get(`/shop/${shopId}/products`);
+    return response.data;
+  }
+
+  export const getListCategoryByShopId = async (shopId) => {
+    const response = await axiosInstance.get(`/shop/${shopId}/categories`);
+    return response.data;
+  }
+
 // Xóa hình ảnh sản phẩm
 export const deleteImageProduct = async (imageId) => {
     try {
