@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Image, Text, Alert} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import indexSt from '../../../public/client/stylesheet/index.style.js';
-import AddToCartModal from '../components/AddToCardModal'; // Import modal
+import AddToCartModal from './Cart/AddToCardModal'; // Import modal
 
 const ItemCard = ({ item, navigation }) => {
     const detailPress = () => {
-        navigation.navigate('Detail', { item });
+        // navigation.navigate('Detail', { item });
+        console.log('a')
     };
     const [modalVisible, setModalVisible] = useState(false);
 

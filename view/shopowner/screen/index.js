@@ -1,11 +1,16 @@
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { getShopById } from '../../../api/adminApi';
 
-const Home = ({navigation}) => {
+const Home = ({navigation,route}) => {
+
     return (
-        <View>
+        <SafeAreaView>
             <View style={[styles.row,styles.header]}>
-                <Text style={[styles.shopName]}>Shop name</Text>
+            <Text style={[styles.shopName]}>name</Text>
                 <View style={[styles.row,styles.personalAndNoti]}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Ionicons name="person-circle-outline" size={24} color="black" />
@@ -13,7 +18,7 @@ const Home = ({navigation}) => {
             </View>
             <View style={[styles.banner]}>
                 <Image
-                    // source={require('../img/img.png')}
+                    source={require("./../../../assets/img/img.png")}
                     style={[styles.image,{borderRadius: 15}]}
                     resizeMode="contain"
                 />
@@ -23,15 +28,15 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            // source={require('../img/order-food.png')}
+                            source={require("./../../../assets/img/order-food.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
                         <Text style={styles.funcName}>Đơn hàng</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.function]}>
+                    <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Rating')}>
                         <Image
-                            // source={require('../img/star.png')}
+                            source={require("./../../../assets/img/star.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -39,7 +44,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Menu')} >
                         <Image
-                            // source={require('../img/menu.png')}
+                            source={require("./../../../assets/img/menu.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -49,7 +54,7 @@ const Home = ({navigation}) => {
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
                     <TouchableOpacity style={[styles.function,]}>
                         <Image
-                            // source={require('../img/help-desk.png')}
+                            source={require("./../../../assets/img/help-desk.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -57,7 +62,7 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                     <TouchableOpacity style={[styles.function]}>
                         <Image
-                            // source={require('../img/voucher.png')}
+                            source={require("./../../../assets/img/voucher.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
@@ -66,7 +71,7 @@ const Home = ({navigation}) => {
                     <View style={[styles.function]}></View>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
