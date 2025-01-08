@@ -9,7 +9,7 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
     const handlePress = () => {
         if (isShopOwner) {
             console.log('edit')
-            // navigation.navigate('Edit', { item });
+            navigation.navigate('EditProduct', { item });
         } else {
             // navigation.navigate('Detail', { item });
             console.log('Detail')
@@ -21,10 +21,22 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
         setModalVisible(true);
     };
 
-
+    // Hàm định dạng ngày tháng năm
+    const formatDateFromArray = (dateArray) => {
+        const date = new Date(
+            dateArray[0], // Year
+            dateArray[1] - 1, // Month (0-indexed)
+            dateArray[2], // Day
+            dateArray[3], // Hours
+            dateArray[4], // Minutes
+            dateArray[5], // Seconds
+            Math.floor(dateArray[6] / 1e6) // Milliseconds
+        );
+        return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getFullYear()}`;
+    };
 
     return (
-        <View style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}>
+        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
                     <Image source={item.img} style={styles.image} />
@@ -33,19 +45,21 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
             <View style={styles.info}>
                 <View style={type === 'comment' && styles.row}>
                     {type==='comment'&&(
-                        <View style={{top:4}}>
+                        <View style={{left:8,top:5}}>
                             <FontAwesome5 name="user-circle" size={24} color="black" />
                         </View>
                     )}
                     <TouchableOpacity >
-                        <Text style={styles.name}>{item.name}</Text>
+                        <Text style={styles.name}>
+                            {type === 'comment' ? item.userName : item.name }
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 {!(type==='voucher')&&(
                     <Rating rating={item.rating}/>
                 )}
                 <View style={[styles.priceContainer,type === 'product' && styles.row]}>
-                    <Text style={styles.price}>{item.price} đ</Text>
+                    <Text style={styles.price}>{item.price}</Text>
                     {type==='voucher'&&(
                         <View style={[styles.voucherContainer, styles.border_bot]}>
                             <View style={{flexDirection:'row',marginVertical:16,}}>
@@ -55,13 +69,7 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
                                 </Text>
                             </View>
                             <Text style={styles.voucherText}>Đặt tối thiểu: {item.minimumOrderValue}đ</Text>
-                            <Text style={styles.voucherText}>Thời gian áp dụng đặt hàng: từ{item.orderStartTime} đến {item.orderEndTime}</Text>
-                            <Text style={styles.voucherText}>Thời gian áp dụng giao hàng: từ {item.deliveryStartTime} đến {item.deliveryEndTime}</Text>
-                            <Text style={styles.voucherText}>Áp dụng cho: {item.applicableFor}</Text>
-                            <Text style={styles.voucherText}>Không áp dụng cho: {item.notApplicableFor}</Text>
-                            <Text style={styles.voucherText}>HSD: {item.expirationDate}</Text>
                             <Text style={styles.voucherText}>Số lượng có hạn</Text>
-                            <Text style={styles.voucherText}>{item.note}</Text>
                         </View>
                     )}
                     {!isShopOwner && (
@@ -70,15 +78,16 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
                         </TouchableOpacity>
                     )}
                 </View>
-                {!(type==='product')&&(
-                    <View>
-                        <Text>{item.content}</Text>
+                {(type==='comment')&&(
+                    <View style={{left: 12}}>
+                        <Text style={styles.content}>{item.message}</Text>
                     </View>
                 )}
             </View>
             {(type==='comment')&&(
                 <TouchableOpacity  >
-                    <Image source={item.img} style={styles.cmtImg} />
+                    <Image source={{ uri:"https://via.placeholder.com/150"}} style={styles.cmtImg} />
+                    <Text style={styles.date}>{formatDateFromArray(item.createdAt)}</Text>
                 </TouchableOpacity>
             )}
             {!isShopOwner && (
@@ -88,11 +97,18 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
                     onClose={() => setModalVisible(false)}
                 />
             )}
-        </View>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
+    date: {
+        fontSize: 14,
+        color: "#555",
+        left:16,
+        bottom: 8,
+    },
+
     card: {
         overflow: 'hidden',
         width: '100%', // Đặt chiều rộng cho card
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         top: 4,
-        left:10
+        left:16
     },
     price: {
         fontSize: 16,
@@ -138,6 +154,7 @@ const styles = StyleSheet.create({
         margin:10,
     },
     content:{
+        top:-8, 
         flexWrap: 'wrap',
     },
 

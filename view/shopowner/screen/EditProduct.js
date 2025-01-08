@@ -1,36 +1,29 @@
 import {Animated, Image, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import React, {useState} from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const EditProduct=({ route ,navigation})=>{
     const {item}  = route.params;
-    const [isAvailable, setIsAvailable] = useState(true);
-    const toggleSwitch = () => {
-        setIsAvailable((prevState) => !prevState);
-
-    };
-
     const [text, setText] = useState('');
     const handleChangeText = (inputText) => {
         setText(inputText);
     };
 
     return (
-        <View>
+        <SafeAreaView>
             <View style={{height:'100%',backgroundColor:'white',top:16}}>
                 <View style={[styles.row,styles.info,]}><Text>Ảnh món</Text><Image source={item.img} style={[styles.image,{height:50,width:50}]}></Image></View>
                 <View style={[styles.row,styles.info]}><Text>Tên món</Text><Text>{item.name}</Text></View>
                 <View style={[styles.row,styles.info]}><Text>Giá</Text><Text>{item.price}</Text></View>
-                <View style={[styles.row,styles.info]}><Text>Danh mục</Text><Text>Bánh</Text></View>
-                <View style={[styles.row,styles.info]}><Text>Lịch bán</Text><TouchableOpacity><Text>{item.name}</Text></TouchableOpacity></View>
+                <View style={[styles.row,styles.info]}><Text>Danh mục</Text><Text>{item.categoryName}</Text></View>
                 <View style={[styles.row,styles.info]}>
-                    <Text>Còn món</Text>
+                    <Text >Còn hàng</Text>
                     <Switch
                         trackColor={{ false: "#767577", true: "#4cd137" }}
                         thumbColor={'white'}
-                        onValueChange={toggleSwitch}
-                        value={isAvailable}
+                        value={item.quantity > 0 ? true : false}
                         style={{
-                            transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
+                            transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }], 
                         }}
                     />
                 </View>
@@ -39,7 +32,7 @@ const EditProduct=({ route ,navigation})=>{
                     <TextInput
                     style={styles.input}
                     onChangeText={handleChangeText}
-                    value={text}
+                    value={item.description}
                     placeholder="Không bắt buộc"
                     />
                 </View>
@@ -54,7 +47,7 @@ const EditProduct=({ route ,navigation})=>{
                     <Text style={{color:"white",fontSize:16,textAlign:'center'}}>Lưu</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );}
 
 

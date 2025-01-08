@@ -6,25 +6,6 @@ import axios from 'axios';
 import { getShopById } from '../../../api/adminApi';
 
 const Home = ({navigation,route}) => {
-    // const  {id } = route.params;
-
-    // const [shop, setShop] = useState({});
-    // useEffect(() => {
-    //     const fetchShop = async (id) => {
-    //         try {
-    //             const shopData = await getShopById(id); // Gọi API để lấy dữ liệu shop
-    //             setShop(shopData); // Cập nhật state shop
-        
-    //         } catch (error) {
-    //             console.error("Error fetching shop data:", error);
-    //         }
-    //     };
-
-    //     if (id) { // Chỉ gọi API nếu id tồn tại
-    //         fetchShop(id);
-    //     }
-    // }, [id]); // useEffect chạy lại khi id thay đổi
-
 
     return (
         <SafeAreaView>
@@ -53,7 +34,7 @@ const Home = ({navigation,route}) => {
                         />
                         <Text style={styles.funcName}>Đơn hàng</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.function]}>
+                    <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Rating')}>
                         <Image
                             source={require("./../../../assets/img/star.png")}
                             style={styles.image}

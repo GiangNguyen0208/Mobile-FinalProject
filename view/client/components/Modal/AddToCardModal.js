@@ -35,7 +35,7 @@ const AddToCartModal = ({ item, visible, onClose }) => {
                             <View style={styles.info}>
                                 <Text style={styles.name}>{item.name}</Text>
                                 <View style={[styles.priceContainer, styles.row]}>
-                                    <Text style={styles.price}>{item.price.toFixed(2)} đ</Text>
+                                    <Text style={styles.price}>{item.price} đ</Text>
                                     <View style={styles.row}>
                                         <TouchableOpacity onPress={decreaseQuantity}>
                                             <AntDesign name="minussquareo" style={[indexSt.taitle, styles.alignSelf]} color="#E95322" />

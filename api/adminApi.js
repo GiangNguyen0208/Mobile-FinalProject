@@ -11,7 +11,17 @@ export const getShopById = async (id) => {
     return response.data;
 }
 
-export const getListProduct = async () => {
-    const response = await axiosInstance.get("/products/listProduct");
+export const getListProductByShopName = async (name) => {
+    const response = await axiosInstance.get("/products/listProduct/shop/"+name);
+    return response.data;
+  }
+
+  export const getListCategoryByShopId = async (id) => {
+    const response = await axiosInstance.get("/shop/"+id+"/categories");
+    return response.data;
+  }
+
+  export const getListCommentByShopId = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
     return response.data;
   }
