@@ -1,12 +1,12 @@
 import {FlatList, StyleSheet, Text, TextInput, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
-import Button from "../../components/Button";
+
 import ButtonMyOrder from "../../components/ButtonMyOrderAccept";
 import ButtonMyOrderRefused from "../../components/ButtonMyOrderRefused";
 import ButtonMyOrderAccept from "../../components/ButtonMyOrderAccept";
-import COLOR from "../../../../constants/COLORS";
+
 import ButtonDriver from "../../components/ButtonDriver";
-import COLORS from "../../../../constants/COLORS";
+
 import ButtonRemove from "../../components/ButtonRemove";
 
 

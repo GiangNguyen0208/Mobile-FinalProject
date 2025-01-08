@@ -1,4 +1,5 @@
 
+
 import React from 'react'; 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
 import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js'; 
@@ -9,6 +10,7 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
+
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 
 const Stack = createNativeStackNavigator();
@@ -26,7 +28,7 @@ const AppNavigator = ({ isLoggedIn, role }) => {
               <Stack.Screen name="ShopOwner" component={ShopScreen} />
             )}
             {role === 'USER' && (
-              <Stack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
+              <Stack.Screen name="User" component={BottomTabNavigation} />
             )}
           </>
         ) : (

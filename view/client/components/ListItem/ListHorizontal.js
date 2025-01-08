@@ -19,7 +19,7 @@ const ListHorizontal = ({ items, onItemPress }) => {
         <FlatList
             data={items}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}
