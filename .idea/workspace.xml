@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -94,13 +94,6 @@
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -117,6 +110,11 @@
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
       <workItem from="1735180260050" duration="8000" />
+      <workItem from="1736073926762" duration="5973000" />
+      <workItem from="1736079921338" duration="774000" />
+      <workItem from="1736084891074" duration="2922000" />
+      <workItem from="1736087899657" duration="4371000" />
+      <workItem from="1736126484066" duration="4226000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -145,6 +143,11 @@
             <State />
           </value>
         </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
@@ -160,6 +163,12 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/App.js</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
