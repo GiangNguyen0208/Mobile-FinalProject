@@ -9,25 +9,25 @@ import RelatedFoodScreen from './foodRelated';
 import RelatedShopScreen from './shopRelated';
 
 const ProductDetail = () => {
-    const [selectedOption, setSelectedOption] = useState('foodRelated');
-    const route = useRoute();
-    const { item } = route.params || {}; // Lấy dữ liệu item từ params
+  const [selectedOption, setSelectedOption] = useState('foodRelated');
+  const route = useRoute();
+  const { item } = route.params || {}; // Lấy dữ liệu item từ params
 
-    const navRoutes = [
-        { key: 'foodRelated', title: 'Món Ăn Liên Quan' },
-        { key: 'ShopRelated', title: 'Cửa Hàng Liên Quan' },
-    ];
+  const navRoutes = [
+    { key: 'foodRelated', title: 'Món Ăn Liên Quan' },
+    { key: 'ShopRelated', title: 'Cửa Hàng Liên Quan' },
+  ];
 
-    const renderContent = () => {
-        switch (selectedOption) {
-            case 'foodRelated':
-                return <RelatedFoodScreen itemId={item.id} />;
-            case 'ShopRelated':
-                return <RelatedShopScreen itemId={item.id} />;
-            default:
-                return <RelatedFoodScreen itemId={item.id} />;
-        }
-    };
+  const renderContent = () => {
+    switch (selectedOption) {
+      case 'foodRelated':
+        return <RelatedFoodScreen categoryId={item?.categoryId} />;
+      case 'ShopRelated':
+        return <RelatedShopScreen categoryId={item?.categoryId} />;
+      default:
+        return <RelatedFoodScreen categoryId={item?.categoryId} />;
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -54,27 +54,25 @@ const ProductDetail = () => {
           ) : (
             <Text style={styles.noDetails}>Không có thông tin chi tiết sản phẩm.</Text>
           )}
-          
+
           <View style={styles.navContainer}>
             {navRoutes.map((route) => (
-                <TouchableOpacity
-                    key={route.key}
-                    style={[styles.navItem, selectedOption === route.key && styles.activeNavItem]}
-                    onPress={() => setSelectedOption(route.key)}
-                >
-                    <Text style={[styles.navText, selectedOption === route.key && styles.activeNavText]}>
-                    {route.title}
-                    </Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                key={route.key}
+                style={[styles.navItem, selectedOption === route.key && styles.activeNavItem]}
+                onPress={() => setSelectedOption(route.key)}
+              >
+                <Text style={[styles.navText, selectedOption === route.key && styles.activeNavText]}>
+                  {route.title}
+                </Text>
+              </TouchableOpacity>
             ))}
           </View>
-          
-          {/* Render data */}
-          {renderContent()} 
 
+          {/* Render content */}
+          {renderContent()}
         </View>
       </ScrollView>
-
     </View>
   );
 };
@@ -159,14 +157,14 @@ const styles = StyleSheet.create({
     borderBottomColor: 'transparent',
   },
   activeNavItem: {
-    borderBottomColor: '#000',  // Khi tab được chọn, thêm đường viền dưới
+    borderBottomColor: '#000',
   },
   navText: {
     fontSize: 16,
     color: '#555',
   },
   activeNavText: {
-    color: '#000',  // Khi tab được chọn, đổi màu chữ
+    color: '#000',
   },
 });
 
