@@ -22,7 +22,7 @@ const AppNavigator = ({ isLoggedIn, role }) => {
               <Stack.Screen name="ShopOwner" component={ShopScreen} />
             )}
             {role === 'USER' && (
-              <Stack.Screen name="BottomTabNavigation" component={BottomTabNavigation} />
+              <Stack.Screen name="User" component={BottomTabNavigation} />
             )}
           </>
         ) : (

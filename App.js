@@ -1,28 +1,37 @@
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context'; // SafeAreaProvider đã được giữ lại
-import AdminScreen from './view/admin/screen/AdminScreen';
-import EditProfile from './view/admin/screen/EditProfile';
-import Setting from './view/admin/screen/Setting';
-import { NavigationContainer } from '@react-navigation/native'; // NavigationContainer
-import { createStackNavigator } from '@react-navigation/stack'; // createStackNavigator
 
-// Khai báo Stack Navigator
-const Stack = createStackNavigator();
+
+import React, { useContext, useEffect } from 'react';
+import { NativeRouter } from 'react-router-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { AuthProvider, AuthContext } from './view/context/Auth/AuthContext'; // Đảm bảo AuthProvider và AuthContext được import đúng
+import AppNavigator from './routes';
 
 
 export default function App() {
-    return (
-        <SafeAreaProvider>
-            {/* Đảm bảo NavigationContainer bao bọc toàn bộ ứng dụng */}
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="AdminScreen">
-                    {/* Các màn hình đã được khai báo đúng tên và component */}
-                    <Stack.Screen name="AdminScreen" component={AdminScreen} />
-                    <Stack.Screen name="EditProfile" component={EditProfile} />
-                    <Stack.Screen name="Setting" component={Setting} />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </SafeAreaProvider>
-    );
+
+  return (
+    <SafeAreaProvider>
+      <AuthProvider>
+        <MainApp />
+      </AuthProvider>
+    </SafeAreaProvider>
+  );
 }
 
+function MainApp() {
+  const { resetAuth, isLoggedIn, role } = useContext(AuthContext);
+
+  // KHÔNG ĐƯỢC XÓA, NẾU ĐĂNG NHẬP LỖI => KHÔNG LOGOUT ĐƯỢC => MỞ LẠI CODE CHẠY LẠI CHƯƠNG TRÌNH ĐỂ LOGIN LẠI.
+  // useEffect(() => {
+  //   resetAuth();
+  // }, [resetAuth]);
+
+  console.log("isLoggedIn:", isLoggedIn, "role:", role);
+
+  return (
+    <NativeRouter>
+      <AppNavigator isLoggedIn={isLoggedIn} role={role} />
+    </NativeRouter>
+  );
+}
