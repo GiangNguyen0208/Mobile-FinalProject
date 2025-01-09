@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet, Image, ScrollView, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../../api/Firebase'; // Firebase config
+import { storage } from '../../../api/firebaseConfig'; // Firebase config
 import { Picker } from '@react-native-picker/picker';
 import { getListCategoryByShopId } from '../../../api/shopApi';
 import { useAuth } from '../../context/Auth/AuthContext';
@@ -51,18 +51,6 @@ const AddProduct = () => {
     fetchCategories();
   }, [shopId]);
 
-  // Chọn ảnh
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
-  };
 
   // Upload ảnh lên Firebase
   const uploadImageToFirebase = async () => {
