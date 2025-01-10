@@ -9,13 +9,10 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
-<<<<<<< HEAD
+
 import ProductDetail from '../view/client/pages/shop/ProductDetail.js'; 
 import Default from '../view/client/layout/default.js'; 
 
-
-=======
->>>>>>> origin/21130338
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
