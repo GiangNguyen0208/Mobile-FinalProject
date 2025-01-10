@@ -1,17 +1,17 @@
-import { TouchableOpacity, View, StyleSheet, FlatList, Text } from "react-native";
+import { TouchableOpacity, View, StyleSheet, FlatList, Text, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getListProductByShopId, getListCategoryByShopId } from "../../../api/shopApi";
+import { getListProductByShopId, getListCategoryByShopId, deleteCategory } from "../../../api/shopApi";
 import { useAuth } from "../../context/Auth/AuthContext";
-import { useNavigation } from '@react-navigation/native';  // Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 
 const Menu = () => {
     const [selectedCategory, setSelectedCategory] = useState('food');
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]); 
     const { shopId } = useAuth();
-    const navigation = useNavigation();  // Initialize useNavigation hook
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchProductsAndCategories = async () => {
@@ -30,12 +30,37 @@ const Menu = () => {
     }, [shopId]);
 
     const handleAddProduct = () => {
-        navigation.navigate('AddProduct');  // Điều hướng đến AddProduct khi nhấn "Thêm món"
+        navigation.navigate('AddProduct');
+    };
+
+    const handleDeleteCategory = (categoryId) => {
+        // Hiển thị hộp thoại xác nhận trước khi xóa
+        Alert.alert(
+            "Xóa danh mục",
+            "Bạn có chắc chắn muốn xóa danh mục này?",
+            [
+                { text: "Hủy", style: "cancel" },  // Thoát
+                { 
+                    text: "Xóa",  // Thực hiện xóa
+                    onPress: async () => {
+                        try {
+                            await deleteCategory(categoryId);  // Gọi API để xóa danh mục
+                            // Tải lại danh sách category sau khi xóa thành công
+                            const categoryData = await getListCategoryByShopId(shopId);
+                            setCategory(categoryData.result || []);
+                            Alert.alert("Thành công", "Danh mục đã được xóa.");
+                        } catch (error) {
+                            Alert.alert("Lỗi", "Không thể xóa danh mục. Vui lòng thử lại.");
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const renderFood = ({ item }) => (
         <TouchableOpacity 
-            onPress={() => navigation.navigate('DetailProductShopScreen', { item })} // Điều hướng đến ProductDetail
+            onPress={() => navigation.navigate('DetailProductShopScreen', { item })}
             style={{ padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }}
         >
             <ItemCard 
@@ -49,18 +74,30 @@ const Menu = () => {
     );
 
     const renderCategory = ({ item }) => (
-        <View style={{ padding: 10, borderBottomWidth: 1 }}>
-            <Text>{item.name}</Text>
+        <View style={styles.categoryCard}>
+            <Text style={styles.categoryName}>{item.name}</Text>
+            <TouchableOpacity 
+                style={styles.deleteButton}
+                onPress={() => handleDeleteCategory(item.id)}  // Gọi hàm xóa khi nhấn nút
+            >
+                <Text style={styles.deleteButtonText}>Xóa</Text>
+            </TouchableOpacity>
         </View>
     );
 
     return (
         <SafeAreaView>
             <View style={[styles.row, { backgroundColor: 'white' }]}>
-                <TouchableOpacity style={[styles.funcContainer, styles.row, selectedCategory === 'food' && styles.selected]} onPress={() => setSelectedCategory('food')}>
+                <TouchableOpacity 
+                    style={[styles.funcContainer, styles.row, selectedCategory === 'food' && styles.selected]} 
+                    onPress={() => setSelectedCategory('food')}
+                >
                     <Text style={[styles.funcName, selectedCategory === 'food' && { color: '#E95322' }]}>Món</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.funcContainer, styles.row, selectedCategory === 'category' && styles.selected]} onPress={() => setSelectedCategory('category')}>
+                <TouchableOpacity 
+                    style={[styles.funcContainer, styles.row, selectedCategory === 'category' && styles.selected]} 
+                    onPress={() => setSelectedCategory('category')}
+                >
                     <Text style={[styles.funcName, selectedCategory === 'category' && { color: '#E95322' }]}>Danh mục</Text>
                 </TouchableOpacity>
             </View>
@@ -68,7 +105,7 @@ const Menu = () => {
             <FlatList
                 data={selectedCategory === 'food' ? products : category}
                 renderItem={selectedCategory === 'food' ? renderFood : renderCategory}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item) => item.id.toString()}  // Dùng id cho khóa để tối ưu
                 style={{ height: '100%' }}
                 contentContainerStyle={{ paddingBottom: 120 }}
             />
@@ -90,6 +127,10 @@ const styles = StyleSheet.create({
     selected: { borderBottomWidth: 1, borderBottomColor: '#E95322' },
     btnContainer: { width: '100%', backgroundColor: 'white', alignItems: 'center', height: 120, position: 'absolute', bottom: 0 },
     addFoodBtn: { width: '95%', paddingVertical: 8, marginVertical: 14, backgroundColor: '#E95322', borderRadius: 8 },
+    categoryCard: { padding: 15, borderBottomWidth: 1, borderColor: '#ccc', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    categoryName: { fontSize: 16, fontWeight: 'bold' },
+    deleteButton: { paddingVertical: 5, paddingHorizontal: 10, backgroundColor: '#E95322', borderRadius: 5 },
+    deleteButtonText: { color: 'white', fontSize: 14 },
 });
 
 export default Menu;

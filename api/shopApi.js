@@ -50,6 +50,16 @@ export const deleteProduct = async (productId) => {
     }
 };
 
+export const deleteCategory = async (categoryId) => {
+    try {
+        const response = await axiosInstance.delete(`categories/${categoryId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error deleting image:', error);
+        throw error;
+    }
+};
+
 // Lấy ra danh sách hình ảnh của sản phẩm
 export const getListImageByProductID = async (productID) => {
     try {
