@@ -25,3 +25,10 @@ export const getListProductByShopName = async (name) => {
     const response = await axiosInstance.get("/comments/list/shop/"+id);
     return response.data;
   }
+
+  export const getListShop = async () => {
+    const response = await axiosInstance.get("/admin/shop/list");
+    return response.data;
+  }
+
+  

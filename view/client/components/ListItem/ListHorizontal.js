@@ -1,37 +1,46 @@
 import React from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
-import Item from './Item'; // Import the Item component
+import ItemCard from './ItemCard'; // Import the Item component
 
-const ListHorizontal = ({ items, onItemPress }) => {
-
-    const renderItem = ({ item }) => (
-        <Item
-            image={item.image}
-            title={item.title}
-            description={item.description}
-            date={item.date}
-            rating={item.rating}
-            onPress={() => onItemPress(item)} // Pass the onPress function
-        />
-    );
+const ListHorizontal = ({navigation, items ,type}) => {
 
     return (
-        <FlatList
-            data={items}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.listContainer}
-            ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
-        />
+        <View style={styles.container}>
+            <FlatList
+                data={items}
+                renderItem={({ item }) => (
+                    <View style={styles.card}>
+                        <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false} />
+                    </View>
+                )}
+                keyExtractor={(_, index) => index.toString()}
+                horizontal={true}  // Thiết lập chiều ngang
+                showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
+                contentContainerStyle={styles.flatList}  // Tùy chỉnh style của FlatList
+            />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    listContainer: {
-        paddingVertical: 10,
+    container: {
+        flex: 1,
+        marginBottom: 10, // Khoảng cách dưới của danh sách
+    },
+    flatList: {
+        paddingHorizontal: 8, // Khoảng cách trái phải cho FlatList
+    },
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        elevation: 3,
+        overflow: 'hidden',
+        width: 300,
+        height:110,
+        margin: 8,
+        justifyContent:'center'
     },
 });
+
 
 export default ListHorizontal;

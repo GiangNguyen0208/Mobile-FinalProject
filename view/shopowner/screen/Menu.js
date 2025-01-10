@@ -1,9 +1,7 @@
 import { TouchableOpacity, View, StyleSheet, FlatList, Text, Modal } from "react-native";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
-import CartIcon from "../../client/components/Cart/CartIcon";
-import ProductList from "../../client/components/ListItem/ProductList";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getListProductByShopName, getListCategoryByShopId } from "../../../api/adminApi";
 
@@ -57,7 +55,7 @@ const Menu = ({ navigation }) => {
 
     const handleAddFood = () => {
         console.log("Thêm món mới");
-        // Thêm logic để xử lý khi người dùng nhấn "Thêm món"
+       
     };
     
     const handleAddCategory = () => {
@@ -68,12 +66,13 @@ const Menu = ({ navigation }) => {
 
    
     const renderFood = ({ item }) => (
-        <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={true}></ItemCard>
+        <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={false}></ItemCard>
     );
 
     const renderCategory = ({ item }) => (
-        <View style={{ padding: 10, borderBottomWidth: 1 }}>
+        <View style={[{ padding: 16 ,flexDirection: 'row',justifyContent:"space-between"}]}>
             <Text>{item.name}</Text>
+            <TouchableOpacity><Ionicons name="trash-bin" size={24} color="#E95322" /></TouchableOpacity>
         </View>
     );
 
@@ -113,7 +112,6 @@ const Menu = ({ navigation }) => {
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
-
     },
     funcContainer: {
         height: 56,

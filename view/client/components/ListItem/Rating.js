@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemCard from './ItemCard';
 import { getListCommentByShopId } from "../../../../api/adminApi";
 
-export default function VoucherList({ navigation }) {
+export default function Rating({ navigation }) {
     const [comments, setComments] = useState([]);
     const shopId = 4;
     useEffect(() => {
