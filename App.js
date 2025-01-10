@@ -1,11 +1,13 @@
+
+
+
 import React, { useContext, useEffect } from 'react';
 import { NativeRouter } from 'react-router-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { createStackNavigator } from '@react-navigation/stack';
+
 import { AuthProvider, AuthContext } from './view/context/Auth/AuthContext'; // Đảm bảo AuthProvider và AuthContext được import đúng
 import AppNavigator from './routes';
 
-const Stack = createStackNavigator();
 export default function App() {
   return (
     <SafeAreaProvider>
@@ -31,7 +33,6 @@ function MainApp() {
       <AppNavigator isLoggedIn={isLoggedIn} role={role} />
     </NativeRouter>
   );
-
 }
 
 

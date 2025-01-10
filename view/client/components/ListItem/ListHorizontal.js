@@ -5,20 +5,32 @@ import ItemCard from './ItemCard'; // Import the Item component
 const ListHorizontal = ({navigation, items ,type}) => {
 
     return (
-        <View style={styles.container}>
-            <FlatList
-                data={items}
-                renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false} />
-                    </View>
-                )}
-                keyExtractor={(_, index) => index.toString()}
-                horizontal={true}  // Thiết lập chiều ngang
-                showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
-                contentContainerStyle={styles.flatList}  // Tùy chỉnh style của FlatList
-            />
-        </View>
+
+        // <View style={styles.container}>
+        //     <FlatList
+        //         data={items}
+        //         renderItem={({ item }) => (
+        //             <View style={styles.card}>
+        //                 <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false} />
+        //             </View>
+        //         )}
+        //         keyExtractor={(_, index) => index.toString()}
+        //         horizontal={true}  // Thiết lập chiều ngang
+        //         showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
+        //         contentContainerStyle={styles.flatList}  // Tùy chỉnh style của FlatList
+        //     />
+        // </View>
+
+        <FlatList
+            data={items}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.listContainer}
+            ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
+        />
+
     );
 };
 

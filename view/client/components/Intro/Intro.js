@@ -24,11 +24,17 @@ const Intro = ({ items, onItemPress }) => {
     }));
 
     // Calculate number of rows needed (5 items per row)
+    const itemsToDisplay = items.slice(0, 10);
+
     const itemsPerRow = 5;
     const rows = [];
     
-    for (let i = 0; i < categoriesWithImages.length; i += itemsPerRow) {
-        rows.push(categoriesWithImages.slice(i, i + itemsPerRow));
+
+    // for (let i = 0; i < categoriesWithImages.length; i += itemsPerRow) {
+    //     rows.push(categoriesWithImages.slice(i, i + itemsPerRow));
+
+    // }
+    for (let i = 0; i < items.length; i += itemsPerRow) {
     }
 
     return (
