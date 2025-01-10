@@ -2,7 +2,21 @@ import React from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
 import ItemCard from './ItemCard'; // Import the Item component
 
-const ListHorizontal = ({navigation, items ,type}) => {
+// <<<<<<< HEAD
+// const ListHorizontal = ({navigation, items ,type}) => {
+// =======
+const ListHorizontal = ({ items, onItemPress }) => {
+
+    const renderItem = ({ item }) => (
+        <Item
+            image={item.base64Image}
+            title={item.title}
+            description={item.description}
+            date={item.date}
+            rating={item.rating}
+            onPress={() => onItemPress(item)} // Pass the onPress function
+        />
+    );
 
     return (
 

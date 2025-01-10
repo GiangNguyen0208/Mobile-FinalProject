@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView ,StyleSheet,TouchableOpacity,FlatList} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView ,StyleSheet,TouchableOpacity,FlatList,ActivityIndicator} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import OnBoarding from '../components/Onboarding/Onboarding';
 import Intro from '../components/Intro/Intro';
 import SearchBox from '../components/Search';
 import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
-import foodData from '../partials/Food/food';
-import optionData from '../partials/Option/options';
-import ListVertical from '../components/ListItem/ListVertical';
+import { getAllCategory, getAllProduct } from '../../../api/systemApi';
 import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
 
@@ -16,6 +14,10 @@ import { getCategoryList } from "../../../api/userApi";
 import { getListProductByShopName ,getListShop} from "../../../api/adminApi";
 
 import { getAllCategory, getAllProduct } from '../../../api/systemApi';
+
+import ProductDetail from '../pages/detail/detail';
+import slides from '../partials/Slide/slide';
+
 
 
 const Default = () => {
@@ -28,14 +30,8 @@ const Default = () => {
   const [foodData, setFoodData] = useState([]); 
   const [categoryData, setCategoryData] = useState([]);
 
+  const [loading, setLoading] = useState(true); // Thêm trạng thái loading
 
-  const navRoutes = [
-    { key: 'home', name: 'Default', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline' },
-    { key: 'orders', name: 'Orders', title: 'Orders', focusedIcon: 'clipboard-list', unfocusedIcon: 'clipboard-list-outline' },
-    { key: 'likes', name: 'Likes', title: 'Wishlist', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-    { key: 'notifications', name: 'Notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
-    { key: 'info', name: 'Info', title: 'My Personal', focusedIcon: 'account', unfocusedIcon: 'account-outline' },
-  ];
 
 // 
 //   const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
@@ -83,37 +79,38 @@ const Default = () => {
       try {
         const data = await getAllProduct();
         const processedData = data.result.map(item => {
-          const base64Image = item.imageUrl
-              ? `data:image/png;base64,${item.imageUrl}`
-              : null;
+          const base64Image = item.images && item.images.length > 0 && item.images[0].imageUrl
+          ? `data:image/jpeg;base64,${item.images[0].imageUrl}`
+          : null;
           return { ...item, base64Image };
         });
         setFoodData(processedData); 
+        setLoading(false); // Đặt trạng thái loading thành false khi dữ liệu đã được tải
       } catch (error) {
         console.error("Error fetching product data:", error);
+        setLoading(false); // Đặt trạng thái loading thành false khi có lỗi
       }
     };
+    
     const fetchCategoryData = async () => {
       try {
         const data = await getAllCategory();
         setCategoryData(data); 
       } catch (error) {
-        console.error("Error fetching product data:", error);
+        console.error("Error fetching category data:", error);
       }
-    }
+    };
     fetchFoodData();
     fetchCategoryData();
   }, []);
   
-
 
   useEffect(() => {
     setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
   }, [route.name]);
 
   const handleItemPress = (item) => {
-    // console.log(item.base64Image); 
-    console.log('Item pressed:', item.name);
+    navigation.navigate('ProductDetail', { item }); // Chuyển item vào route
   };
 
   const handleSearch = (query) => {
@@ -132,27 +129,26 @@ const Default = () => {
       ) : (
         <ScrollView style={styles.containerScrollView}>
           <View style={styles.contentContainer}>
-            {/* Search */}
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
 
-            {/* OnBoarding */}
-            <OnBoarding />
+            <OnBoarding slides={slides}/>
+
 
             {/* Intro */}
 {/*
             <Intro items={category} onItemPress={handleItemPress} />
 */}
+            {/* List Horizontal */}
+
             <Intro items={foodData} onItemPress={handleItemPress} />
 
 
-            {/* List Horizontal */}
             <View style={styles.collectionHeader}>
               <Text style={[styles.collectionTitle,{color:'#E95322',left:16}]}>FLASH SALE</Text>
               <Text style={styles.viewAllText}>View All</Text>
             </View>
             <ListHorizontal items={products} type={'product'} navigation={navigation} ></ListHorizontal>
 
-            {/* List Items */}
             <View style={styles.container}>
 {/* 
                 <View style={[styles2.row, { backgroundColor: 'white' }]}>
@@ -183,14 +179,20 @@ const Default = () => {
                 /> */}
                 
 
-              {foodData.length > 0 ? (
+              {/* {foodData.length > 0 ? ( */}
+
+              {loading ? (
+                <ActivityIndicator size="large" color="#0000ff" />
+              ) : foodData.length > 0 ? (
                 foodData.map((item) => (
                   <Item
                     key={item.id}
-                    image={item.base64Image} // Thay 'image' bằng 'images'
-                    title={item.name} // Thay 'title' bằng 'name'
-                    description={item.des} // Thay 'description' bằng 'des'
-                    date={item.date} // Đảm bảo trường 'date' tồn tại hoặc loại bỏ nếu không cần thiết
+                    image={item.base64Image} 
+                    title={item.name}
+                    description={item.des} 
+                    price={item.price}
+                    rating={item.rating}
+                    onPress={() => handleItemPress(item)}
                   />
                 ))
               ) : (
@@ -201,7 +203,6 @@ const Default = () => {
           </View>
         </ScrollView>
       )}
-
     </SafeAreaView>
   );
 };

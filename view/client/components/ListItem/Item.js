@@ -1,28 +1,40 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import StarRender from "../../components/Rating/StartRender"
+// <<<<<<< HEAD
+// import StarRender from "../../components/Rating/StartRender"
 
 
-// const Item = ({ image, title, description, date, rating,onPress }) => {
-//     // Ensure image is a valid string URL or a local image
-//     const imageSource = typeof image === 'string' ? { uri: image } : image;
+// // const Item = ({ image, title, description, date, rating,onPress }) => {
+// //     // Ensure image is a valid string URL or a local image
+// //     const imageSource = typeof image === 'string' ? { uri: image } : image;
+// =======
+import Rating from '../Rating/StartRender';
 
-const Item = ({ image, title, description, date, onPress }) => {
+
+const Item = ({ image, title, description, price, rating, onPress }) => {
     const imageSource = image ? { uri: image } : null; // Dùng base64Image nếu có
 
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             {imageSource ? (
-                <Image source={imageSource} style={styles.image} />
+                <Image 
+                    source={{ uri: image }} 
+                    style={styles.image} 
+                />
             ) : (
                 <Text>No Image Available</Text> // Trường hợp không có hình ảnh
             )}
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>
-                <StarRender rating={rating}></StarRender>
-                <Text style={styles.date}>{date}</Text>
+
+                {/* <StarRender rating={rating}></StarRender>
+                <Text style={styles.date}>{date}</Text> */}
+
+                <Text style={styles.date}>{price}</Text>
+                <Rating rating={rating}/>
+
             </View>
         </TouchableOpacity>
     );

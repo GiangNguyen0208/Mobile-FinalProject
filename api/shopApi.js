@@ -1,33 +1,48 @@
 import axiosInstance from './axiosInstance';
 
-// Upload image
-export const uploadImageProduct = async (productId, imageFile) => {
-    const formData = new FormData();
-    formData.append("image", {
-        uri: imageFile.uri, // URI của file hình ảnh
-        type: imageFile.type, // Loại hình ảnh, ví dụ 'image/jpeg'
-        name: imageFile.fileName, // Tên file hình ảnh
-    });
-
+// Add Product
+export const addProduct = async (productData) => {
     try {
-        const response = await axiosInstance.post(`/product/images/upload/${productId}`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data", // Chú ý content type là multipart/form-data khi upload file
-            },
-        });
-
-        return response.data;
+      const response = await axiosInstance.post('/products/add', productData);
+      return response.data;
     } catch (error) {
-        console.error("Error uploading image:", error);
-        throw error; // Ném lại lỗi nếu có
+      console.error('Error adding product:', error);
+      throw error;
     }
-};
+  };
 
+  const saveImagesToDatabase = async (productId, imageUrls) => {
+    try {
+      const imageRecords = await axiosInstance.post(`/product/images/upload/${productId}`, { imageUrls });
+      return imageRecords;
+    } catch (error) {
+      console.error('Error saving image records to DB:', error);
+      throw error;
+    }
+  };
+
+
+
+export const getListCommentByShopId = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  };
+
+
+export const getListProductByShopId = async (shopId) => {
+    const response = await axiosInstance.get(`/shop/${shopId}/products`);
+    return response.data;
+  }
+
+  export const getListCategoryByShopId = async (shopId) => {
+    const response = await axiosInstance.get(`/shop/${shopId}/categories`);
+    return response.data;
+  }
 
 // Xóa hình ảnh sản phẩm
-export const deleteImageProduct = async (imageId) => {
+export const deleteProduct = async (productId) => {
     try {
-        const response = await axiosInstance.delete(`/api/v1/product/images/${imageId}`);
+        const response = await axiosInstance.delete(`products/${productId}`);
         return response.data;
     } catch (error) {
         console.error('Error deleting image:', error);
@@ -36,6 +51,32 @@ export const deleteImageProduct = async (imageId) => {
 };
 
 // Lấy ra danh sách hình ảnh của sản phẩm
-export const getListProduct = async () => {
-    
+export const getListImageByProductID = async (productID) => {
+    try {
+        const response = await axiosInstance.get(`/product/images/show-list/${productID}`);
+        return response.data;
+      } catch (error) {
+        console.error('Error during API call:', error);
+        throw error;
+      }
+};
+
+export const updateDataProduct = async (productId, dataUpdate) => {
+    try {
+        const response = await axiosInstance.put(`/products/${productId}`, dataUpdate);
+        return response.data;
+      } catch (error) {
+        console.error('Error during API call:', error);
+        throw error;
+      }
+};
+
+export const getProductById = async (productId) => {
+    try {
+        const response = await axiosInstance.get(`/products/${productId}`);
+        return response.data;
+      } catch (error) {
+        console.error('Error during API call:', error);
+        throw error;
+      }
 }

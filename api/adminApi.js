@@ -5,9 +5,10 @@ export const getAllUser = async () => {
     const response = await axiosInstance.get("admin/user/list");
     return response.data;
 }
-export const getShopById = async (id) => {
-    const response = await axiosInstance.get("admin/shop/id",id ,{
+// export const getShopById = async (id) => {
+//     const response = await axiosInstance.get("admin/shop/id",id ,{
         
+<<<<<<< HEAD
     });
     return response.data;
 }
@@ -36,6 +37,11 @@ export const getListProductByShopName = async (name) => {
   
 =======
 };
+=======
+//     });
+//     return response.data;
+// }
+>>>>>>> origin/21130338
 
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
