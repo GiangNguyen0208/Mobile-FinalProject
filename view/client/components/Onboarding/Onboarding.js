@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, View, Animated, Dimensions } from 'react-native';
 
 import OnboardingItem from './OnboardingItem';
 
-export default function OnBoarding({slides}) {
+export default function OnBoarding({images}) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
     const slidesRef = useRef(null);
@@ -18,7 +18,7 @@ export default function OnBoarding({slides}) {
         <View style={styles.container}>
             <View style={styles.flatlistContainer}>
                 <FlatList
-                    data={slides}
+                    data={images}
                     renderItem={({ item }) => <OnboardingItem item={item} />}
                     horizontal
                     showsHorizontalScrollIndicator={false}

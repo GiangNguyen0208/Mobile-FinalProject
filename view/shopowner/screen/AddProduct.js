@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, StyleSheet, Image, ScrollView, Text } from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Text,
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { storage } from '../../../api/firebaseConfig'; // Firebase config
 import { Picker } from '@react-native-picker/picker';
-import { getListCategoryByShopId } from '../../../api/shopApi';
+import { getListCategoryByShopId, addProduct, saveImagesToDatabase } from '../../../api/shopApi';
 import { useAuth } from '../../context/Auth/AuthContext';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { db } from '../../../api/firebaseConfig'; // Firebase Firestore config
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -19,10 +29,11 @@ const AddProduct = () => {
   const [uploading, setUploading] = useState(false);
   const [images, setImages] = useState([]);
 
+  // Chọn nhiều ảnh
   const pickImages = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       quality: 1,
       selectionLimit: 0, // Cho phép chọn nhiều ảnh
     });
@@ -32,93 +43,111 @@ const AddProduct = () => {
     }
   };
 
+  // Lấy danh sách danh mục từ API
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const categoryData = await getListCategoryByShopId(shopId);
         setCategories(categoryData.result || []);
       } catch (error) {
-        if (error.response) {
-          console.error('API error response:', error.response.data); // Data from the server
-        } else if (error.request) {
-          console.error('No response received:', error.request); // No response from the server
-        } else {
-          console.error('Request setup error:', error.message); // Any other errors
-        }
+        console.error('Error fetching categories:', error.message);
       }
     };
 
     fetchCategories();
   }, [shopId]);
 
-
-  // Upload ảnh lên Firebase
-  const uploadImageToFirebase = async () => {
-    if (!image) return null;
-
-    setUploading(true);
-    try {
+  const uploadImagesToFirebase = async (images) => {
+    const uploadedUrls = [];
+    for (const image of images) {
+      if (!image || !image.uri) {
+        console.error('Invalid image:', image);
+        continue; // Bỏ qua ảnh không hợp lệ
+      }
+  
       const fileName = `products/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.jpg`;
       const storageRef = ref(storage, fileName);
+      try {
+        const response = await fetch(image.uri);
+        const blob = await response.blob();
+        await uploadBytes(storageRef, blob);
+        const url = await getDownloadURL(storageRef);
+        uploadedUrls.push(url);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
+    return uploadedUrls;
+  };
+  
+  // Lưu ảnh vào Firestore
+  const saveImageToFirestore = async (productId, imageUrl) => {
+    const foodsRef = doc(db, 'Foods', productId); // Tham chiếu đến bảng Foods và sử dụng ID sản phẩm làm key
+    await setDoc(foodsRef, {
+      key: productId,   // key của sản phẩm
+      value: imageUrl,  // URL của ảnh
+    });
+    console.log('Image data saved to Firestore');
+  };
 
-      const response = await fetch(image);
-      const blob = await response.blob();
-
-      await uploadBytes(storageRef, blob);
-
-      const url = await getDownloadURL(storageRef);
-      return url; 
+  const handleSubmit = async () => {
+    if (images.length === 0) {
+      alert('Vui lòng chọn ít nhất một ảnh!');
+      return;
+    }
+  
+    setUploading(true);
+    try {
+      // Kiểm tra lại các ảnh
+      const validImages = images.filter(image => image && image.uri);
+      if (validImages.length === 0) {
+        alert('Không có ảnh hợp lệ để tải lên!');
+        return;
+      }
+  
+      const imageUrls = await uploadImagesToFirebase(validImages);
+      if (imageUrls.length === 0) {
+        alert('Tải ảnh lên Firebase thất bại!');
+        return;
+      }
+  
+      const productData = {
+        name,
+        description,
+        price: parseFloat(price),
+        quantity: parseInt(quantity, 10),
+        categoryId: category,
+        status,
+      };
+  
+      const response = await addProduct(productData);
+      if (response && response.data) {
+        for (const imageUrl of imageUrls) {
+          await saveImagesToDatabase(response.data.id, imageUrl);
+        }
+  
+        alert('Thêm sản phẩm và ảnh thành công!');
+        setName('');
+        setDescription('');
+        setPrice('');
+        setQuantity('');
+        setImages([]);
+        setCategory('');
+        setStatus('ON_SALE');
+      } else {
+        alert('Thêm sản phẩm thất bại!');
+      }
     } catch (error) {
-      console.error('Error uploading image:', error);
-      return null;
+      console.error('Error submitting product:', error);
+      alert('Đã xảy ra lỗi khi thêm sản phẩm!');
     } finally {
       setUploading(false);
     }
   };
-
-  // Gửi dữ liệu sản phẩm đến server Spring Boot
-  const handleSubmit = async () => {
-    const imageUrl = await uploadImageToFirebase();
-    if (!imageUrl) {
-      alert('Upload ảnh thất bại!');
-      return;
-    }
-
-    const productData = {
-        name,
-        description,
-        price: parseFloat(price),
-        imageUrl, 
-        category, 
-    };
-
-      try {
-        const response = await fetch('http://<YOUR_SPRING_BOOT_SERVER>/api/products', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(productData),
-        });
   
-        if (response.ok) {
-          alert('Thêm sản phẩm thành công!');
-          setName('');
-          setDescription('');
-          setPrice('');
-          setImage(null);
-          setCategory(''); // Reset category
-          setStatus()
-        } else {
-          alert('Thêm sản phẩm thất bại!');
-        }
-      } catch (error) {
-        console.error('Error submitting product:', error);
-      }
-    };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Tên sản phẩm"
@@ -145,8 +174,7 @@ const AddProduct = () => {
         onChangeText={setQuantity}
         keyboardType="numeric"
       />
-      
-      {/* Category Dropdown */}
+
       <Text>Chọn danh mục:</Text>
       <Picker
         selectedValue={category}
@@ -158,7 +186,6 @@ const AddProduct = () => {
         ))}
       </Picker>
 
-      {/* Product Status */}
       <Text>Chọn tình trạng sản phẩm:</Text>
       <Picker
         selectedValue={status}
@@ -168,25 +195,23 @@ const AddProduct = () => {
         <Picker.Item label="SOLD_OUT" value="SOLD_OUT" />
       </Picker>
 
+      <Button title="Chọn ảnh" onPress={pickImages} />
+      <ScrollView horizontal>
+        {images.map((image, index) => (
+          <Image
+            key={index}
+            source={{ uri: image.uri }}
+            style={styles.image}
+          />
+        ))}
+      </ScrollView>
 
-      {/* Image Picker */}
-      {/* <Button title="Chọn ảnh" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={styles.image} />} */}
-
-        <Button title="Chọn ảnh" onPress={pickImages} />
-        {/* Hiển thị tất cả ảnh đã chọn */}
-        <ScrollView horizontal>
-            {images.map((image, index) => (
-            <Image
-                key={index}
-                source={{ uri: image.uri }}
-                style={styles.image}
-            />
-            ))}
-        </ScrollView>
-      
-      <Button title="Thêm sản phẩm" onPress={handleSubmit} disabled={uploading} />
-    </View>
+      <Button
+        title="Thêm sản phẩm"
+        onPress={handleSubmit}
+        disabled={uploading}
+      />
+    </ScrollView>
   );
 };
 
@@ -202,9 +227,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   image: {
-    width: 200,
-    height: 200,
-    marginVertical: 10,
+    width: 100,
+    height: 100,
+    margin: 5,
   },
 });
 

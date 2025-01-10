@@ -34,7 +34,18 @@ const Menu = () => {
     };
 
     const renderFood = ({ item }) => (
-        <ItemCard type={'product'} item={item} isShopOwner={true}></ItemCard>
+        <TouchableOpacity 
+            onPress={() => navigation.navigate('DetailProductShopScreen', { item })} // Điều hướng đến ProductDetail
+            style={{ padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }}
+        >
+            <ItemCard 
+                type={'product'} 
+                item={item}
+                shopId={shopId}
+                isShopOwner={true}>
+                navigation={navigation}
+            </ItemCard>
+        </TouchableOpacity>
     );
 
     const renderCategory = ({ item }) => (

@@ -12,6 +12,7 @@ import Rating from '../view/client/components/ListItem/Rating.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
+import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
+    <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
   </ShopStack.Navigator>
 );
 
