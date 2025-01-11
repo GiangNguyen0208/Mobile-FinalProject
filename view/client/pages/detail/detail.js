@@ -20,11 +20,11 @@ const ProductDetailUser = () => {
   const renderContent = () => {
     switch (selectedOption) {
       case 'foodRelated':
-        return <RelatedFoodScreen categoryId={item?.categoryId} />;
+        return <RelatedFoodScreen item={item} />;
       case 'ShopRelated':
-        return <RelatedShopScreen categoryId={item?.categoryId} />;
+        return <RelatedShopScreen item={item} />;
       default:
-        return <RelatedFoodScreen categoryId={item?.categoryId} />;
+        return <RelatedFoodScreen item={item} />;
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import ItemRelated from './itemRelated';
 import { getProductsByCategory } from '../../../../api/systemApi';
 import { useRoute } from '@react-navigation/native';
@@ -7,48 +7,69 @@ import { useRoute } from '@react-navigation/native';
 const RelatedFoodScreen = () => {
   const [data, setData] = useState([]);
   const route = useRoute();
-  const { categoryId } = route.params || {};
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { item } = route.params || {};
 
   useEffect(() => {
-    const fetchProducts = async (categoryId) => {
+    if (!item?.categoryId) {
+      console.error('Category ID is missing');
+      return; // Nếu không có categoryId, không gọi API
+    }
+  
+    const fetchProducts = async () => {
       try {
-        const response = await getProductsByCategory(categoryId);
-        setData(response.result); // Gán danh sách sản phẩm vào state
+        const response = await getProductsByCategory(item.categoryId);
+        console.log("Product Relative response:", response); // Log dữ liệu API
+        setData(response); // Cập nhật state với dữ liệu
       } catch (error) {
-        console.error("Error fetching Product list data:", error);
+        if (error.response) {
+          console.error("API Error:", error.response.data); // Log lỗi trả về từ server
+          console.error("Status Code:", error.response.status);
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error setting up request:", error.message);
+        }
       }
     };
-    fetchProducts();
-  }, [categoryId]);
-
   
+    fetchProducts();
+  }, [item?.categoryId]);
 
-  if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  }
-
-  if (error) {
-    return <Text style={styles.error}>{error}</Text>;
-  }
+  const handleItemPress = (item) => {
+    navigation.navigate('ProductDetailUser', { item }); // Chuyển item vào route
+  };
 
   return (
-    <FlatList
-      data={data}
-      keyExtractor={(item) => item.id} // Đảm bảo key là duy nhất
-      renderItem={({ item }) => <ItemRelated item={item} />} // Hiển thị sản phẩm
-      ListEmptyComponent={<Text style={styles.emptyText}>Không có sản phẩm nào.</Text>} // Hiển thị khi danh sách rỗng
-    />
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      {data.length > 0 ? (
+        data.map((item) => (
+          <ItemRelated key={item.id} item={item} onPress={() => handleItemPress(item)} />
+        ))
+      ) : (
+        <Text style={styles.emptyText}>Không có sản phẩm nào.</Text>
+      )}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  error: {
-    color: 'red',
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
+    paddingBottom: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  loadingText: {
     fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
+    color: '#333',
   },
   emptyText: {
     fontSize: 16,
