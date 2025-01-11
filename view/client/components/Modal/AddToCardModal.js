@@ -38,7 +38,7 @@ const AddToCartModal = ({ item, visible, onClose }) => {
                                     <Text style={styles.price}>{item.price} đ</Text>
                                     <View style={styles.row}>
                                         <TouchableOpacity onPress={decreaseQuantity}>
-                                            <AntDesign name="minussquareo" style={[indexSt.taitle, styles.alignSelf]} color="#E95322" />
+                                            <AntDesign name="minussquareo" style={[indexSt.title, styles.alignSelf]} color="#E95322" />
                                         </TouchableOpacity>
                                         <Text style={{marginHorizontal:8,alignSelf:'center',fontSize:16}}>{quantity}</Text>
                                         <TouchableOpacity onPress={increaseQuantity}>

@@ -8,9 +8,40 @@ export const getAllUser = async () => {
 // export const getShopById = async (id) => {
 //     const response = await axiosInstance.get("admin/shop/id",id ,{
         
+<<<<<<< HEAD
+    });
+    return response.data;
+}
+
+export const getListProductByShopName = async (name) => {
+    const response = await axiosInstance.get("/products/listProduct/shop/"+name);
+    return response.data;
+  }
+
+  export const getListCategoryByShopId = async (id) => {
+    const response = await axiosInstance.get("/shop/"+id+"/categories");
+    return response.data;
+  }
+
+  export const getListCommentByShopId = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  }
+<<<<<<< HEAD
+
+  export const getListShop = async () => {
+    const response = await axiosInstance.get("/admin/shop/list");
+    return response.data;
+  }
+
+  
+=======
+};
+=======
 //     });
 //     return response.data;
 // }
+>>>>>>> origin/21130338
 
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
@@ -58,3 +89,4 @@ export const deleteShop = async (shopId) => {
   const response = await axiosInstance.delete(`admin/shop/delete/${shopId}`);
   return response.data;
 };
+>>>>>>> 3b73332a893f3e795d6b1720e6124bdb04da752e

@@ -1,6 +1,8 @@
 import { TouchableOpacity, View, StyleSheet, FlatList, Text, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getListProductByShopId, getListCategoryByShopId, deleteCategory } from "../../../api/shopApi";
 import { useAuth } from "../../context/Auth/AuthContext";
@@ -29,7 +31,26 @@ const Menu = () => {
         fetchProductsAndCategories();
     }, [shopId]);
 
+    useEffect(() => {
+        console.log("Fetched products data:", products); // Log dữ liệu của products
+    }, [products]);
+
+    useEffect(() => {
+        console.log("Fetched category data:", category); // Log dữ liệu của category
+    }, [category]); // Sửa lại đây để theo dõi sự thay đổi của category
+
+
+    const handleAddFood = () => {
+        console.log("Thêm món mới");
+       
+    };
+    
+    const handleAddCategory = () => {
+        console.log("Thêm danh mục mới");
+        // Thêm logic để xử lý khi người dùng nhấn "Thêm danh mục"
+    }
     const handleAddProduct = () => {
+
         navigation.navigate('AddProduct');
     };
 
@@ -59,6 +80,9 @@ const Menu = () => {
     };
 
     const renderFood = ({ item }) => (
+
+        // <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={false}></ItemCard>
+
         <TouchableOpacity 
             onPress={() => navigation.navigate('DetailProductShopScreen', { item })}
             style={{ padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }}
@@ -71,6 +95,7 @@ const Menu = () => {
                 navigation={navigation}
             </ItemCard>
         </TouchableOpacity>
+
     );
 
     const renderCategory = ({ item }) => (
@@ -121,6 +146,45 @@ const Menu = () => {
 };
 
 const styles = StyleSheet.create({
+
+//     row: {
+//         flexDirection: 'row',
+//     },
+//     funcContainer: {
+//         height: 56,
+//         marginHorizontal: 8,
+//         alignItems: 'center',
+//     },
+//     funcName: {
+//         fontSize: 16,
+//         paddingHorizontal: 70,
+//     },
+//     selected: {
+//         borderBottomWidth: 1,
+//         borderBottomColor: '#E95322',
+//     },
+//     item: {
+//         backgroundColor: 'white',
+//         borderBottomWidth: 0.5,
+//     },
+//     btnContainer: {
+//         width: '100%',
+//         backgroundColor: 'white',
+//         alignItems: 'center',
+//         elevation: 5,
+//         height: 120,
+//         position: 'absolute',
+//         bottom: 0,
+//     },
+//     addFoodBtn: {
+//         width: '95%',
+//         paddingVertical: 8,
+//         marginVertical: 14,
+//         backgroundColor: '#E95322',
+//         borderRadius: 8,
+//     },
+// })
+
     row: { flexDirection: 'row' },
     funcContainer: { height: 56, marginHorizontal: 8, alignItems: 'center' },
     funcName: { fontSize: 16, paddingHorizontal: 70 },
@@ -132,5 +196,6 @@ const styles = StyleSheet.create({
     deleteButton: { paddingVertical: 5, paddingHorizontal: 10, backgroundColor: '#E95322', borderRadius: 5 },
     deleteButtonText: { color: 'white', fontSize: 14 },
 });
+
 
 export default Menu;

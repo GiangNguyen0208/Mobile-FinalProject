@@ -9,6 +9,10 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
+
+import ProductDetail from '../view/client/pages/shop/ProductDetail.js'; 
+import Default from '../view/client/layout/default.js'; 
+
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
@@ -56,8 +60,19 @@ const AppNavigator = ({ isLoggedIn, role }) => {
           </>
         ) : (
           <>
+
+            {/* <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} /> */}
+            <Stack.Screen name="ShopOwner" initialParams={4} component={ShopScreen} />
+            <Stack.Screen name="Menu" component={Menu} />
+            <Stack.Screen name="EditProduct" component={EditProduct} />
+            <Stack.Screen name="Rating" component={Rating} />
+            <Stack.Screen name="ProductDetail" component={ProductDetail} />
+            <Stack.Screen name="Default" component={Default} />
+{/* =======
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
+>>>>>>> origin/21130338 */}
           </>
         )}
       </Stack.Navigator>
