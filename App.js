@@ -22,9 +22,9 @@ function MainApp() {
   const { resetAuth, isLoggedIn, role } = useContext(AuthContext);
 
   // KHÔNG ĐƯỢC XÓA, NẾU ĐĂNG NHẬP LỖI => KHÔNG LOGOUT ĐƯỢC => MỞ LẠI CODE CHẠY LẠI CHƯƠNG TRÌNH ĐỂ LOGIN LẠI.
-  // useEffect(() => {
-  //   resetAuth();
-  // }, [resetAuth]);
+//   useEffect(() => {
+//     resetAuth();
+//   }, [resetAuth]);
 
   console.log("isLoggedIn:", isLoggedIn, "role:", role);
 
