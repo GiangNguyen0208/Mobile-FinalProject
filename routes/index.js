@@ -5,6 +5,10 @@ import Login from '../view/client/pages/login/index.js';
 import Register from '../view/client/pages/register/index.js';
 import { NavigationContainer } from '@react-navigation/native';
 import ShopScreen from '../view/shopowner/screen/index.js';
+import Menu from '../view/shopowner/screen/Menu.js';
+import EditProduct from '../view/shopowner/screen/EditProduct.js';
+import Rating from '../view/client/components/ListItem/Rating.js';
+import ProductDetail from '../view/client/pages/shop/ProductDetail.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 
 const Stack = createNativeStackNavigator();
@@ -27,8 +31,13 @@ const AppNavigator = ({ isLoggedIn, role }) => {
           </>
         ) : (
           <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
+            {/* <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} /> */}
+            <Stack.Screen name="ShopOwner" initialParams={4} component={ShopScreen} />
+            <Stack.Screen name="Menu" component={Menu} />
+            <Stack.Screen name="EditProduct" component={EditProduct} />
+            <Stack.Screen name="Rating" component={Rating} />
+            <Stack.Screen name="ProductDetail" component={ProductDetail} />
           </>
         )}
       </Stack.Navigator>
