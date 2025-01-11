@@ -1,18 +1,19 @@
-import React from 'react'; 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
-import { NavigationContainer } from '@react-navigation/native'; 
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js'; 
-import Login from '../view/client/pages/login/index.js'; 
-import Register from '../view/client/pages/register/index.js'; 
-import ShopScreen from '../view/shopowner/screen/index.js'; 
-import Menu from '../view/shopowner/screen/Menu.js'; 
-import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
-import Rating from '../view/client/components/ListItem/Rating.js'; 
+import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js';
+import Login from '../view/client/pages/login/index.js';
+import Register from '../view/client/pages/register/index.js';
+import ShopScreen from '../view/shopowner/screen/index.js';
+import Menu from '../view/shopowner/screen/Menu.js';
+import EditProduct from '../view/shopowner/screen/EditProduct.js';
+import Rating from '../view/client/components/ListItem/Rating.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
+import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
+
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
   </ShopStack.Navigator>
 );
@@ -53,6 +55,8 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             {role === 'USER' && (
               <Stack.Screen name="User" component={UserNavigator} />
             )}
+            {/* Đặt EditShop ở đây ngoài ShopNavigator */}
+            <Stack.Screen name="EditShop" component={EditShopScreen} />
           </>
         ) : (
           <>
