@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-
 const { width } = Dimensions.get('window'); // Lấy kích thước màn hình
-
 const AdminProfile = () => {
     const adminData = {
         name: 'Admin Name',

@@ -7,7 +7,7 @@ export const getAllUser = async () => {
 }
 export const getShopById = async (id) => {
     const response = await axiosInstance.get("admin/shop/id",id ,{
-        
+
     });
     return response.data;
 }
@@ -25,7 +25,7 @@ export const getListProductByShopName = async (name) => {
   export const getListCommentByShopId = async (id) => {
     const response = await axiosInstance.get("/comments/list/shop/"+id);
     return response.data;
-  }
+
 };
 
 // Thêm người dùng mới
