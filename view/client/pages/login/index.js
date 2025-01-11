@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import { AuthContext } from "../../../context/Auth/AuthContext";
 import { loginApi } from "../../../../api/authApi";
 import { useNavigation } from '@react-navigation/native';
+import { useNavigate } from "react-router-native";
 
 const { width } = Dimensions.get("window");
 
@@ -15,7 +16,7 @@ const Login = ({ setIsPrivateRoutes }) => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const { login, role } = useContext(AuthContext);
-    const navigation = useNavigation();
+    const navigate = useNavigate();
 
     const [displayedText, setDisplayedText] = useState(""); // Dùng để hiển thị chữ từng chữ một
     const fullText = "Welcome to Best Food App";
@@ -32,24 +33,23 @@ const Login = ({ setIsPrivateRoutes }) => {
     }, []);
 
     useEffect(() => {
-        console.log('Role changed:', role);
         if (role) { // Kiểm tra nếu role đã được cập nhật
             switch (role) {
                 case 'ADMIN':
-                    navigation.replace("Admin");
+                    navigate("Admin");
                     break;
                 case 'Shop':
-                    navigation.replace("ShopOwner");
+                    navigate("ShopOwner");
                     break;
                 case 'USER':
-                    navigation.replace("BottomTabNavigation");
+                    navigate("User");
                     break;
                 default:
                     alert("Login failed! Check your username and password.");
                     break;
             }
         }
-    }, [role, navigation]); // Theo dõi sự thay đổi của role
+    }, [role, navigate]); // Theo dõi sự thay đổi của role
 
     const handleLogin = async () => {
         setLoading(true);

@@ -3,12 +3,14 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 import Item from './Item'; // Import the Item component
 
 const ListHorizontal = ({ items, onItemPress }) => {
+
     const renderItem = ({ item }) => (
         <Item
             image={item.image}
             title={item.title}
             description={item.description}
             date={item.date}
+            rating={item.rating}
             onPress={() => onItemPress(item)} // Pass the onPress function
         />
     );
@@ -17,7 +19,7 @@ const ListHorizontal = ({ items, onItemPress }) => {
         <FlatList
             data={items}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}

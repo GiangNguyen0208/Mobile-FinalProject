@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Modal, Button, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import indexSt from "../../../public/client/stylesheet/index.style";
+import indexSt from "../../../../public/client/stylesheet/index.style";
+
 const AddToCartModal = ({ item, visible, onClose }) => {
         const [quantity, setQuantity] = useState(1);
 

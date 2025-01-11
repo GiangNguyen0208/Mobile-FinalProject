@@ -1,27 +1,20 @@
 import React from 'react';
-import { View, StyleSheet, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Item from './Item';
+import ItemCard from "./ItemCard";
 
-const ListVertical = ({ items }) => {
-    const renderItem = ({ item }) => (
-        <Item
-            image={item.image}
-            title={item.title}
-            description={item.description}
-            date={item.date}
-            onPress={() => onItemPress(item)} // Pass the onPress function
-        />
-    );
-
+const List = ({ items }) => {
+    const isShopOwner = true;
     return (
-        <FlatList
-            data={items}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContainer}
-            ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
-        />
+        <View style={[styles.border_bot, styles.container,]}>
+            {items.length > 0 ? (
+                items.map((item) => (
+                    <ItemCard item={item} isShopOwner={isShopOwner}/>
+                ))
+            ) : (
+                <Text>No announcements.</Text>
+            )}
+        </View>
     );
 };
 
@@ -30,6 +23,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
+    border_bot:{
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'black',
+        marginBottom:12,
+        width:'95%',
+        alignSelf:"center"
+    }
 });
 
-export default ListVertical;
+export default List;

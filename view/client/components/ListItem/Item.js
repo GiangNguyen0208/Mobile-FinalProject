@@ -2,12 +2,15 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Item = ({ image, title, description, date, onPress }) => {
-    // Ensure image is a valid string URL or a local image
-    const imageSource = typeof image === 'string' ? { uri: image } : image;
+    const imageSource = image ? { uri: image } : null; // Dùng base64Image nếu có
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
-            <Image source={imageSource} style={styles.image} />
+            {imageSource ? (
+                <Image source={imageSource} style={styles.image} />
+            ) : (
+                <Text>No Image Available</Text> // Trường hợp không có hình ảnh
+            )}
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>

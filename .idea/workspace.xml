@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile" />
+    <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
+      <change afterPath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/PopularDish.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/VoucherList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,41 +79,35 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "21130312",
+    "git-widget-placeholder": "Merging 21130576",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/DoAnTTMobile/DoAn/Mobile-FinalProject/view/client/admin",
+    "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "settings.editor.selected.configurable": "vcs.Git",
-    "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\DoAnTTMobile\DoAn\Mobile-FinalProject\view\client\admin" />
+
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
+
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -115,7 +124,13 @@
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
+
       <workItem from="1735180260050" duration="8000" />
+      <workItem from="1736073926762" duration="5973000" />
+      <workItem from="1736079921338" duration="774000" />
+      <workItem from="1736084891074" duration="2922000" />
+      <workItem from="1736087899657" duration="4371000" />
+      <workItem from="1736126484066" duration="4226000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -144,6 +159,11 @@
             <State />
           </value>
         </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
@@ -159,10 +179,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
+          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/App.js</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
-
 </project>

@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, Modal, Button, Image, TouchableOpacity} from 're
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import indexSt from "./index.style";
+import indexSt from "../../../../public/client/stylesheet/index.style";
 const AddToCartModal = ({ item, visible, onClose }) => {
         const [quantity, setQuantity] = useState(1);
 
@@ -35,10 +35,10 @@ const AddToCartModal = ({ item, visible, onClose }) => {
                             <View style={styles.info}>
                                 <Text style={styles.name}>{item.name}</Text>
                                 <View style={[styles.priceContainer, styles.row]}>
-                                    <Text style={styles.price}>{item.price.toFixed(2)} đ</Text>
+                                    <Text style={styles.price}>{item.price} đ</Text>
                                     <View style={styles.row}>
                                         <TouchableOpacity onPress={decreaseQuantity}>
-                                            <AntDesign name="minussquareo" style={[indexSt.title, styles.alignSelf]} color="#E95322" />
+                                            <AntDesign name="minussquareo" style={[indexSt.taitle, styles.alignSelf]} color="#E95322" />
                                         </TouchableOpacity>
                                         <Text style={{marginHorizontal:8,alignSelf:'center',fontSize:16}}>{quantity}</Text>
                                         <TouchableOpacity onPress={increaseQuantity}>
