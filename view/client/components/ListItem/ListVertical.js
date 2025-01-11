@@ -1,35 +1,29 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import Item from './Item';
+import { View, StyleSheet, Text,FlatList } from 'react-native';
 import ItemCard from "./ItemCard";
 
-const List = ({ items }) => {
-    const isShopOwner = true;
+const List = ({ items,navigation ,type}) => {
+    
     return (
-        <View style={[styles.border_bot, styles.container,]}>
-            {items.length > 0 ? (
-                items.map((item) => (
-                    <ItemCard item={item} isShopOwner={isShopOwner}/>
-                ))
-            ) : (
-                <Text>No announcements.</Text>
-            )}
+        <View style={styles.container}>
+            <FlatList
+                data={items}
+                renderItem={({ item }) => (
+                    <ItemCard type={type} item={item} navigation={navigation} isShopOwner={true}></ItemCard>
+                )}
+                keyExtractor={(_, index) => index.toString()}
+                numColumns={1}
+                contentContainerStyle={{ paddingBottom: 50 }}
+            />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
+       
+       
     },
-    border_bot:{
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'black',
-        marginBottom:12,
-        width:'95%',
-        alignSelf:"center"
-    }
 });
 
 export default List;

@@ -1,20 +1,40 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+// <<<<<<< HEAD
+// import StarRender from "../../components/Rating/StartRender"
 
-const Item = ({ image, title, description, date, onPress }) => {
+
+// // const Item = ({ image, title, description, date, rating,onPress }) => {
+// //     // Ensure image is a valid string URL or a local image
+// //     const imageSource = typeof image === 'string' ? { uri: image } : image;
+// =======
+import Rating from '../Rating/StartRender';
+
+
+const Item = ({ image, title, description, price, rating, onPress }) => {
     const imageSource = image ? { uri: image } : null; // Dùng base64Image nếu có
+
 
     return (
         <TouchableOpacity onPress={onPress} style={styles.container}>
             {imageSource ? (
-                <Image source={imageSource} style={styles.image} />
+                <Image 
+                    source={{ uri: image }} 
+                    style={styles.image} 
+                />
             ) : (
                 <Text>No Image Available</Text> // Trường hợp không có hình ảnh
             )}
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.description}>{description}</Text>
-                <Text style={styles.date}>{date}</Text>
+
+                {/* <StarRender rating={rating}></StarRender>
+                <Text style={styles.date}>{date}</Text> */}
+
+                <Text style={styles.date}>{price}</Text>
+                <Rating rating={rating}/>
+
             </View>
         </TouchableOpacity>
     );
@@ -24,19 +44,21 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
+        padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
-        marginBottom: 10, // Adjusted for better spacing
+        marginBottom: 2, // Adjusted for better spacing
+        backgroundColor:'white',
+       
     },
     image: {
         width: 60,
         height: 60,
         borderRadius: 5,
-        marginRight: 10,
     },
     textContainer: {
         flex: 1,
+        paddingHorizontal:16
     },
     title: {
         fontSize: 16,
