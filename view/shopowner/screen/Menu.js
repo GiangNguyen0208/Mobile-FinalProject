@@ -89,6 +89,7 @@ const Menu = () => {
         >
             <ItemCard 
                 type={'product'} 
+                key={item.id}
                 item={item}
                 shopId={shopId}
                 isShopOwner={true}>

@@ -31,11 +31,11 @@ const AddToCartModal = ({ item, visible, onClose }) => {
                             <Ionicons style={styles.closeIcon} onPress={onClose} name="close" size={32} color="black"/>
                         </View>
                         <View style={[styles.row, styles.itemContainer]}>
-                            <Image source={item.img} style={styles.image}/>
+                            <Image source={item?.img} style={styles.image}/>
                             <View style={styles.info}>
-                                <Text style={styles.name}>{item.name}</Text>
+                                <Text style={styles.name}>{item?.name}</Text>
                                 <View style={[styles.priceContainer, styles.row]}>
-                                    <Text style={styles.price}>{item.price} đ</Text>
+                                    <Text style={styles.price}>{item?.price} đ</Text>
                                     <View style={styles.row}>
                                         <TouchableOpacity onPress={decreaseQuantity}>
                                             <AntDesign name="minussquareo" style={[indexSt.title, styles.alignSelf]} color="#E95322" />

@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import ItemRelated from './itemRelated';
+import { getProductsByCategory } from '../../../../api/systemApi';
+import { useRoute } from '@react-navigation/native';
 
-const RelatedFoodScreen = ({ categoryId }) => {
+const RelatedFoodScreen = () => {
   const [data, setData] = useState([]);
+  const route = useRoute();
+  const { categoryId } = route.params || {};
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
-  // Fetch Data, Call API
   useEffect(() => {
-    if (categoryId) {
-      fetchRelatedData(categoryId);
-    }
+    const fetchProducts = async (categoryId) => {
+      try {
+        const response = await getProductsByCategory(categoryId);
+        setData(response.result); // Gán danh sách sản phẩm vào state
+      } catch (error) {
+        console.error("Error fetching Product list data:", error);
+      }
+    };
+    fetchProducts();
   }, [categoryId]);
 
-  const fetchProducts = async (id) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const products = await getProductsByCategory(id);
-      setData(products); // Gán danh sách sản phẩm vào state
-    } catch (err) {
-      setError('Không thể tải sản phẩm.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -39,7 +36,7 @@ const RelatedFoodScreen = ({ categoryId }) => {
   return (
     <FlatList
       data={data}
-      keyExtractor={(item) => item.id.toString()} // Đảm bảo key là duy nhất
+      keyExtractor={(item) => item.id} // Đảm bảo key là duy nhất
       renderItem={({ item }) => <ItemRelated item={item} />} // Hiển thị sản phẩm
       ListEmptyComponent={<Text style={styles.emptyText}>Không có sản phẩm nào.</Text>} // Hiển thị khi danh sách rỗng
     />

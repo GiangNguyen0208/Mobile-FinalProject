@@ -1,26 +1,32 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const ItemRelated = () => {
+  const route = useRoute();
+  const { item } = route.params || {};
   return (
     <View style={styles.container}>
       {/* Row 1 */}
       <View style={styles.row}>
         <View style={styles.column}>
-          <Text style={styles.text}>Main Image</Text>
+          <Image source={{uri: item.imageLink[0] }} style={[styles.image, { width }]} />
         </View>
         <View style={styles.columnMerged}>
-          <Text style={styles.text}>Main Content</Text>
+          <Text style={styles.text}>{item.name}</Text>
+          <Text style={styles.text}>{item.des}</Text>
+          <Text style={styles.text}>{item.price}</Text>
         </View>
       </View>
 
       {/* Row 2 */}
       <View style={styles.row}>
         <View style={styles.column}>
-          {/* Empty column */}
         </View>
         <View style={styles.columnMerged}>
-          <Text style={styles.text}>Sub Content</Text>
+          <Text style={styles.text}>{item.name}</Text>
+          <Text style={styles.text}>{item.des}</Text>
+          <Text style={styles.text}>{item.price}</Text>
         </View>
       </View>
 
@@ -30,7 +36,9 @@ const ItemRelated = () => {
           {/* Empty column */}
         </View>
         <View style={styles.columnMerged}>
-          <Text style={styles.text}>Sub Content</Text>
+          <Text style={styles.text}>{item.name}</Text>
+          <Text style={styles.text}>{item.des}</Text>
+          <Text style={styles.text}>{item.price}</Text>
         </View>
       </View>
     </View>

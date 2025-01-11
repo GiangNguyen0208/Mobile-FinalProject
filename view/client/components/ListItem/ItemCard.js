@@ -56,12 +56,12 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
                     )}
                     <TouchableOpacity >
                         <Text style={styles.name}>
-                            {type === 'comment' ? item.userName : item.name}
+                            {type === 'comment' ? item?.userName : item?.name}
                         </Text>
                     </TouchableOpacity>
                 </View>
                 {!(type === 'voucher') && (
-                    <Rating rating={item.rating} />
+                    <Rating rating={item?.rating} />
                 )}
                 <View style={[styles.priceContainer, type === 'product' && styles.row]}>
                     {(type === 'product') && (

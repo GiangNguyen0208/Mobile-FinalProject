@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import OnBoarding from '../../components/Onboarding/Onboarding';
+import slideDetail from '../../partials/SlideDetail/slideDetail';
 import NavigationRelative from '../../components/Navigation/NavigationRelative'; // Giữ nguyên hoặc thay đổi component nếu cần
 import Rating from '../../components/Rating/StartRender';
 import RelatedFoodScreen from './foodRelated';
 import RelatedShopScreen from './shopRelated';
 
-const ProductDetailUser = () => {
+const ShopDetailUser = () => {
   const [selectedOption, setSelectedOption] = useState('foodRelated');
   const route = useRoute();
   const { item } = route.params || {}; // Lấy dữ liệu item từ params
@@ -34,7 +35,7 @@ const ProductDetailUser = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Chi Tiết Sản Phẩm</Text>
         </View>
-        <OnBoarding item={item} />
+        <OnBoarding slides={slideDetail} />
         <View style={styles.container}>
           {item ? (
             <>
@@ -167,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailUser;
+export default ShopDetailUser;

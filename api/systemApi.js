@@ -6,11 +6,11 @@ export const getAllProduct = async () => {
 };
 
 export const getAllCategory = async () => {
-    const response = await axiosInstance.get("/users/categories");
+    const response = await axiosInstance.get("/categories/listCategory");
     return response.data;
 };
 
 export const getProductsByCategory = async (categoryId) => {
-      const response = await axios.get(`/getByCategory/${categoryId}`);
+      const response = await axios.get(`/products/getByCategory/${categoryId}`);
       return response.data.result;
   };

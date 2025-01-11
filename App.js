@@ -26,7 +26,6 @@ function MainApp() {
   //   resetAuth();
   // }, [resetAuth]);
 
-  console.log("isLoggedIn:", isLoggedIn, "role:", role);
 
   return (
     <NativeRouter>
