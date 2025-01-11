@@ -52,7 +52,7 @@ const Home = ({navigation,route}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[styles.function,]}>
+                    <TouchableOpacity style={[styles.function,]} onPress={() => navigation.navigate('Default')}>
                         <Image
                             source={require("./../../../assets/img/help-desk.png")}
                             style={styles.image}

@@ -36,3 +36,5 @@ yarn-error.*
 
 # URL_NET_ADDRESS
 api/constant.js
+
+yarn.lock
