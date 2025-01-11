@@ -4,15 +4,17 @@ import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AddToCartModal from "../Modal/AddToCardModal";
 import Rating from "../Rating/StartRender";
+import { useNavigation } from '@react-navigation/native';
 
-const ItemCard = ({type, item, navigation ,isShopOwner}) => {
+const ItemCard = ({type, item, shopId ,isShopOwner}) => {
+    const navigation = useNavigation(); // Khởi tạo navigation từ hook
+
     const handlePress = () => {
         if (isShopOwner) {
-            console.log('edit')
-            navigation.navigate('EditProduct', { item });
+            navigation.navigate('DetailProductShopScreen', { item, shopId });
+            console.log('edit');
         } else {
-            // navigation.navigate('Detail', { item });
-            console.log('Detail')
+            console.log('Bạn không có quyền của Shop');
         }
     };
     const [modalVisible, setModalVisible] = useState(false);
@@ -24,13 +26,13 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
     // Hàm định dạng ngày tháng năm
     const formatDateFromArray = (dateArray) => {
         const date = new Date(
-            dateArray[0], // Year
-            dateArray[1] - 1, // Month (0-indexed)
-            dateArray[2], // Day
-            dateArray[3], // Hours
-            dateArray[4], // Minutes
-            dateArray[5], // Seconds
-            Math.floor(dateArray[6] / 1e6) // Milliseconds
+            dateArray[0], 
+            dateArray[1] - 1, 
+            dateArray[2], 
+            dateArray[3], 
+            dateArray[4], 
+            dateArray[5], 
+            Math.floor(dateArray[6] / 1e6)
         );
         return `${date.getDate().toString().padStart(2, "0")}/${(date.getMonth() + 1).toString().padStart(2, "0")}/${date.getFullYear()}`;
     };
@@ -39,7 +41,10 @@ const ItemCard = ({type, item, navigation ,isShopOwner}) => {
         <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
-                    <Image source={item.img} style={styles.image} />
+                    <Image 
+                        source={{ uri: item?.imageLink?.[0] || 'https://example.com/default-image' }} 
+                        style={styles.image} 
+                    />
                 </TouchableOpacity>
             )}
             <View style={styles.info}>

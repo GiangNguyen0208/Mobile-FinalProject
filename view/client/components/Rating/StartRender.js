@@ -32,4 +32,5 @@ const Rating = ({ rating }) => {
         </View>
     );
 };
+
 export default Rating;

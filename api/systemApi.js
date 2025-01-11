@@ -9,3 +9,8 @@ export const getAllCategory = async () => {
     const response = await axiosInstance.get("/users/categories");
     return response.data;
 };
+
+export const getProductsByCategory = async (categoryId) => {
+      const response = await axios.get(`/getByCategory/${categoryId}`);
+      return response.data.result;
+  };

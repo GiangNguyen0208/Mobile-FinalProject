@@ -6,7 +6,7 @@ const ListHorizontal = ({ items, onItemPress }) => {
 
     const renderItem = ({ item }) => (
         <Item
-            image={item.image}
+            image={item.base64Image}
             title={item.title}
             description={item.description}
             date={item.date}
