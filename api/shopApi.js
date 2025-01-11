@@ -44,7 +44,7 @@ export const deleteProduct = async (productId) => {
     try {
         const response = await axiosInstance.delete(`products/${productId}`);
         return response.data;
-    } catch (error) {
+    } catch (error) {r
         console.error('Error deleting image:', error);
         throw error;
     }

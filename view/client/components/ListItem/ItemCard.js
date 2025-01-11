@@ -38,7 +38,9 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
     };
 
     return (
-        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
+        <TouchableOpacity style={
+            [styles.card,type === 'product' && {flexDirection:"row",height:120}]}
+            onPress={type === 'product' ? handlePress : null}>
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
                     <Image 

@@ -64,6 +64,8 @@ const Login = ({ setIsPrivateRoutes }) => {
           
           if (data.code === 1000 && data.result.token) {
             login(data); // Cập nhật role và token ngay lập tức
+            console.log("Token: " + data.result.token);
+            console.log("ShopID: " + data.result.shopId);
           } else {
             alert("Login failed! Check your username and password.");
           }
