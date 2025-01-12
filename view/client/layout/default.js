@@ -7,6 +7,7 @@ import SearchBox from '../components/Search';
 import styles from '../../../public/client/stylesheet/default.style';
 import ListHorizontal from '../components/ListItem/ListHorizontal';
 import { getAllCategory, getAllProduct } from '../../../api/systemApi';
+import { addToCart } from '../../../api/cartApi';
 import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
 import ProductDetail from '../pages/detail/detail';
@@ -63,6 +64,18 @@ const Default = () => {
     console.log('Searching for:', query);
   };
 
+  const handleAddToCart = async (product) => {
+    try {
+      const cartData = { productId: product.id, quantity: 1 };
+      const response = await addToCart(cartData); // Thêm sản phẩm với số lượng là 1
+      alert(`${product.name} added to cart!`);
+      console.log(response); // Đảm bảo bạn nhận được phản hồi từ API
+    } catch (error) {
+      alert('Failed to add to cart!');
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Nội dung chính */}
@@ -101,6 +114,7 @@ const Default = () => {
                     price={item.price}
                     rating={item.rating}
                     onPress={() => handleItemPress(item)}
+                    onAddToCart={() => handleAddToCart(item)}
                   />
                 ))
               ) : (

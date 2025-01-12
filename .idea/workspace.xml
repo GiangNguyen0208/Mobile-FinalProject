@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_55_SA__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_18_10_2024_9_55_SA__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/Cart/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/adminApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/adminApi.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/admin/screen/AdminProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/admin/screen/AdminProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/systemApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/systemApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/Item.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/Item.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/client/layout/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/layout/default.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,23 +79,24 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;21130312&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Project_frontend_mobile/Mobile-FinalProject&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Project_frontend_mobile/Mobile-FinalProject/api&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Project_frontend_mobile\Mobile-FinalProject\api" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
@@ -125,6 +129,11 @@
       <workItem from="1736126484066" duration="4226000" />
       <workItem from="1736337884380" duration="4414000" />
       <workItem from="1736561256193" duration="333000" />
+      <workItem from="1736568817785" duration="2697000" />
+      <workItem from="1736587160808" duration="572000" />
+      <workItem from="1736588093797" duration="14788000" />
+      <workItem from="1736610014260" duration="3974000" />
+      <workItem from="1736643707735" duration="2162000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
