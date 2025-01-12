@@ -48,10 +48,10 @@ const ManageShopsScreen = () => {
     }
   };
 
-  const handleEdit = (shopId) => {
-    Alert.alert('Chỉnh sửa cửa hàng', `Chỉnh sửa thông tin của cửa hàng ID: ${shopId}`);
-    // Bạn có thể thêm logic để điều hướng tới trang chỉnh sửa cửa hàng nếu cần
-  };
+    const handleEdit = (shopId) => {
+      // Chuyển hướng tới trang chỉnh sửa cửa hàng, truyền shopId
+    navigation.navigate('EditShop', { shopId: shopId }); // Điều hướng tới màn hình EditShop
+    };
 
   const handleManage = (shop) => {
     navigation.navigate('ManageShopProducts', { shopName: shop.name });
@@ -81,29 +81,32 @@ const ManageShopsScreen = () => {
       {loading ? (
         <Text>Đang tải dữ liệu...</Text>
       ) : (
-        <FlatList
-          data={shopList}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.shopItem}>
-              <View>
-                <Text style={styles.shopName}>{item.name}</Text>
-                <Text style={styles.shopLocation}>{item.location}</Text>
-              </View>
-              <View style={styles.buttonGroup}>
-                <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleEdit(item.id)}>
-                  <Text style={styles.buttonText}>Chỉnh sửa</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.manageButton]} onPress={() => handleManage(item)}>
-                  <Text style={styles.buttonText}>Quản lý</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(item.id)}>
-                  <Text style={styles.buttonText}>Xóa</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
-        />
+       <FlatList
+         data={shopList}
+         keyExtractor={(item) => item.id.toString()}
+         renderItem={({ item }) => (
+           <View style={styles.shopItem}>
+             <View>
+               <Text style={styles.shopName}>{item.name}</Text>
+               <Text style={styles.shopLocation}>{item.location}</Text>
+             </View>
+
+             {/* Group buttons below the shop name */}
+             <View style={styles.buttonGroup}>
+               <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleEdit(item.id)}>
+                 <Text style={styles.buttonText}>Chỉnh sửa</Text>
+               </TouchableOpacity>
+               <TouchableOpacity style={[styles.button, styles.manageButton]} onPress={() => handleManage(item)}>
+                 <Text style={styles.buttonText}>Quản lý</Text>
+               </TouchableOpacity>
+               <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(item.id)}>
+                 <Text style={styles.buttonText}>Xóa</Text>
+               </TouchableOpacity>
+             </View>
+           </View>
+         )}
+       />
+
       )}
 
       <TouchableOpacity style={styles.addButton} onPress={handleAddShop}>
@@ -118,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 20,
     alignSelf: 'center',
-    paddingLeft : 15,
+    paddingLeft: 15,
   },
   title: {
     fontSize: 28,
@@ -128,9 +131,9 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   shopItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'column', // Sắp xếp các phần tử theo chiều dọc
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start', // Đảm bảo các phần tử không bị lệch
     padding: 15,
     backgroundColor: '#f9f9f9',
     borderRadius: 10,
@@ -145,17 +148,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom: 5, // Khoảng cách giữa tên cửa hàng và địa chỉ
   },
   shopLocation: {
     fontSize: 14,
     color: '#666',
+    marginBottom: 10, // Khoảng cách giữa địa chỉ và các nút
   },
   buttonGroup: {
-    flexDirection: 'row',
+    flexDirection: 'row', // Sắp xếp các nút theo chiều ngang
+    justifyContent: 'space-between', // Đảm bảo các nút cách đều
+    width: '100%', // Chiếm hết chiều rộng
   },
   button: {
     padding: 10,
     borderRadius: 5,
+    width: '30%', // Các nút chiếm 1/3 chiều rộng của mỗi hàng
     marginHorizontal: 5,
   },
   editButton: {
@@ -171,6 +179,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+    textAlign: 'center', // Đảm bảo chữ nằm giữa
   },
   addButton: {
     marginTop: 20,
@@ -190,5 +199,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
 
 export default ManageShopsScreen;

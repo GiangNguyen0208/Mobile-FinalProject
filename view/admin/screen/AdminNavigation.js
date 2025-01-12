@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet, Dimensions, Image, Alert } from 'react-native';
+import { AuthContext } from "../../context/Auth/AuthContext"; // Import AuthContext
+import { useNavigate } from 'react-router-native'; // If you're using react-router for navigation
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 const AdminNavigation = ({ onMenuSelect, currentPage }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -7,19 +10,19 @@ const AdminNavigation = ({ onMenuSelect, currentPage }) => {
   const screenWidth = Dimensions.get('window').width;
   const maxDrawerWidth = screenWidth * 0.25; // 25% of screen width
 
+  const { logout } = useContext(AuthContext); // Use AuthContext for logout
+  const navigate = useNavigate(); // To navigate to the login page
+
   // Hàm xử lý đăng xuất
   const handleLogout = async () => {
      try {
-       await logout();
-       await AsyncStorage.removeItem("token");
-       setIsLoggedIn(false);
-       setIsPrivate(true);
-       setRole(null);
-       navigate('/login');
-       Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
+       await logout(); // Call logout from context
+       await AsyncStorage.removeItem("token"); // Remove token from AsyncStorage
+       Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!'); // Show success alert
+       navigate('/login'); // Navigate to login page
      } catch (error) {
        console.error("Logout Failed!", error);
-       Alert.alert('Lỗi', 'Không thể đăng xuất. Vui lòng thử lại.');
+       Alert.alert('Lỗi', 'Không thể đăng xuất. Vui lòng thử lại.'); // Show error alert
      }
    };
 

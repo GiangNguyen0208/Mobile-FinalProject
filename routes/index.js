@@ -1,22 +1,19 @@
-import React from 'react'; 
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
-import { NavigationContainer } from '@react-navigation/native'; 
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js'; 
-import Login from '../view/client/pages/login/index.js'; 
-import Register from '../view/client/pages/register/index.js'; 
-import ShopScreen from '../view/shopowner/screen/index.js'; 
-import Menu from '../view/shopowner/screen/Menu.js'; 
-import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
-import Rating from '../view/client/components/ListItem/Rating.js'; 
-
-import ProductDetail from '../view/client/pages/shop/ProductDetail.js'; 
-import Default from '../view/client/layout/default.js'; 
-
+import BottomTabNavigation from '../view/client/components/Navigation/NavigationBottom.js';
+import Login from '../view/client/pages/login/index.js';
+import Register from '../view/client/pages/register/index.js';
+import ShopScreen from '../view/shopowner/screen/index.js';
+import Menu from '../view/shopowner/screen/Menu.js';
+import EditProduct from '../view/shopowner/screen/EditProduct.js';
+import Rating from '../view/client/components/ListItem/Rating.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
+import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -30,6 +27,7 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
+
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
   </ShopStack.Navigator>
 );
@@ -57,22 +55,13 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             {role === 'USER' && (
               <Stack.Screen name="User" component={UserNavigator} />
             )}
+            {/* Đặt EditShop ở đây ngoài ShopNavigator */}
+            <Stack.Screen name="EditShop" component={EditShopScreen} />
           </>
         ) : (
           <>
-
-            {/* <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} /> */}
-            <Stack.Screen name="ShopOwner" initialParams={4} component={ShopScreen} />
-            <Stack.Screen name="Menu" component={Menu} />
-            <Stack.Screen name="EditProduct" component={EditProduct} />
-            <Stack.Screen name="Rating" component={Rating} />
-            <Stack.Screen name="ProductDetail" component={ProductDetail} />
-            <Stack.Screen name="Default" component={Default} />
-{/* =======
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
->>>>>>> origin/21130338 */}
           </>
         )}
       </Stack.Navigator>

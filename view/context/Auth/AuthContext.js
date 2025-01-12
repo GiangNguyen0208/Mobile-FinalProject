@@ -45,28 +45,31 @@ export const AuthProvider = ({ children }) => {
   }, []); // Chỉ chạy một lần khi ứng dụng khởi động
 
   const login = async (data) => {
-    try {
-      const newToken = data.result.token;
-      const updateRole = data.result.clientType;
-      const userId = data.result.userId;
-      const shopId = data.result.shopId;
+      try {
+        const newToken = data.result.token;
+        const updateRole = data.result.clientType;
+        const userId = data.result.userId;
+        const shopId = data.result.shopId;
 
-      await AsyncStorage.setItem("token", newToken);
-      await AsyncStorage.setItem("role", updateRole);
-      await AsyncStorage.setItem("userId", JSON.stringify(userId));
-      await AsyncStorage.setItem("shopId", JSON.stringify(shopId));
+        if (shopId !== undefined) {
+          await AsyncStorage.setItem("shopId", JSON.stringify(shopId));
+        }
 
-      setToken(newToken);
-      setRole(updateRole);
-      setUserId(userId);
-      setShopId(shopId);
-      setIsLoggedIn(true);
-      setIsPrivate(false);
+        await AsyncStorage.setItem("token", newToken);
+        await AsyncStorage.setItem("role", updateRole);
+        await AsyncStorage.setItem("userId", JSON.stringify(userId));
 
-    } catch (error) {
-      console.error("Error saving token to AsyncStorage:", error);
-    }
-  };
+        setToken(newToken);
+        setRole(updateRole);
+        setUserId(userId);
+        setShopId(shopId);
+        setIsLoggedIn(true);
+        setIsPrivate(false);
+
+      } catch (error) {
+        console.error("Error saving token to AsyncStorage:", error);
+      }
+    };
 
   const logout = async () => {
     try {
