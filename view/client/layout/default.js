@@ -12,6 +12,8 @@ import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
 import ProductDetail from '../pages/detail/detail';
 import slides from '../partials/Slide/slide';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 const Default = () => {
   const navigation = useNavigation();
@@ -124,6 +126,13 @@ const Default = () => {
           </View>
         </ScrollView>
       )}
+
+    <TouchableOpacity
+        style={styles.cartButton}
+        onPress={() => navigation.navigate('Cart')} 
+      >
+        <Icon name="shopping-cart" size={24} color="#fff" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

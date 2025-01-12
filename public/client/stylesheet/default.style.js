@@ -46,6 +46,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 100,  // Đảm bảo NavigationBottom sẽ hiển thị trên các phần tử khác
   },
+  cartButton: {
+    position: 'absolute',
+    bottom: 70,
+    right: 20,
+    backgroundColor: 'orange', // Màu nền nút giỏ hàng
+    borderRadius: 30,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1,
+  },
 });
 
   export default styles;

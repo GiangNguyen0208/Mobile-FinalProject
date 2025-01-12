@@ -6,18 +6,22 @@ export const addToCart = async (cartData) => {
         console.log(cartData);
         const response = await axiosInstance.post('/cart/add', cartData);
         console.log(response);
-        // return response.data;
+        return response.data;
     } catch (error) {
-        if (error.response) {
+        console.error('Error adding product from cart:', error);
+        throw error;
+    }
+};
 
-            console.error('Status:', error.response.status);
-
-        } else if (error.request) {
-            console.error('No response received:', error.request);
-
-        } else {
-            console.error('Error setting up request:', error.message);
-        }
+// Add product to cart
+export const updateCart = async (cartData) => {
+    try {
+        console.log(cartData);
+        const response = await axiosInstance.put('/cart/update', cartData);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding product from cart:', error);
         throw error;
     }
 };
@@ -56,24 +60,5 @@ export const clearCart = async () => {
     }
 };
 
-// Increase quantity of a product in the cart
-export const increaseProductQuantity = async (productId) => {
-    try {
-        const response = await axiosInstance.post(`/cart/increase/${productId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error increasing product quantity in cart:', error);
-        throw error;
-    }
-};
 
-// Decrease quantity of a product in the cart
-export const decreaseProductQuantity = async (productId) => {
-    try {
-        const response = await axiosInstance.post(`/cart/decrease/${productId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Error decreasing product quantity in cart:', error);
-        throw error;
-    }
-};
+
