@@ -23,8 +23,8 @@ const Cart = ({ navigation }) => {
         const cartData = await viewCart()
         if (cartData.result.length === 0) {
           Alert.alert(
-            'Your cart is empty',
-            'You will be redirected to the Home page.',
+            'Giỏ hàng đang rỗng!',
+            'Vui lòng thêm sản phẩm vào giỏ hàng và quay lại sau nhé !',
             [
               {
                 text: 'OK',
@@ -103,31 +103,26 @@ const Cart = ({ navigation }) => {
   const changeQuantity = async (item, operation) => {
     const updatedItem = { ...item }
   
-    // Tăng hoặc giảm số lượng
     if (operation === 'increase') {
       updatedItem.quantity += 1
     } else if (operation === 'decrease' && updatedItem.quantity > 1) {
       updatedItem.quantity -= 1
     } else {
-      alert('Quantity cannot be less than 1.')
+      alert('Số lượng không thể nhỏ hơn 1.')
       return
     }
   
-    // Tạo yêu cầu cập nhật giỏ hàng
     const cartRequest = {
       productId: updatedItem.idProduct,
       quantity: updatedItem.quantity,
     }
   
     try {
-      // Gửi yêu cầu cập nhật giỏ hàng
       await updateCartProduct(cartRequest)
   
-      // Cập nhật danh sách giỏ hàng
       const updatedCart = await viewCart()
       setCartItems(updatedCart.result)
   
-      // Kiểm tra nếu sản phẩm đang được chọn, cập nhật trong `selectedItems`
       const isSelected = selectedItems.some(
         selectedItem => selectedItem.idProduct === updatedItem.idProduct
       )
@@ -140,12 +135,11 @@ const Cart = ({ navigation }) => {
         )
         setSelectedItems(updatedSelectedItems)
   
-        // Tính lại tổng tiền từ danh sách đã chọn
         updateTotal(updatedSelectedItems)
       }
     } catch (error) {
       console.error('Error updating cart:', error)
-      alert('Failed to update cart. Please try again.')
+      alert('Lỗi khi cập nhật giỏ hàng, vui lòng thử lại sau!')
     }
   }
   
@@ -153,13 +147,12 @@ const Cart = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Your Cart</Text>
+      <Text style={styles.title}>Giỏ hàng của bạn</Text>
       <FlatList
         data={cartItems}
         keyExtractor={item => item.idProduct.toString()}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            {/* Checkbox */}
             <TouchableOpacity
               onPress={() => toggleSelection(item)}
               style={styles.checkboxContainer}
@@ -175,7 +168,6 @@ const Cart = ({ navigation }) => {
               />
             </TouchableOpacity>
 
-            {/* Product Info */}
             <View style={styles.productInfo}>
               <Image source={{ uri: item.image }} style={styles.productImage} />
               <View style={styles.productDetails}>
@@ -184,7 +176,6 @@ const Cart = ({ navigation }) => {
               </View>
             </View>
 
-            {/* Quantity Controls */}
             <View style={styles.quantityControls}>
               <TouchableOpacity
                 style={styles.quantityButton}
@@ -216,13 +207,13 @@ const Cart = ({ navigation }) => {
         style={styles.checkOut}
         onPress={() => {
           if (selectedItems.length === 0) {
-            alert('Please select at least one item to proceed to checkout.')
+            alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán !')
           } else {
             navigation.navigate('Pay', { cartItems: selectedItems })
           }
         }}
       >
-        <Text style={styles.checkOutText}>Checkout</Text>
+        <Text style={styles.checkOutText}>Xác nhận</Text>
       </TouchableOpacity>
     </View>
   )

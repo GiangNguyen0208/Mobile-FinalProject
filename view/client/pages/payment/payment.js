@@ -53,14 +53,14 @@ const Payment = ({ route }) => {
     try {
         const response = await createOrder(orderData)
         if (response.code === 1000) {
-          alert('Payment successful! Order created.')
+          alert('Thanh toán thành công!')
           navigation.navigate('UserHome') 
         } else {
           alert('Payment failed: ' + response.mesg)
         }
       } catch (error) {
         console.error('Error creating order:', error)
-        alert('An error occurred. Please try again.')
+        alert('Có lỗi sảy ra khi thanh toán, vui lòng thử lại sau !')
       }
   }
 
@@ -71,20 +71,20 @@ const Payment = ({ route }) => {
         keyExtractor={item => item.idProduct.toString()}
         ListHeaderComponent={() => (
           <>
-            <Text style={styles.title}>Payment Details</Text>
+            <Text style={styles.title}>Chi tiết hóa đơn</Text>
           </>
         )}
         ListFooterComponent={() => (
           <>
             <View style={styles.summaryContainer}>
-              <Text style={styles.summaryText}>Total: ${totalAmount}</Text>
+              <Text style={styles.summaryText}>Tổng tiền: ${totalAmount}</Text>
               <Text style={styles.summaryText}>
-                Discounted Total: ${discountedAmount}
+                Tổng giảm giá: ${discountedAmount}
               </Text>
             </View>
             <TextInput
               style={styles.input}
-              placeholder="Enter your voucher code"
+              placeholder="Nhập mã giảm giá"
               value={voucher}
               onChangeText={setVoucher}
             />
@@ -92,9 +92,9 @@ const Payment = ({ route }) => {
               style={styles.applyButton}
               onPress={handleVoucherApply}
             >
-              <Text style={styles.applyButtonText}>Apply</Text>
+              <Text style={styles.applyButtonText}>Áp dụng mã giảm giá</Text>
             </TouchableOpacity>
-            <Text style={styles.label}>Payment Method</Text>
+            <Text style={styles.label}>Phương thức thanh toán</Text>
             <View style={styles.paymentMethods}>
               <TouchableOpacity
                 style={[
@@ -111,7 +111,7 @@ const Payment = ({ route }) => {
                       styles.selectedPaymentText,
                   ]}
                 >
-                  Cash on Delivery
+                  Tiền mặt
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -129,12 +129,12 @@ const Payment = ({ route }) => {
                       styles.selectedPaymentText,
                   ]}
                 >
-                  Credit Card
+                  Chuyển khoản
                 </Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
-              <Text style={styles.payButtonText}>Pay Now</Text>
+              <Text style={styles.payButtonText}>Thánh toán ngay</Text>
             </TouchableOpacity>
           </>
         )}
