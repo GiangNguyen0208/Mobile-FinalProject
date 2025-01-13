@@ -1,184 +1,281 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
+import React, { useState } from 'react'
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  FlatList,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView
+} from 'react-native'
+import { createOrder } from '../../../../api/orderApi'
+import { useNavigation } from '@react-navigation/native'
 
-const ThanhToan = ({ route, navigation }) => {
-    // Nhận thông tin đơn hàng từ route params
-    const { order } = route.params;
+const Payment = ({ route }) => {
+  const { cartItems } = route.params
+  const navigation = useNavigation() 
+  const [address, setAddress] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('Cash on Delivery')
+  const [voucher, setVoucher] = useState('')
+  const [discount, setDiscount] = useState(0)
 
-    // State để điều khiển hiển thị của các Modal
-    const [isMoMoModalVisible, setMoMoModalVisible] = useState(false);
-    const [isCreditCardModalVisible, setCreditCardModalVisible] = useState(false);
+  const totalAmount = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  )
+  const discountedAmount = totalAmount - discount
 
-    const handleMoMoPayment = () => {
-        // Mở form mã QR thanh toán qua MoMo
-        setMoMoModalVisible(true);
-    };
+  const handleVoucherApply = () => {
+    if (voucher === 'DISCOUNT10') {
+      setDiscount(totalAmount * 0.1)
+      alert('Voucher applied: 10% off')
+    } else if (voucher === 'DISCOUNT20') {
+      setDiscount(totalAmount * 0.2)
+      alert('Voucher applied: 20% off')
+    } else {
+      setDiscount(0)
+      alert('Invalid voucher code')
+    }
+  }
 
-    const handleCreditCardPayment = () => {
-        // Mở form nhập thông tin thẻ Credit Card
-        setCreditCardModalVisible(true);
-    };
+  const handlePayment = async () => {
+    const orderData = {
+      voucherId: voucher ? voucher : null,  // Nếu có voucher, gán voucherId
+      paymentMethodId: paymentMethod === 'Cash on Delivery' ? 1 : 2,  
+      orderDetails: cartItems.map(item => ({
+        productId: item.idProduct,
+        quantity: item.quantity,
+      })),
+    }
 
-    const closeMoMoModal = () => {
-        setMoMoModalVisible(false);
-    };
+    try {
+        const response = await createOrder(orderData)
+        if (response.code === 1000) {
+          alert('Payment successful! Order created.')
+          navigation.navigate('UserHome') 
+        } else {
+          alert('Payment failed: ' + response.mesg)
+        }
+      } catch (error) {
+        console.error('Error creating order:', error)
+        alert('An error occurred. Please try again.')
+      }
+  }
 
-    const closeCreditCardModal = () => {
-        setCreditCardModalVisible(false);
-    };
-
-    return (
-        <View style={styles.container}>
-            {/* Tiêu đề "Thanh Toán" */}
-            <Text style={styles.title}>Thanh Toán</Text>
-
-            {/* Mã đơn hàng và tổng tiền */}
-            <View style={styles.orderInfoContainer}>
-                <Text style={styles.orderDetailText}>Mã đơn hàng: <Text style={styles.boldText}>{order.id}</Text></Text>
-                <Text style={styles.orderDetailText}>Tổng tiền: <Text style={styles.boldText}>{order.price} VND</Text></Text>
+  return (
+    <KeyboardAvoidingView style={styles.container}>
+      <FlatList
+        data={cartItems}
+        keyExtractor={item => item.idProduct.toString()}
+        ListHeaderComponent={() => (
+          <>
+            <Text style={styles.title}>Payment Details</Text>
+          </>
+        )}
+        ListFooterComponent={() => (
+          <>
+            <View style={styles.summaryContainer}>
+              <Text style={styles.summaryText}>Total: ${totalAmount}</Text>
+              <Text style={styles.summaryText}>
+                Discounted Total: ${discountedAmount}
+              </Text>
             </View>
-
-            {/* Các phương thức thanh toán */}
-            <TouchableOpacity style={styles.paymentOption} onPress={handleMoMoPayment}>
-                <Text style={styles.paymentText}>Thanh toán qua MoMo</Text>
-                <Image source={require('../../../assets/momo.jpg')} style={styles.paymentImage} />
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.paymentOption} onPress={handleCreditCardPayment}>
-                <Text style={styles.paymentText}>Thanh toán qua Credit Card</Text>
-                <Image source={require('../../../assets/creditcard.jpg')} style={styles.paymentImage} />
-            </TouchableOpacity>
-
-            {/* Modal hiển thị mã QR MoMo */}
-            <Modal
-                visible={isMoMoModalVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={closeMoMoModal}
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your voucher code"
+              value={voucher}
+              onChangeText={setVoucher}
+            />
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={handleVoucherApply}
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Quét mã QR để thanh toán qua MoMo</Text>
-                        <Image source={require('../../../assets/myMomo.jpg')} style={styles.qrImage} />
-                        <Button title="Đóng" onPress={closeMoMoModal} />
-                    </View>
-                </View>
-            </Modal>
-
-          {/* Modal nhập thông tin Credit Card */}
-          <Modal
-              visible={isCreditCardModalVisible}
-              transparent={true}
-              animationType="slide"
-              onRequestClose={closeCreditCardModal}
-          >
-              <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                      <Text style={styles.modalTitle}>Nhập thông tin thẻ Credit Card</Text>
-                      <TextInput style={styles.input} placeholder="Số thẻ" keyboardType="numeric" />
-                      <TextInput style={styles.input} placeholder="Ngày hết hạn (MM/YY)" keyboardType="numeric" />
-                      <TextInput style={styles.input} placeholder="CVV" keyboardType="numeric" secureTextEntry={true} />
-                      <View style={styles.buttonContainer}>
-                          <View style={styles.button}>
-                              <Button title="Thanh Toán" onPress={() => { console.log('Thanh toán bằng Credit Card') }} />
-                          </View>
-                          <View style={styles.button}>
-                              <Button title="Đóng" onPress={closeCreditCardModal} />
-                          </View>
-                      </View>
-                  </View>
-              </View>
-          </Modal>
-        </View>
-    );
-};
+              <Text style={styles.applyButtonText}>Apply</Text>
+            </TouchableOpacity>
+            <Text style={styles.label}>Payment Method</Text>
+            <View style={styles.paymentMethods}>
+              <TouchableOpacity
+                style={[
+                  styles.paymentButton,
+                  paymentMethod === 'Cash on Delivery' &&
+                    styles.selectedPaymentMethod,
+                ]}
+                onPress={() => setPaymentMethod('Cash on Delivery')}
+              >
+                <Text
+                  style={[
+                    styles.paymentButtonText,
+                    paymentMethod === 'Cash on Delivery' &&
+                      styles.selectedPaymentText,
+                  ]}
+                >
+                  Cash on Delivery
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.paymentButton,
+                  paymentMethod === 'Credit Card' &&
+                    styles.selectedPaymentMethod,
+                ]}
+                onPress={() => setPaymentMethod('Credit Card')}
+              >
+                <Text
+                  style={[
+                    styles.paymentButtonText,
+                    paymentMethod === 'Credit Card' &&
+                      styles.selectedPaymentText,
+                  ]}
+                >
+                  Credit Card
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
+              <Text style={styles.payButtonText}>Pay Now</Text>
+            </TouchableOpacity>
+          </>
+        )}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Image source={{ uri: item.image }} style={styles.productImage} />
+            <View style={styles.productInfo}>
+              <Text style={styles.productName}>{item.name}</Text>
+              <Text style={styles.productDesc}>{item.des}</Text>
+              <Text style={styles.productPrice}>
+                ${item.price} x {item.quantity}
+              </Text>
+            </View>
+            <Text style={styles.totalPrice}>${item.totalPrice}</Text>
+          </View>
+        )}
+      />
+    </KeyboardAvoidingView>
+  )
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    orderInfoContainer: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        marginBottom: 20,
-    },
-    orderDetailText: {
-        fontSize: 18,
-        marginBottom: 5,
-    },
-    boldText: {
-        fontWeight: 'bold',
-    },
-    paymentOption: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 10,
-        backgroundColor: '#f9f9f9',
-    },
-    paymentText: {
-        fontSize: 18,
-    },
-    paymentImage: {
-        width: 50,
-        height: 50,
-        marginLeft: 10,
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        width: '80%',
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    modalTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    qrImage: {
-        width: 200,
-        height: 200,
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        height: 40,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-    },
-      buttonContainer: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 10, // Tạo khoảng cách giữa các trường nhập liệu và các nút
-        },
-        button: {
-            flex: 1, // Để nút chiếm cùng một không gian
-            marginHorizontal: 5, // Tạo khoảng cách ngang giữa các nút
-        },
-});
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f8f8f8'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center'
+  },
+  item: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 15,
+    elevation: 3,
+    alignItems: 'center'
+  },
+  cartList: {
+    minHeight: 310
+  },
+  productImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    marginRight: 15
+  },
+  productInfo: {
+    flex: 1
+  },
+  productName: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  productDesc: {
+    fontSize: 14,
+    color: '#777'
+  },
+  productPrice: {
+    fontSize: 16,
+    color: '#555'
+  },
+  totalPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#e80b0b'
+  },
+  summaryContainer: {
+    marginVertical: 20,
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 3,
+    marginBottom: 20
+  },
+  summaryText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    paddingHorizontal: 20
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingLeft: 10,
+    marginBottom: 15
+  },
+  applyButton: {
+    backgroundColor: '#e80b0b',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+    alignItems: 'center'
+  },
+  applyButtonText: {
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  paymentMethods: {
+    flexDirection: 'row',
+    marginBottom: 20
+  },
+  paymentButton: {
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    marginRight: 10
+  },
+  selectedPaymentMethod: {
+    backgroundColor: '#8b0000'
+  },
+  paymentButtonText: {
+    color: '#000'
+  },
+  selectedPaymentText: {
+    color: '#fff'
+  },
+  payButton: {
+    backgroundColor: '#e80b0b',
+    padding: 15,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30
+  },
+  payButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
+})
 
-export default ThanhToan;
+export default Payment
