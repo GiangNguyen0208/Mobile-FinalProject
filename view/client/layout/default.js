@@ -131,8 +131,7 @@ const Default = () => {
         </ScrollView>
       )}
 
-    <TouchableOpacity
-        style={styles.cartButton}
+    <TouchableOpacity  style={styles.cartButton}
         onPress={() => navigation.navigate('Cart')} 
       >
         <Icon name="shopping-cart" size={24} color="#fff" />

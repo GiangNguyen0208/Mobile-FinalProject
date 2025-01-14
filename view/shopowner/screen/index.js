@@ -4,13 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getShopById } from '../../../api/adminApi';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
 
 const Home = ({navigation,route}) => {
 
     return (
         <SafeAreaView>
             <View style={[styles.row,styles.header]}>
-            <Text style={[styles.shopName]}>name</Text>
+                <Text style={[styles.shopName]}>Shop Screen</Text>
                 <View style={[styles.row,styles.personalAndNoti]}>
                     <Ionicons name="notifications-outline" size={24} color="black" />
                     <Ionicons name="person-circle-outline" size={24} color="black" />
@@ -26,7 +28,10 @@ const Home = ({navigation,route}) => {
             </View>
             <View style={styles.container}>
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[styles.function]}>
+                    <TouchableOpacity 
+                        style={[styles.function]}
+                        onPress={() => navigation.navigate('OrderList')} 
+                    >
                         <Image
                             source={require("./../../../assets/img/order-food.png")}
                             style={styles.image}

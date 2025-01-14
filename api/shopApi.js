@@ -90,3 +90,43 @@ export const getProductById = async (productId) => {
         throw error;
       }
 }
+
+export const getOrderListPedding = async () => {
+  try {
+      const response = await axiosInstance.get(`/orders/shipping`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+}
+
+export const getOrderListDone = async () => {
+  try {
+      const response = await axiosInstance.get(`/orders/history`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+}
+
+export const updateOrderStatus = async (orderId) => {
+  try {
+    const response = await axiosInstance.put(`/orders/update/${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error during API call:', error);
+    throw error;
+  }
+};
+
+export const viewDetail = async (orderId) => {
+  try {
+      const response = await axiosInstance.get(`/orders/detail/${orderId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+}

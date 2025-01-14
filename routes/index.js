@@ -17,6 +17,8 @@ import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
 import Cart from '../view/client/pages/Cart/index';
 import Pay from '../view/client/pages/payment/payment';
+import OrderList from '../view/shopowner/screen/OrderList';
+import OrderDetailShop from '../view/shopowner/screen/OrderDetailShop.js';
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -31,6 +33,8 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
+    <ShopStack.Screen name="OrderList" component={OrderList} />
+    <ShopStack.Screen name="OrderDetailShop" component={OrderDetailShop} />
   </ShopStack.Navigator>
 );
 

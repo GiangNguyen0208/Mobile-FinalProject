@@ -14,4 +14,16 @@ export const getAllCategory = async () => {
 export const getProductsByCategory = async (categoryId) => {
       const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
       return response.data.result;
+
   };
+
+export const getNotificationsByShop = async (shopId) => {
+    const response = await axiosInstance.get(`/notifications/listNotification/${shopId}`);
+    return response.data;
+};
+
+export const getVouchersByShop = async (shopId) => {
+    const response = await axiosInstance.get(`/vouchers/list/shop/${shopId}`);
+    return response.data;
+};
+
