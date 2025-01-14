@@ -6,26 +6,10 @@ import AddToCartModal from "../Modal/AddToCardModal";
 import Rating from "../Rating/StartRender";
 import { useNavigation } from '@react-navigation/native';
 
-const ItemCard = ({type, item, shopId ,isShopOwner}) => {
+const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
     const navigation = useNavigation(); // Khởi tạo navigation từ hook
 
-// <<<<<<< HEAD
-// const ItemCard = ({ type, item, navigation, isShopOwner }) => {
-// =======
 
-    const handlePress = () => {
-        if (isShopOwner) {
-            navigation.navigate('DetailProductShopScreen', { item, shopId });
-            console.log('edit');
-        } else {
-// <<<<<<< HEAD
-//             navigation.navigate('ProductDetail', { item });
-//             console.log('Detail')
-// =======
-            console.log('Bạn không có quyền của Shop');
-
-        }
-    };
     const [modalVisible, setModalVisible] = useState(false);
 
     const addToCard = ({ item }) => {
@@ -47,18 +31,12 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
     };
 
     return (
-// <<<<<<< HEAD
-//         <TouchableOpacity style={[styles.card, type === 'product' && { flexDirection: "row", height: 120 }]} onPress={type === 'product' ? handlePress : null}>
-//             {(type === 'product') && (
-//                 <TouchableOpacity style={{ flex: 5 }} >
-//                     <Image source={item.img} style={styles.image} />
-// =======
-        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
+        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]} onPress={ handlePress }>
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
                     <Image 
                         source={{ uri: item?.imageLink?.[0] || 'https://example.com/default-image' }} 
-                        style={styles.image} 
+                        style={[styles.image]} 
                     />
 
                 </TouchableOpacity>
@@ -85,13 +63,13 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
                     )}
                     {type === 'voucher' && (
                         <View style={[styles.voucherContainer, styles.border_bot]}>
-                            <View style={{ flexDirection: 'row', marginVertical: 16, }}>
-                                <FontAwesome5 name="tag" size={16} color='#E95322' />
+                            <View style={{ flexDirection: 'row' }}>
+                                <FontAwesome5 name="tag" size={16} color='#E95322' style={{bottom:8}} />
                                 <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
-                                    Nhập "{item.code}": {item.description}
+                                    Nhập "{item.code}": giảm ngay {item.valueDiscount} %
                                 </Text>
                             </View>
-                            <Text style={styles.voucherText}>Đặt tối thiểu: {item.minimumOrderValue}đ</Text>
+                            <Text style={styles.voucherText}>Đặt tối thiểu: {item.priceMin*1000}đ</Text>
                             <Text style={styles.voucherText}>Số lượng có hạn</Text>
                         </View>
                     )}
@@ -135,7 +113,10 @@ const styles = StyleSheet.create({
     card: {
         overflow: 'hidden',
         width: '100%', // Đặt chiều rộng cho card
-        margin: 10,
+        marginVertical: 4,
+        elevation:3,
+        backgroundColor:'white',
+        borderRadius: 8,
     },
     image: {
         resizeMode: 'contain',
@@ -187,12 +168,13 @@ const styles = StyleSheet.create({
         lineHeight: 24,
     },
     voucherContainer: {
-        height: 240,
+        height: 100,
     },
     voucherTitle: {
         fontSize: 16,
         lineHeight: 18,
         left: 8,
+        bottom:8
     },
 });
 

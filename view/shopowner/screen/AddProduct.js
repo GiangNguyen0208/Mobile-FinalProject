@@ -16,6 +16,7 @@ import { getListCategoryByShopId, addProduct, saveImagesToDatabase } from '../..
 import { useAuth } from '../../context/Auth/AuthContext';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { db } from '../../../api/firebaseConfig'; // Firebase Firestore config
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -147,7 +148,7 @@ const AddProduct = () => {
   
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Tên sản phẩm"
@@ -195,7 +196,7 @@ const AddProduct = () => {
         <Picker.Item label="SOLD_OUT" value="SOLD_OUT" />
       </Picker>
 
-      <Button title="Chọn ảnh" onPress={pickImages} />
+      <Button title="Chọn ảnh" onPress={pickImages} color={"#E95322"}/>
       <ScrollView horizontal>
         {images.map((image, index) => (
           <Image
@@ -210,8 +211,9 @@ const AddProduct = () => {
         title="Thêm sản phẩm"
         onPress={handleSubmit}
         disabled={uploading}
+        color={"#E95322"}
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 

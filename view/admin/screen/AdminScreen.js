@@ -5,6 +5,7 @@ import ManageShopsScreen from './ManageShopsScreen';
 import ManageUsersScreen from './ManageUsersScreen';
 import StatisticScreen from './StatisticsScreen';
 import AdminProfile from "./AdminProfile";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function AdminScreen() {
   const [currentPage, setCurrentPage] = useState('');
@@ -27,13 +28,13 @@ export default function AdminScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Sử dụng AdminNavigation */}
       <AdminNavigation onMenuSelect={setCurrentPage} currentPage={currentPage} />
       <View style={styles.mainContent}>
         {renderMainContent()}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
