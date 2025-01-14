@@ -5,13 +5,10 @@ import OnBoarding from '../components/Onboarding/Onboarding';
 import Intro from '../components/Intro/Intro';
 import SearchBox from '../components/Search';
 import styles from '../../../public/client/stylesheet/default.style';
-import ListHorizontal from '../components/ListItem/ListHorizontal';
 import { getAllCategory, getAllProduct } from '../../../api/systemApi';
 import { addToCart } from '../../../api/cartApi';
 import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
-import slides from '../partials/Slide/slide';
-import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 
