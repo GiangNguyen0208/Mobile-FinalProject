@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { getAllShops, getAllShopsClosed, addShop, deleteShop } from '../../../api/adminApi'; // Import API
 
@@ -21,6 +21,11 @@ const ManageShopsScreen = () => {
       ];
 
       setShopList(combinedList);
+
+           // In kết quả của getAllShops vào console
+            console.log('Active Shops:', activeShops);
+            console.log('Closed Shops:', closedShops);
+
     } catch (error) {
       console.error('Error fetching shops:', error);
       Alert.alert('Lỗi', 'Không thể tải danh sách cửa hàng');
@@ -98,13 +103,20 @@ const ManageShopsScreen = () => {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View style={[styles.shopItem, item.closed && styles.closedShop]}>
-              <View>
-                <Text style={styles.shopName}>{item.name}</Text>
-                <Text style={styles.shopLocation}>{item.location}</Text>
+              <View style={styles.shopInfo}>
+                {/* Hiển thị hình ảnh */}
+                <Image
+                  source={{ uri: item.image }} // Lấy URL hình ảnh từ API
+                  style={styles.shopImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.shopDetails}>
+                  <Text style={styles.shopName}>{item.name}</Text>
+                  <Text style={styles.shopLocation}>{item.location}</Text>
+                </View>
               </View>
 
               <View style={styles.buttonGroup}>
-                {/* Nút Chỉnh sửa luôn hiển thị và không bị làm mờ */}
                 <TouchableOpacity
                   style={[styles.button, styles.editButton, item.closed && styles.activeEditButton]}
                   onPress={() => handleEdit(item.id)}
@@ -170,6 +182,23 @@ const styles = StyleSheet.create({
   activeEditButton: {
     opacity: 1.5, // Giữ nút chỉnh sửa không bị làm mờ khi cửa hàng đóng
   },
+  shopInfo: {
+    flexDirection: 'row', // Đặt hình và thông tin nằm ngang
+    alignItems: 'center', // Căn giữa theo chiều dọc
+    justifyContent: 'flex-start', // Căn trái cho hình ảnh
+    marginBottom: 10,
+  },
+  shopImage: {
+    width: 120, // Kích thước hình ảnh
+    height: 120,
+    borderRadius: 10,
+    marginRight: 10, // Khoảng cách giữa hình ảnh và tên shop
+  },
+  shopDetails: {
+    flexDirection: 'column',
+    justifyContent: 'center', // Căn giữa tên shop và địa chỉ theo chiều dọc
+    alignItems: 'flex-start', // Căn trái cho tên shop và địa chỉ
+  },
   shopName: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -182,9 +211,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'row', // Các nút nằm ngang
+    justifyContent: 'center', // Căn giữa các nút
     width: '100%',
+    marginTop: 10,
   },
   button: {
     padding: 10,
@@ -225,5 +255,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+
 
 export default ManageShopsScreen;
