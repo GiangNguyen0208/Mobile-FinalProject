@@ -2,19 +2,36 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { getShopById } from '../../../api/adminApi';
 
 const Home = ({navigation,route}) => {
+    const shopId = route.params?.shopId;
+    const [shop, setShop] = useState([]);
+     useEffect(() => {
+            const fetchshop = async () => {
+                try {
+                    // Gọi API lấy dữ liệu theo shop id
+                    const shopData = await getShopById(shopId);
+                    setShop(shopData);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            };
+    
+            fetchshop(); // Gọi hàm fetchProductsAndCategories
+        }, [shopId]);
+    
+        useEffect(() => {
+            console.log("Fetched data:", shop); // Log dữ liệu của products
+        }, [shop]);
 
     return (
         <SafeAreaView>
             <View style={[styles.row,styles.header]}>
-            <Text style={[styles.shopName]}>name</Text>
-                <View style={[styles.row,styles.personalAndNoti]}>
-                    <Ionicons name="notifications-outline" size={24} color="black" />
-                    <Ionicons name="person-circle-outline" size={24} color="black" />
-                </View>
+            <Text style={[styles.shopName]}>{shop.name ? shop.name.toUpperCase() : ''}</Text>
+                <TouchableOpacity style={[styles.personalAndNoti]} onPress={() => navigation.navigate('EditProfile', { shopId: shop.id })}>
+                    <Ionicons name="person-circle-outline" size={32} color="black" />
+                </TouchableOpacity>
             </View>
             <View style={[styles.banner]}>
                 <Image
@@ -34,7 +51,7 @@ const Home = ({navigation,route}) => {
                         />
                         <Text style={styles.funcName}>Đơn hàng</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.function]} onPress={()=>navigation.navigate('Rating')}>
+                    <TouchableOpacity style={[styles.function]} onPress={() => navigation.navigate('Rating', { shopId: shop.id })} >
                         <Image
                             source={require("./../../../assets/img/star.png")}
                             style={styles.image}
@@ -52,15 +69,15 @@ const Home = ({navigation,route}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[styles.function,]}>
+                    <TouchableOpacity style={[styles.function,]} onPress={() => navigation.navigate('Notification', { shop: shop })}>
                         <Image
-                            source={require("./../../../assets/img/help-desk.png")}
+                            source={require("./../../../assets/img/notification.png")}
                             style={styles.image}
                             resizeMode="contain"
                         />
-                        <Text style={styles.funcName}>Hỗ trợ</Text>
+                        <Text style={styles.funcName}>Thông báo</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.function]}>
+                    <TouchableOpacity style={[styles.function]}onPress={() => navigation.navigate('VoucherList', { shop: shop })}>
                         <Image
                             source={require("./../../../assets/img/voucher.png")}
                             style={styles.image}
@@ -86,12 +103,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         left: 16,
         paddingVertical:6,
+        color:"#E95322",
+        fontWeight:600,
     },
     personalAndNoti:{
-        right:10,
+        right:20,
         paddingVertical:7,
-        justifyContent:'space-around',
-        width: 80
     },
     container:{
         marginHorizontal:16,

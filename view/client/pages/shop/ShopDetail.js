@@ -9,26 +9,20 @@ import {
     FlatList,
     Button, ScrollView, Alert,
 } from "react-native";
-import React, {useRef, useState} from 'react';
-import defStyles from './default.style';
+import React, { useEffect, useState } from 'react';
+import defStyles from '../../../../public/client/stylesheet/default.style';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import itemdetail from "../../../../../../component/app/ProductDetail";
-import ProductList from "./ProductList";
-import PopularDish from "./PopularDish";
+import itemdetail from "../../../client/pages/shop/ProductDetail";
+import ProductList from "../../components/ListItem/ProductList";
+import ListHorizontal from "../../components/ListItem/ListHorizontal";
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-
-
+import { getListProductByShopName } from "../../../../api/adminApi";
+import ItemCard from '../../components/ListItem/ItemCard';
 const { width, height } = Dimensions.get('window');
-const categories = [
-    { id: '1', name: 'Fruits' },
-    { id: '2', name: 'Vegetables' },
-    { id: '3', name: 'Dairy' },
-    { id: '4', name: 'Grains' },
-    { id: '5', name: 'Proteins' },
-    { id: '6', name: 'Snacks' },
-];
+
+
 const voucherData = [
     {
         id: 1,
@@ -77,14 +71,39 @@ const voucherData = [
         remaining: 10,
     },
 ];
-const ProductDetail=({route ,navigation})=>{
+const ProductDetail = ({ route, navigation }) => {
+
+    const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
+    const shopName = 'Nhà hàng Lẩu'
+    useEffect(() => {
+        const fetchProductsAndCategories = async () => {
+            try {
+                // Gọi API lấy dữ liệu sản phẩm theo tên shop
+                const productsData = await getListProductByShopName(shopName);
+
+                // Lấy danh sách kết quả từ API (đảm bảo dữ liệu không undefined)
+                const productsArray = productsData.result || [];
+
+                // Cập nhật state
+                setProducts(productsArray);
+            } catch (error) {
+                console.error("Error fetching product or category data:", error);
+            }
+        };
+
+        fetchProductsAndCategories(); // Gọi hàm fetchProductsAndCategories
+    }, [shopName]);
+
+    useEffect(() => {
+        console.log("Fetched products data:", products); // Log dữ liệu của products
+    }, [products]);
     // const { shop } = route.params;
     const [isFilled, setIsFilled] = useState(false);
 
     const addFavorite = () => {
-        if(isFilled){
+        if (isFilled) {
             Alert.alert('Đã xóa khỏi danh sách yêu thích')
-        }else {
+        } else {
             Alert.alert('Đã thêm vào danh sách yêu thích')
         }
 
@@ -93,45 +112,45 @@ const ProductDetail=({route ,navigation})=>{
 
 
     return (
-        <SafeAreaView style={[defStyles.container,styles.bgWhite]}>
+        <SafeAreaView style={[defStyles.container, styles.bgWhite]}>
             <ScrollView>
                 <View>
                     <View >
-                        <Image source={require('../img/order-food.png')} style={[styles.image]} />
+                        <Image source={require("./../../../../assets/img/order-food.png")} style={[styles.image]} />
                     </View>
                     <View style={styles.itemInfo}>
-                        <View style={[styles.row,styles.shopTitle]}>
+                        <View style={[styles.row, styles.shopTitle]}>
                             <Text style={styles.favorite}>Yêu thích</Text>
-                            <View style={[styles.row,{top:3}]}>
+                            <View style={[styles.row, { top: 3 }]}>
                                 <Ionicons name="shield-checkmark" size={26} color="#FFD12F" />
-                                <Text style={[styles.itemName,{bottom:4}]}> Shop vui ve</Text>
+                                <Text style={[styles.itemName, { bottom: 4 }]}> Shop vui ve</Text>
                             </View>
                             <TouchableOpacity>
-                                <Feather style={[styles.bgWhite,styles.infoIcon]} name="info" size={24} color="black" />
+                                <Feather style={[styles.bgWhite, styles.infoIcon]} name="info" size={24} color="black" />
                             </TouchableOpacity>
                         </View>
-                        <View style={[styles.row,styles.justifyBw]}>
+                        <View style={[styles.row, styles.justifyBw]}>
                             <View style={styles.row}>
                                 <StarRender rating={1.2}></StarRender>
-                                <TouchableOpacity style={[styles.row,{top:2}]}>
+                                <TouchableOpacity style={[styles.row, { top: 2 }]} onPress={() => navigation.navigate('Rating')}>
                                     <Text></Text>
-                                    <Text style={{fontSize:16}}>Bình luận </Text>
+                                    <Text style={{ fontSize: 16 }}>Bình luận </Text>
                                     <Feather name="chevron-right" size={24} color="black" />
                                 </TouchableOpacity>
-                                <View style={[styles.row,{top:4}]}>
+                                <View style={[styles.row, { top: 4 }]}>
                                     <Feather name="clock" size={20} color="black" />
-                                    <Text style={{fontSize:16,lineHeight:20,left:6,top:1}}>22 phút</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 20, left: 6, top: 1 }}>22 phút</Text>
                                 </View>
                             </View>
                             <TouchableOpacity onPress={addFavorite}>
-                                <Ionicons name={isFilled ? "heart-sharp" : "heart-outline"} size={24} color={isFilled ? "red" : "black"} style={[styles.alignSelf, itemdetail.itemName]}/>
+                                <Ionicons name={isFilled ? "heart-sharp" : "heart-outline"} size={24} color={isFilled ? "red" : "black"} style={[styles.alignSelf, itemdetail.itemName]} />
                             </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.bank_space}></View>
                 </View>
-                <View style={[styles.bgWhite,styles.shipInfo]}>
-                    <View style={[styles.row,styles.shopTitleContainer]}>
+                <View style={[styles.bgWhite, styles.shipInfo]}>
+                    <View style={[styles.row, styles.shopTitleContainer]}>
                         <View style={styles.shipIcon}>
                             <FontAwesome5 name="shipping-fast" size={24} color="#E95322" />
                         </View>
@@ -143,18 +162,31 @@ const ProductDetail=({route ,navigation})=>{
                             </View>
                         </View>
                     </View>
-                    <View style={[styles.voucherContainer,styles.row]}>
+                    <View style={[styles.voucherContainer, styles.row]}>
                         <VoucherTwo></VoucherTwo>
-                        <TouchableOpacity style={[styles.row,styles.seeAll]}>
-                            <Text style={{fontSize:16,color:'#808080'}}>Xem tất cả</Text>
+                        <TouchableOpacity style={[styles.row, styles.seeAll]} >
+                            <Text style={{ fontSize: 16, color: '#808080' }}>Xem tất cả</Text>
                             <Feather name="chevron-right" size={24} color="#808080" />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.bank_space}></View>
-                <View style={[styles.bgWhite,styles.popularListContainer]}>
+                <View style={[styles.bgWhite, styles.popularListContainer]}>
                     <Text style={[styles.popularList]}>Món phổ biến</Text>
-                    <PopularDish navigation={navigation}></PopularDish>
+                    <ListHorizontal items={products} type={'product'} navigation={navigation} ></ListHorizontal>
+                    {/* <FlatList
+                        data={products}
+                        renderItem={({ item }) => (
+                            <View style={styles.card}>
+                            <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={false} />
+                            </View>
+                        )}
+                        keyExtractor={(_, index) => index.toString()}
+                        horizontal={true}  // Thiết lập chiều ngang
+                        showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
+                        contentContainerStyle={styles.flatList} 
+                        style={{ flex: 1 }}  // Tùy chỉnh style của FlatList
+                    /> */}
                 </View>
                 <View style={styles.bank_space}></View>
                 <ProductList navigation={navigation} />
@@ -173,11 +205,12 @@ const StarRender = ({ rating }) => {
                 <FontAwesome key={`star-${i}`} name="star" size={24} color="#FFD12F" />
             );
         }
-        if(halfStar){
+        if (halfStar) {
             for (let i = 0; i < halfStar; i++) {
                 stars.push(
                     <FontAwesome key={`star-half-full-${i}`} name="star-half-full" size={24} color="#FFD12F" />
-                );}
+                );
+            }
         }
         const remainingStars = 5 - fullStars - halfStar; // Tính số sao rỗng
         for (let i = 0; i < remainingStars; i++) {
@@ -188,7 +221,7 @@ const StarRender = ({ rating }) => {
     };
     starRender(rating);
     return (
-        <View style={[styles.row,styles.ratingStar]}>
+        <View style={[styles.row, styles.ratingStar]}>
             <Text >{stars}</Text>
         </View>
     );
@@ -202,7 +235,7 @@ const addMinutesToCurrentTime = (minutes) => {
 
 const ShippingTime = ({ minutes }) => {
     return (
-        <Text style={{fontSize:16,left:36}}>{addMinutesToCurrentTime(minutes)}</Text>
+        <Text style={{ fontSize: 16, left: 36 }}>{addMinutesToCurrentTime(minutes)}</Text>
     );
 };
 
@@ -211,10 +244,10 @@ const VoucherTwo = () => {
     const firstTwoVouchers = voucherData.slice(0, 2);
 
     const renderItem = ({ item }) => (
-        <View style={[styles.voucherContainer,styles.row]}>
+        <View style={[styles.voucherContainer, styles.row]}>
             <FontAwesome name="tag" size={18} color="#E95322" />
             <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
-               Nhập "{item.code}": {item.description}
+                Nhập "{item.code}": {item.description}
             </Text>
         </View>
     );
@@ -231,29 +264,39 @@ const VoucherTwo = () => {
 
 
 const styles = StyleSheet.create({
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        elevation: 3,
+        overflow: 'hidden',
+        width: 300,
+        height:110,
+        margin: 10,
+        justifyContent:'center'
+    },
 
-    seeAll:{
+    seeAll: {
         top: 48
     },
-    shipInfo:{
+    shipInfo: {
         height: 150
     },
-    shipIcon:{
-        backgroundColor:'#FFEADE',
-        height:52,
-        width:52,
-        justifyContent:'center',
+    shipIcon: {
+        backgroundColor: '#FFEADE',
+        height: 52,
+        width: 52,
+        justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 32,
         left: 16,
 
     },
-    shopTitleContainer:{
-        top:8,
+    shopTitleContainer: {
+        top: 8,
     },
-    shipTitle:{
-        fontSize:16,
-        left:32,
+    shipTitle: {
+        fontSize: 16,
+        left: 32,
     },
     voucherContainer: {
         padding: 8,
@@ -261,38 +304,38 @@ const styles = StyleSheet.create({
     },
     voucherTitle: {
         fontSize: 16,
-        textAlign:'center',
+        textAlign: 'center',
         lineHeight: 20,
         marginLeft: 8,
     },
 
-    infoIcon:{
-        position:'relative',
+    infoIcon: {
+        position: 'relative',
         top: -24,
-        padding:4,
-        borderRadius:32,
-        alignSelf:"flex-end",
-        right:-80,
+        padding: 4,
+        borderRadius: 32,
+        alignSelf: "flex-end",
+        right: -80,
     },
-    popularListContainer:{
-        width:'100%'
+    popularListContainer: {
+        width: '100%'
     },
-    ratingStar:{
+    ratingStar: {
         width: 120,
     },
-    popularList:{
-        width:'100%',
-        color:'#E95322',
-        marginHorizontal:12,
-        fontSize:20,
-        fontWeight:'500'
+    popularList: {
+        width: '100%',
+        color: '#E95322',
+        marginHorizontal: 12,
+        fontSize: 20,
+        fontWeight: '500'
     },
-    bgWhite:{
-        backgroundColor:'white',
+    bgWhite: {
+        backgroundColor: 'white',
     },
-    bank_space:{
-        backgroundColor:'#f2f3f5',
-        width:'100%',
+    bank_space: {
+        backgroundColor: '#f2f3f5',
+        width: '100%',
         height: 12
     },
     image: {
@@ -301,58 +344,58 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         position: 'relative',
     },
-    row:{
-        flexDirection:"row",
+    row: {
+        flexDirection: "row",
     },
-    justifyBw:{
-        justifyContent:"space-between"
+    justifyBw: {
+        justifyContent: "space-between"
     },
     backButton: {
         position: 'relative',
-        top:50,
+        top: 50,
         left: 10,
         padding: 8,
         zIndex: 1,
     },
-    col:{
-        flexDirection:"column",
-        justifyContent:"space-around"
+    col: {
+        flexDirection: "column",
+        justifyContent: "space-around"
     },
-    itemInfo:{
-        marginHorizontal:12,
+    itemInfo: {
+        marginHorizontal: 12,
         height: 100,
-        justifyContent:"space-around"
+        justifyContent: "space-around"
     },
-    itemName:{
-        fontSize:24,
-        fontWeight:'600'
+    itemName: {
+        fontSize: 24,
+        fontWeight: '600'
     },
-    itemDes:{
+    itemDes: {
         marginVertical: 12,
-        fontSize:16,
-        fontWeight:null
+        fontSize: 16,
+        fontWeight: null
     },
-    price:{
-        fontSize:20,
-        fontWeight:'600',
-        color:'#E95322',
+    price: {
+        fontSize: 20,
+        fontWeight: '600',
+        color: '#E95322',
     },
-    alignSelf:{
-        paddingVertical:2
+    alignSelf: {
+        paddingVertical: 2
     },
-    favorite:{
-        backgroundColor:"#E95322",
-        width:90,
+    favorite: {
+        backgroundColor: "#E95322",
+        width: 90,
         borderRadius: 8,
-        marginRight:12,
+        marginRight: 12,
         color: 'white',
-        textAlign:'center',
+        textAlign: 'center',
         lineHeight: 30,
-        fontSize:16,
+        fontSize: 16,
 
     },
-    shopTitle:{
-      justifyContent: null,
+    shopTitle: {
+        justifyContent: null,
     },
 })
 

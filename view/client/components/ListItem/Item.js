@@ -2,26 +2,35 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Rating from '../Rating/StartRender';
 
+
 const Item = ({ image, title, description, price, rating, onPress }) => {
     const imageSource = image ? { uri: image } : null; // Dùng base64Image nếu có
 
+
     return (
-        <TouchableOpacity onPress={onPress} style={styles.container}>
+        <TouchableOpacity
+            onPress={onPress}
+            style={styles.container}
+        >
+            {/* Chỉ hiển thị hình ảnh nếu có `imageSource` */}
             {imageSource ? (
-                <Image 
-                    source={{ uri: image }} 
-                    style={styles.image} 
+                <Image
+                    source={{ uri: image }}
+                    style={styles.image}
                 />
-            ) : (
-                <Text>No Image Available</Text> // Trường hợp không có hình ảnh
+            ) : null}
+
+            {/* Kiểm tra từng phần dữ liệu */}
+            {(title || description || price || rating) && (
+                <View style={styles.textContainer}>
+                    {title && <Text style={styles.title}>{title}</Text>}
+                    {description && <Text style={styles.description}>{description}</Text>}
+                    {price && <Text style={styles.date}>{price}</Text>}
+                    {rating && <Rating rating={rating} />}
+                </View>
             )}
-            <View style={styles.textContainer}>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.description}>{description}</Text>
-                <Text style={styles.date}>{price}</Text>
-                <Rating rating={rating}/>
-            </View>
         </TouchableOpacity>
+
     );
 };
 
@@ -29,19 +38,21 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
+        padding: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
-        marginBottom: 10, // Adjusted for better spacing
+        marginBottom: 2, // Adjusted for better spacing
+        backgroundColor: 'white',
+
     },
     image: {
         width: 60,
         height: 60,
         borderRadius: 5,
-        marginRight: 10,
     },
     textContainer: {
         flex: 1,
+        paddingHorizontal: 16
     },
     title: {
         fontSize: 16,

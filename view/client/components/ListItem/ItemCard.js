@@ -1,25 +1,18 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image, Text, Alert, Modal} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Image, Text, Alert, Modal } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AddToCartModal from "../Modal/AddToCardModal";
 import Rating from "../Rating/StartRender";
 import { useNavigation } from '@react-navigation/native';
 
-const ItemCard = ({type, item, shopId ,isShopOwner}) => {
+const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
     const navigation = useNavigation(); // Khởi tạo navigation từ hook
 
-    const handlePress = () => {
-        if (isShopOwner) {
-            navigation.navigate('DetailProductShopScreen', { item, shopId });
-            console.log('edit');
-        } else {
-            console.log('Bạn không có quyền của Shop');
-        }
-    };
+
     const [modalVisible, setModalVisible] = useState(false);
 
-    const addToCard = ({item}) => {
+    const addToCard = ({ item }) => {
         setModalVisible(true);
     };
 
@@ -38,42 +31,45 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
     };
 
     return (
-        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
+        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]} onPress={ handlePress }>
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
                     <Image 
                         source={{ uri: item?.imageLink?.[0] || 'https://example.com/default-image' }} 
-                        style={styles.image} 
+                        style={[styles.image]} 
                     />
+
                 </TouchableOpacity>
             )}
             <View style={styles.info}>
                 <View style={type === 'comment' && styles.row}>
-                    {type==='comment'&&(
-                        <View style={{left:8,top:5}}>
+                    {type === 'comment' && (
+                        <View style={{ left: 8, top: 5 }}>
                             <FontAwesome5 name="user-circle" size={24} color="black" />
                         </View>
                     )}
                     <TouchableOpacity >
                         <Text style={styles.name}>
-                            {type === 'comment' ? item.userName : item.name }
+                            {type === 'comment' ? item.userName : item.name}
                         </Text>
                     </TouchableOpacity>
                 </View>
-                {!(type==='voucher')&&(
-                    <Rating rating={item.rating}/>
+                {!(type === 'voucher') && (
+                    <Rating rating={item.rating} />
                 )}
-                <View style={[styles.priceContainer,type === 'product' && styles.row]}>
-                    <Text style={styles.price}>{item.price}</Text>
-                    {type==='voucher'&&(
+                <View style={[styles.priceContainer, type === 'product' && styles.row]}>
+                    {(type === 'product') && (
+                    <Text style={styles.price}>{item.price * 1000} đ</Text>
+                    )}
+                    {type === 'voucher' && (
                         <View style={[styles.voucherContainer, styles.border_bot]}>
-                            <View style={{flexDirection:'row',marginVertical:16,}}>
-                                <FontAwesome5 name="tag" size={16} color='#E95322' />
+                            <View style={{ flexDirection: 'row' }}>
+                                <FontAwesome5 name="tag" size={16} color='#E95322' style={{bottom:8}} />
                                 <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
-                                    Nhập "{item.code}": {item.description}
+                                    Nhập "{item.code}": giảm ngay {item.valueDiscount} %
                                 </Text>
                             </View>
-                            <Text style={styles.voucherText}>Đặt tối thiểu: {item.minimumOrderValue}đ</Text>
+                            <Text style={styles.voucherText}>Đặt tối thiểu: {item.priceMin*1000}đ</Text>
                             <Text style={styles.voucherText}>Số lượng có hạn</Text>
                         </View>
                     )}
@@ -83,15 +79,15 @@ const ItemCard = ({type, item, shopId ,isShopOwner}) => {
                         </TouchableOpacity>
                     )}
                 </View>
-                {(type==='comment')&&(
-                    <View style={{left: 12}}>
+                {(type === 'comment') && (
+                    <View style={{ left: 12 }}>
                         <Text style={styles.content}>{item.message}</Text>
                     </View>
                 )}
             </View>
-            {(type==='comment')&&(
+            {(type === 'comment') && (
                 <TouchableOpacity  >
-                    <Image source={{ uri:"https://via.placeholder.com/150"}} style={styles.cmtImg} />
+                    <Image source={{ uri: "https://via.placeholder.com/150" }} style={styles.cmtImg} />
                     <Text style={styles.date}>{formatDateFromArray(item.createdAt)}</Text>
                 </TouchableOpacity>
             )}
@@ -110,71 +106,75 @@ const styles = StyleSheet.create({
     date: {
         fontSize: 14,
         color: "#555",
-        left:16,
+        left: 16,
         bottom: 8,
     },
 
     card: {
         overflow: 'hidden',
         width: '100%', // Đặt chiều rộng cho card
-        margin: 10,
+        marginVertical: 4,
+        elevation:3,
+        backgroundColor:'white',
+        borderRadius: 8,
     },
     image: {
-        resizeMode:'contain',
+        resizeMode: 'contain',
         width: '100%', // Chiếm hết chiều rộng của card
         height: '100%', // Đặt chiều cao cho hình ảnh
     },
     info: {
         padding: 5,
-        justifyContent:"space-between",
-        flex:7
+        justifyContent: "space-between",
+        flex: 7
     },
     name: {
         fontSize: 20,
         fontWeight: 'bold',
         top: 4,
-        left:16
+        left: 10
     },
     price: {
         fontSize: 16,
         color: '#666',
     },
     priceContainer: {
-        marginHorizontal:10,
-        bottom:4,
-        justifyContent:"space-between",
+        marginHorizontal: 10,
+        bottom: 4,
+        justifyContent: "space-between",
     },
-    row:{
-        flexDirection:"row",
+    row: {
+        flexDirection: "row",
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
     },
     //style của comment
-    cmtImg:{
+    cmtImg: {
         width: 100,
         height: 100,
         resizeMode: 'cover',
-        margin:10,
+        margin: 10,
     },
-    content:{
-        top:-8, 
+    content: {
+        top: -8,
         flexWrap: 'wrap',
     },
 
     // style cua voucher
-    voucherText:{
+    voucherText: {
         flexWrap: 'wrap',
-        lineHeight:24,
+        lineHeight: 24,
     },
-    voucherContainer:{
-        height: 240,
+    voucherContainer: {
+        height: 100,
     },
-    voucherTitle:{
-        fontSize:16,
-        lineHeight:18,
-        left:8,
+    voucherTitle: {
+        fontSize: 16,
+        lineHeight: 18,
+        left: 8,
+        bottom:8
     },
 });
 

@@ -2,9 +2,33 @@ import axiosInstance from "./axiosInstance";
 
 // Lấy danh sách tất cả người dùng
 export const getAllUser = async () => {
-  const response = await axiosInstance.get("admin/user/list");
-  return response.data;
-};
+    const response = await axiosInstance.get("admin/user/list");
+    return response.data;
+}
+
+export const getListProductByShopName = async (name) => {
+    const response = await axiosInstance.get("/products/listProduct/shop/"+name);
+    return response.data;
+  }
+
+  export const getListCategoryByShopId = async (id) => {
+    const response = await axiosInstance.get("/shop/"+id+"/categories");
+    return response.data;
+  }
+
+  export const getListCommentByShopId = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  }
+
+  export const getListShop = async () => {
+    const response = await axiosInstance.get("/admin/shop/list");
+    return response.data;
+  }
+
+  
+
+
 
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
@@ -29,6 +53,8 @@ export const getUserById = async (userId) => {
   const response = await axiosInstance.get(`admin/user/id/${userId}`);
   return response.data;
 };
+
+
 
 // Lấy danh sách tất cả cửa hàng
 export const getAllShops = async () => {
@@ -63,6 +89,7 @@ export const deleteShop = async (shopId) => {
   return response.data;
 };
 
+
 // Lấy thông tin cửa hàng theo ID
 export const getShopById = async (shopId) => {
   const response = await axiosInstance.get(`admin/shop/id/${shopId}`);
@@ -74,3 +101,4 @@ export const getShopByName = async (shopName) => {
   const response = await axiosInstance.get(`admin/shop/name/${shopName}`);
   return response.data;
 };
+
