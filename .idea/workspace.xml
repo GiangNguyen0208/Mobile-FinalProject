@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/admin/screen/ManageShopsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/admin/screen/ManageShopsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/shopowner/screen/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/shopowner/screen/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

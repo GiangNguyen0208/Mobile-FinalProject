@@ -112,7 +112,7 @@ const ManageShopsScreen = () => {
                 />
                 <View style={styles.shopDetails}>
                   <Text style={styles.shopName}>{item.name}</Text>
-                  <Text style={styles.shopLocation}>{item.location}</Text>
+                  <Text style={styles.shopLocation}>{item.address}</Text>
                 </View>
               </View>
 
