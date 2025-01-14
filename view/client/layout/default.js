@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView ,StyleSheet,TouchableOpacity,FlatList,ActivityIndicator} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import OnBoarding from '../components/Onboarding/Onboarding';
 import Intro from '../components/Intro/Intro';
@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
+
 const Default = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -22,7 +23,11 @@ const Default = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [loading, setLoading] = useState(true); // Thêm trạng thái loading
 
-
+  const [selected, setSelected] = useState('nearBy');
+  // const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
+  // const [category, setCategory] = useState([]);
+  const [shops, setShops] = useState([]);
+  // const shopName = 'Nhà hàng Lẩu'
 
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -48,7 +53,11 @@ const Default = () => {
     fetchFoodData();
     fetchCategoryData();
   }, []);
-  
+
+  useEffect(() => {
+    console.log("Fetched data:", shops); // Log dữ liệu của category
+  }, [shops]); // Sửa lại đây để theo dõi sự thay đổi của category
+
 
   useEffect(() => {
     setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
@@ -93,8 +102,9 @@ const Default = () => {
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
             <OnBoarding item={slides}/>
             <Intro items={categoryData} onItemPress={handleCategoryOfShopPress} />
+
             <View style={styles.collectionHeader}>
-              <Text style={[styles.collectionTitle,{color:'#E95322',left:16}]}>FLASH SALE</Text>
+              <Text style={[styles.collectionTitle, { color: '#E95322', left: 16 }]}>FLASH SALE</Text>
               <Text style={styles.viewAllText}>View All</Text>
             </View>
             <View style={styles.container}>
@@ -115,8 +125,7 @@ const Default = () => {
                 ))
               ) : (
                 <Text>Can't upload data from db.</Text>
-              )}
-
+              )}    
             </View>
           </View>
         </ScrollView>

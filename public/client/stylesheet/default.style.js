@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   cartButton: {
     position: 'absolute',
-    bottom: 70,
+    bottom: 100,
     right: 20,
     backgroundColor: 'orange', // Màu nền nút giỏ hàng
     borderRadius: 30,
