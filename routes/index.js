@@ -9,13 +9,14 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
-
-import ProductDetail from '../view/client/pages/shop/ProductDetail.js'; 
-import Default from '../view/client/layout/default.js'; 
-
+import VoucherList from '../view/client/components/ListItem/VoucherList.js'; 
+import Notification from '../view/client/components/ListItem/Notifications.js'; 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetail from '../view/client/pages/detail/detail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
+import AddNotification from '../view/shopowner/screen/AddNotification.js';
+import AddVoucher from '../view/shopowner/screen/AddVoucher.js';
+import EditProfile from '../view/shopowner/screen/EditProfile.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
 
 const Stack = createNativeStackNavigator();
@@ -25,12 +26,17 @@ const UserStack = createNativeStackNavigator();
 // Shop Navigator
 const ShopNavigator = () => (
   <ShopStack.Navigator screenOptions={{ headerShown: false }}>
-    <ShopStack.Screen name="ShopHome" component={ShopScreen} />
+    <ShopStack.Screen name="ShopHome" initialParams={{ shopId: 4 }}  component={ShopScreen} />
     <ShopStack.Screen name="Menu" component={Menu} />
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
+    <ShopStack.Screen name="Notification" component={Notification} />
+    <ShopStack.Screen name="AddNotification" component={AddNotification} />
+    <ShopStack.Screen name="AddVoucher" component={AddVoucher} />
+    <ShopStack.Screen name="VoucherList" component={VoucherList} />
+    <ShopStack.Screen name="EditProfile" component={EditProfile} />
   </ShopStack.Navigator>
 );
 
@@ -53,6 +59,7 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             )}
             {role === 'Shop' && (
               <Stack.Screen name="Shop" component={ShopNavigator} />
+              
             )}
             {role === 'USER' && (
               <Stack.Screen name="User" component={UserNavigator} />
@@ -63,16 +70,15 @@ const AppNavigator = ({ isLoggedIn, role }) => {
 
             {/* <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} /> */}
-            <Stack.Screen name="ShopOwner" initialParams={4} component={ShopScreen} />
+            {/* <Stack.Screen name="ShopOwner" initialParams={4} component={ShopScreen} />
             <Stack.Screen name="Menu" component={Menu} />
             <Stack.Screen name="EditProduct" component={EditProduct} />
             <Stack.Screen name="Rating" component={Rating} />
             <Stack.Screen name="ProductDetail" component={ProductDetail} />
-            <Stack.Screen name="Default" component={Default} />
-{/* =======
+             */}
+
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
->>>>>>> origin/21130338 */}
           </>
         )}
       </Stack.Navigator>

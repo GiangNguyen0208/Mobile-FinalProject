@@ -5,13 +5,6 @@ export const getAllUser = async () => {
     const response = await axiosInstance.get("admin/user/list");
     return response.data;
 }
-// export const getShopById = async (id) => {
-//     const response = await axiosInstance.get("admin/shop/id",id ,{
-        
-<<<<<<< HEAD
-    });
-    return response.data;
-}
 
 export const getListProductByShopName = async (name) => {
     const response = await axiosInstance.get("/products/listProduct/shop/"+name);
@@ -27,7 +20,6 @@ export const getListProductByShopName = async (name) => {
     const response = await axiosInstance.get("/comments/list/shop/"+id);
     return response.data;
   }
-<<<<<<< HEAD
 
   export const getListShop = async () => {
     const response = await axiosInstance.get("/admin/shop/list");
@@ -35,13 +27,7 @@ export const getListProductByShopName = async (name) => {
   }
 
   
-=======
-};
-=======
-//     });
-//     return response.data;
-// }
->>>>>>> origin/21130338
+
 
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
@@ -67,8 +53,8 @@ export const getAllShops = async () => {
 };
 
 // Lấy cửa hàng theo ID
-export const getShopById = async (shopId) => {
-  const response = await axiosInstance.get(`admin/shop/id/${shopId}`);
+export const getShopById = async (id) => {
+  const response = await axiosInstance.get(`/admin/shop/id/${id}`);
   return response.data;
 };
 
@@ -89,4 +75,3 @@ export const deleteShop = async (shopId) => {
   const response = await axiosInstance.delete(`admin/shop/delete/${shopId}`);
   return response.data;
 };
->>>>>>> 3b73332a893f3e795d6b1720e6124bdb04da752e

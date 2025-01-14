@@ -6,6 +6,7 @@ import OnBoarding from '../../client/components/Onboarding/Onboarding';
 import Rating from '../../client/components/Rating/StartRender';
 import NotificationPopup from '../../client/components/NotificationPopup';
 import { getProductById, getListImageByProductID } from '../../../api/shopApi'; // Thêm API để lấy thông tin sản phẩm
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const DetailProductShopScreen = () => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -62,8 +63,8 @@ const DetailProductShopScreen = () => {
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <ScrollView style={styles.scrollContainer} contentContainerStyle={{ paddingBottom: 80 }}>
+    <SafeAreaView style={styles.mainContainer}>
+      <ScrollView style={styles.scrollContainer} >
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Chi Tiết Sản Phẩm</Text>
         </View>
@@ -96,14 +97,14 @@ const DetailProductShopScreen = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: 'white',
   },
   scrollContainer: {
     flex: 1,
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 80,
   },
   editButtonText: {
     color: '#fff',

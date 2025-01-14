@@ -80,3 +80,88 @@ export const getProductById = async (productId) => {
         throw error;
       }
 }
+
+// delete category
+export const deleteCategory = async (categoryId) => {
+  try {
+    const response = await axiosInstance.delete(`/categories/${categoryId}`);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error del category:', error);
+    throw error;
+  }
+};
+
+// crud notification
+export const deleteNotification = async (notificationId) => {
+  try {
+    const response = await axiosInstance.delete(`/notifications/delete/${notificationId}`);
+    return response;
+  } catch (error) {
+    console.error('Error del notification:', error);
+    throw error;
+  }
+};
+
+export const addNotification = async (NotificationData) => {
+  try {
+    const response = await axiosInstance.post('/notifications/add', NotificationData);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding notifications:', error);
+    throw error;
+  }
+};
+
+export const editNotification = async (id, notificationData) => {
+  try {
+      const response = await axiosInstance.put(`/notifications/update/${id}`, notificationData);
+      return response.data;
+  } catch (error) {
+      console.error('Error updating notification:', error);
+  }
+};
+
+
+// crud Voucher
+export const deleteVoucher = async (VoucherId) => {
+  try {
+    const response = await axiosInstance.delete(`/vouchers/delete/${VoucherId}`);
+    return response;
+  } catch (error) {
+    console.error('Error del Voucher:', error);
+    throw error;
+  }
+};
+
+export const addVoucher = async (VoucherData) => {
+  try {
+    const response = await axiosInstance.post('/vouchers/add', VoucherData);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error adding Voucher:', error);
+    throw error;
+  }
+};
+
+export const editVoucher = async (id, VoucherData) => {
+  try {
+      const response = await axiosInstance.put(`/vouchers/update/${id}`, VoucherData);
+      return response.data;
+  } catch (error) {
+      console.error('Error updating Voucher:', error);
+  }
+};
+
+
+export const shopProfile = async (shopId, shopData) => {
+  try {
+      const response = await axiosInstance.put(`/admin/shop/update/${shopId}`, shopData);
+      console.log(response)
+      return response;
+  } catch (error) {
+      console.error('Error updating :', error);
+  }
+};
