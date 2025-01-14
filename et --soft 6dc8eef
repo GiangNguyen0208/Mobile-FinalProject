@@ -1,0 +1,16 @@
+[33m231cedb[m[33m ([m[1;36mHEAD -> [m[1;32m21130551[m[33m, [m[1;31morigin/21130551[m[33m)[m HEAD@{0}: commit: AdminProfile
+[33m6dc8eef[m HEAD@{1}: checkout: moving from 21130338 to 21130551
+[33m0c1849b[m[33m ([m[1;31morigin/21130338[m[33m, [m[1;32m21130338[m[33m)[m HEAD@{2}: checkout: moving from 21130551 to 21130338
+[33m6dc8eef[m HEAD@{3}: merge 21130338: Merge made by the 'ort' strategy.
+[33m70f6b2a[m HEAD@{4}: checkout: moving from 21130338 to 21130551
+[33m0c1849b[m[33m ([m[1;31morigin/21130338[m[33m, [m[1;32m21130338[m[33m)[m HEAD@{5}: checkout: moving from 21130551 to 21130338
+[33m70f6b2a[m HEAD@{6}: commit (merge): Merge branch 'main' into 21130551
+[33m314baa9[m HEAD@{7}: checkout: moving from main to 21130551
+[33m1bffd49[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{8}: merge origin/main: Fast-forward
+[33m39371ad[m HEAD@{9}: checkout: moving from 21130551 to main
+[33m314baa9[m HEAD@{10}: commit: AdminProfile
+[33m58817aa[m HEAD@{11}: commit: AdminProfile
+[33mdf23458[m HEAD@{12}: checkout: moving from main to 21130551
+[33m39371ad[m HEAD@{13}: checkout: moving from 21130551 to main
+[33mdf23458[m HEAD@{14}: checkout: moving from main to 21130551
+[33m39371ad[m HEAD@{15}: clone: from https://github.com/GiangNguyen0208/Mobile-FinalProject.git
