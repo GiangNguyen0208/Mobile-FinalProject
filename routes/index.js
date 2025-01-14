@@ -15,7 +15,7 @@ import ProductDetailUser from '../view/client/pages/detail/detail.js';
 import ShopDetailUser from '../view/client/pages/detail/shopDetail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
-
+import Cart from '../view/client/pages/Cart/index';
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
 const UserStack = createNativeStackNavigator();
@@ -23,6 +23,7 @@ const UserStack = createNativeStackNavigator();
 // Shop Navigator
 const ShopNavigator = () => (
   <ShopStack.Navigator screenOptions={{ headerShown: false }}>
+
     <ShopStack.Screen name="ShopHome" component={ShopScreen} />
     <ShopStack.Screen name="Menu" component={Menu} />
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
@@ -38,6 +39,8 @@ const UserNavigator = () => (
     <UserStack.Screen name="UserHome" component={BottomTabNavigation} />
     <UserStack.Screen name="ProductDetailUser" component={ProductDetailUser} />
     <UserStack.Screen name="ShopDetailUser" component={ShopDetailUser} />
+    {/* <UserStack.Screen name="ProductDetail" component={ProductDetail} /> */}
+      <ShopStack.Screen name="Cart" component={Cart} />
   </UserStack.Navigator>
 );
 
