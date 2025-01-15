@@ -18,112 +18,59 @@ import ProductList from "../../components/ListItem/ProductList";
 import ListHorizontal from "../../components/ListItem/ListHorizontal";
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { getListProductByShopName } from "../../../../api/adminApi";
-import ItemCard from '../../components/ListItem/ItemCard';
+import { getListProductByShopId, getShopById, getVouchersByShop } from "../../../../api/systemApi";
+import StarRender from '../../components/Rating/StartRender'
+import Item from '../../components/ListItem/Item';
+import { addToCart } from '../../../../api/cartApi';
+
+
 const { width, height } = Dimensions.get('window');
-
-
-const voucherData = [
-    {
-        id: 1,
-        code: 'SALE20',
-        description: 'Giảm 20% cho đơn hàng từ 200.000đ',
-        discountPercentage: 20,
-        minOrderValue: 200000,
-        expiryDate: '2024-12-31',
-        remaining: 50, // số lượng voucher còn lại
-    },
-    {
-        id: 2,
-        code: 'FREESHIP50',
-        description: 'Miễn phí vận chuyển cho đơn hàng từ 50.000đ',
-        discountPercentage: 0, // giảm tiền ship, không giảm giá sản phẩm
-        freeShipping: true, // cờ đánh dấu voucher là freeship
-        minOrderValue: 50000,
-        expiryDate: '2024-11-30',
-        remaining: 100,
-    },
-    {
-        id: 3,
-        code: 'NEWUSER30',
-        description: 'Giảm 30% cho người dùng mới, tối đa 100.000đ',
-        discountPercentage: 30,
-        maxDiscountValue: 100000, // giá trị giảm giá tối đa
-        minOrderValue: 0, // không có giá trị đơn hàng tối thiểu
-        expiryDate: '2024-12-31',
-        remaining: 30,
-    },
-    {
-        id: 4,
-        code: 'BUY1GET1',
-        description: 'Mua 1 tặng 1 cho sản phẩm áp dụng',
-        discountType: 'buy1get1', // loại khuyến mãi "mua 1 tặng 1"
-        expiryDate: '2024-10-31',
-        remaining: 20,
-    },
-    {
-        id: 5,
-        code: 'FLASH50',
-        description: 'Giảm ngay 50% cho đơn hàng trong 24 giờ',
-        discountPercentage: 50,
-        minOrderValue: 100000,
-        expiryDate: '2024-10-25',
-        remaining: 10,
-    },
-];
 const ProductDetail = ({ route, navigation }) => {
+    // const { shopId } = route.params;
+    const [shop, setShop] = useState([]); // Dữ liệu sản phẩm
+    const [products, setProducts] = useState([]);
+    const [voucher, setVoucher] = useState([]);
+    const shopId = 4;
 
-    const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
-    const shopName = 'Nhà hàng Lẩu'
+
+
     useEffect(() => {
-        const fetchProductsAndCategories = async () => {
+        const fetchshop = async () => {
             try {
-                // Gọi API lấy dữ liệu sản phẩm theo tên shop
-                const productsData = await getListProductByShopName(shopName);
-
-                // Lấy danh sách kết quả từ API (đảm bảo dữ liệu không undefined)
-                const productsArray = productsData.result || [];
-
-                // Cập nhật state
-                setProducts(productsArray);
+                const vouchersresponse = await getVouchersByShop(shopId);
+                const vouchers = vouchersresponse.result || [];
+                setVoucher(vouchers);
+                const productsresponse = await getListProductByShopId(shopId);
+                const products = productsresponse.result || [];
+                setProducts(products);
+                console.log(products)
+                // Gọi API lấy dữ liệu theo shop id
+                const shopData = await getShopById(shopId);
+                setShop(shopData);
             } catch (error) {
-                console.error("Error fetching product or category data:", error);
+                console.error("Error fetching data:", error);
             }
         };
 
-        fetchProductsAndCategories(); // Gọi hàm fetchProductsAndCategories
-    }, [shopName]);
-
-    useEffect(() => {
-        console.log("Fetched products data:", products); // Log dữ liệu của products
-    }, [products]);
-    // const { shop } = route.params;
-    const [isFilled, setIsFilled] = useState(false);
-
-    const addFavorite = () => {
-        if (isFilled) {
-            Alert.alert('Đã xóa khỏi danh sách yêu thích')
-        } else {
-            Alert.alert('Đã thêm vào danh sách yêu thích')
-        }
-
-        setIsFilled(!isFilled); // Đổi trạng thái giữa rỗng và đầy
-    };
-
+        fetchshop(); // Gọi hàm fetchProductsAndCategories
+    }, [shopId]);
 
     return (
         <SafeAreaView style={[defStyles.container, styles.bgWhite]}>
             <ScrollView>
                 <View>
                     <View >
-                        <Image source={require("./../../../../assets/img/order-food.png")} style={[styles.image]} />
+                        <Image
+                            source={{ uri: shop.image }}
+                            style={styles.image}
+                        />
                     </View>
                     <View style={styles.itemInfo}>
                         <View style={[styles.row, styles.shopTitle]}>
                             <Text style={styles.favorite}>Yêu thích</Text>
                             <View style={[styles.row, { top: 3 }]}>
                                 <Ionicons name="shield-checkmark" size={26} color="#FFD12F" />
-                                <Text style={[styles.itemName, { bottom: 4 }]}> Shop vui ve</Text>
+                                <Text style={[styles.itemName, { bottom: 4 }]}> {shop.name}</Text>
                             </View>
                             <TouchableOpacity>
                                 <Feather style={[styles.bgWhite, styles.infoIcon]} name="info" size={24} color="black" />
@@ -131,20 +78,13 @@ const ProductDetail = ({ route, navigation }) => {
                         </View>
                         <View style={[styles.row, styles.justifyBw]}>
                             <View style={styles.row}>
-                                <StarRender rating={1.2}></StarRender>
-                                <TouchableOpacity style={[styles.row, { top: 2 }]} onPress={() => navigation.navigate('Rating')}>
+                                <StarRender rating={shop.rating}></StarRender>
+                                <TouchableOpacity style={[styles.row, { top: 4 }]} onPress={() => navigation.navigate('Rating', { shopId: shop.id })}>
                                     <Text></Text>
                                     <Text style={{ fontSize: 16 }}>Bình luận </Text>
                                     <Feather name="chevron-right" size={24} color="black" />
                                 </TouchableOpacity>
-                                <View style={[styles.row, { top: 4 }]}>
-                                    <Feather name="clock" size={20} color="black" />
-                                    <Text style={{ fontSize: 16, lineHeight: 20, left: 6, top: 1 }}>22 phút</Text>
-                                </View>
                             </View>
-                            <TouchableOpacity onPress={addFavorite}>
-                                <Ionicons name={isFilled ? "heart-sharp" : "heart-outline"} size={24} color={isFilled ? "red" : "black"} style={[styles.alignSelf, itemdetail.itemName]} />
-                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.bank_space}></View>
@@ -163,67 +103,49 @@ const ProductDetail = ({ route, navigation }) => {
                         </View>
                     </View>
                     <View style={[styles.voucherContainer, styles.row]}>
-                        <VoucherTwo></VoucherTwo>
-                        <TouchableOpacity style={[styles.row, styles.seeAll]} >
+                        <View>
+                            <FlatList
+                                data={voucher.slice(0, 2)}  // Chỉ lấy 2 item đầu tiên
+                                renderItem={({ item }) => (
+                                    <View style={[styles.voucherContainer, styles.row]}>
+                                        <FontAwesome name="tag" size={18} color="#E95322" />
+                                        <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
+                                            Nhập "{item.code}": giảm {item.valueDiscount} %
+                                        </Text>
+                                    </View>
+                                )}
+                                keyExtractor={item => item.id.toString()}
+                                scrollEnabled={false}
+                            />
+                        </View>
+                        {/* chuyển trang tới voucher list user */}
+                        <TouchableOpacity style={[styles.row, styles.seeAll]} onPress={() => navigation.navigate('Voucher')}>
                             <Text style={{ fontSize: 16, color: '#808080' }}>Xem tất cả</Text>
                             <Feather name="chevron-right" size={24} color="#808080" />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.bank_space}></View>
-                <View style={[styles.bgWhite, styles.popularListContainer]}>
-                    <Text style={[styles.popularList]}>Món phổ biến</Text>
-                    <ListHorizontal items={products} type={'product'} navigation={navigation} ></ListHorizontal>
-                    {/* <FlatList
-                        data={products}
+                <View>
+                    <FlatList
+                        data={products}  // Chỉ lấy 2 item đầu tiên
                         renderItem={({ item }) => (
-                            <View style={styles.card}>
-                            <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={false} />
-                            </View>
+                            <Item
+                            key={item?.id}
+                            image={item?.imageLink?.[0]} 
+                            title={item?.name}
+                            description={item?.des} 
+                            price={item?.price}
+                            rating={item?.rating}
+                            onPress={() => handleItemPress(item)}
+                            onAddToCart={() => handleAddToCart(item)}>
+                            </Item>
                         )}
-                        keyExtractor={(_, index) => index.toString()}
-                        horizontal={true}  // Thiết lập chiều ngang
-                        showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
-                        contentContainerStyle={styles.flatList} 
-                        style={{ flex: 1 }}  // Tùy chỉnh style của FlatList
-                    /> */}
+                        keyExtractor={item => item.id.toString()}
+                        scrollEnabled={false}
+                    />
                 </View>
-                <View style={styles.bank_space}></View>
-                <ProductList navigation={navigation} />
             </ScrollView>
         </SafeAreaView>
-    );
-};
-
-const StarRender = ({ rating }) => {
-    const stars = [];
-    const starRender = (rating) => {
-        const fullStars = Math.floor(rating); // Số sao đầy đủ
-        const halfStar = rating % 1 !== 0 ? 1 : 0; // Số nửa sao
-        for (let i = 0; i < fullStars; i++) {
-            stars.push(
-                <FontAwesome key={`star-${i}`} name="star" size={24} color="#FFD12F" />
-            );
-        }
-        if (halfStar) {
-            for (let i = 0; i < halfStar; i++) {
-                stars.push(
-                    <FontAwesome key={`star-half-full-${i}`} name="star-half-full" size={24} color="#FFD12F" />
-                );
-            }
-        }
-        const remainingStars = 5 - fullStars - halfStar; // Tính số sao rỗng
-        for (let i = 0; i < remainingStars; i++) {
-            stars.push(
-                <FontAwesome key={`star-o-${i}`} name="star-o" size={24} color="#FFD12F" />
-            );
-        }
-    };
-    starRender(rating);
-    return (
-        <View style={[styles.row, styles.ratingStar]}>
-            <Text >{stars}</Text>
-        </View>
     );
 };
 
@@ -239,28 +161,21 @@ const ShippingTime = ({ minutes }) => {
     );
 };
 
-const VoucherTwo = () => {
-    // Lấy 2 voucher đầu tiên
-    const firstTwoVouchers = voucherData.slice(0, 2);
+const handleItemPress = (item) => {
+    navigation.navigate('ProductDetailUser', { item }); // Chuyển item vào route
+  };
 
-    const renderItem = ({ item }) => (
-        <View style={[styles.voucherContainer, styles.row]}>
-            <FontAwesome name="tag" size={18} color="#E95322" />
-            <Text style={styles.voucherTitle} numberOfLines={1} ellipsizeMode="tail">
-                Nhập "{item.code}": {item.description}
-            </Text>
-        </View>
-    );
-
-    return (
-        <FlatList
-            data={firstTwoVouchers}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-            scrollEnabled={false}
-        />
-    );
-};
+  const handleAddToCart = async (product) => {
+      try {
+        const cartData = { productId: product.id, quantity: 1 };
+        const response = await addToCart(cartData); // Thêm sản phẩm với số lượng là 1
+        alert(`${product.name} added to cart!`);
+        console.log(response); // Đảm bảo bạn nhận được phản hồi từ API
+      } catch (error) {
+        alert('Failed to add to cart!');
+        console.error('Error:', error);
+      }
+    };
 
 
 const styles = StyleSheet.create({
@@ -270,9 +185,9 @@ const styles = StyleSheet.create({
         elevation: 3,
         overflow: 'hidden',
         width: 300,
-        height:110,
+        height: 110,
         margin: 10,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
 
     seeAll: {

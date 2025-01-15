@@ -15,7 +15,7 @@ import Notification from '../view/client/components/ListItem/Notifications.js';
 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetailUser from '../view/client/pages/detail/detail.js';
-import ShopDetailUser from '../view/client/pages/detail/shopDetail.js';
+import ShopDetailUser from '../view/client/pages/shop/ShopDetail.js';
 import foodList from '../view/client/components/ListItem/ProductList.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import AddNotification from '../view/shopowner/screen/AddNotification.js';

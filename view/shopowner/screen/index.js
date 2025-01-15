@@ -2,7 +2,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
-import { getShopById } from '../../../api/shopApi';
+import { getShopById } from '../../../api/systemApi';
 import { useAuth } from '../../context/Auth/AuthContext';
 
 const Home = ({navigation}) => {
