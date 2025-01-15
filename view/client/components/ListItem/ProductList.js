@@ -1,126 +1,133 @@
-import ItemCard from './ItemCard'
-// import styles from '../../../public/client/stylesheet/default.style';
-import {
-    View,
-    FlatList,
-    SafeAreaView, StyleSheet, Text, TouchableOpacity, ScrollView
+import React, { useCallback, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, FlatList } from 'react-native';
+import Item from '../../components/ListItem/Item';
+import { getProductsByCategory,getProductsByName } from '../../../../api/systemApi';
+import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native'; 
+import { addToCart } from '../../../../api/cartApi';
+import AntDesign from '@expo/vector-icons/AntDesign';
+const ProductList = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { category,query } = route.params || {};
 
-} from 'react-native';
-import React, {useRef, useState} from "react";
-
-const stl = StyleSheet.create({
-    row:{
-        flexDirection:'row'
-    },
-    cateName:{
-        fontSize:16,
-        marginHorizontal:8,
-    },
-    selected: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#E95322',
-    },
-    cateContainer:{
-        height: 56,
-        marginHorizontal:8,
-        alignItems:'center',
-    },
-    border_bot:{
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'black',
-        marginBottom:12,
-        width:'95%',
-        alignSelf:"center"
-    },
-    categoryTitle:{
-        left: 32,
-        height:32,
-        fontSize:20,
-        marginVertical:8,
+  const fetchProduct = async () => {
+    setLoading(true);
+    try {
+      let response;
+      // Nếu có category thì gọi API theo category, nếu không có thì gọi API theo tên
+      if (category?.id) {
+        response = await getProductsByCategory(category.id);
+      } else if (query) {
+        response = await getProductsByName(query);
+      }
+      console.log('data:', response);
+      setProduct(response );
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu:", error);
+    } finally {
+      setLoading(false);
     }
-})
+  };
 
-export default function ProductList({navigation,foodItems ,categories}) {
-    if(foodItems!=null) {
+  useFocusEffect(
+    useCallback(() => {
+      fetchProduct();
+    }, [category?.id, query]) // Gọi lại API khi category hoặc query thay đổi
+  );
 
-        const sortedData = foodItems.sort((a, b) => a.categoryId - b.categoryId);
-
-        const getCategoryNameById = (id) => {
-            const category = categories.find(cat => cat.id === id);
-            return category ? category.name : 'Danh mục không tồn tại';
-        };
-
-        const flatListRef = useRef(null);
-        const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-
-        const CategoryList = () => {
-
-            const renderCate = ({item}) => (
-                <TouchableOpacity style={[stl.cateContainer, stl.row, selectedCategoryId === item.id && stl.selected]}
-                                  onPress={() => setSelectedCategoryId(categoryId)}>
-                    <Text style={[stl.cateName, selectedCategoryId === item.id && {color: '#E95322',}]}
-                          numberOfLines={1} ellipsizeMode="tail">
-                        {item.name}
-                    </Text>
-                </TouchableOpacity>
-            );
-
-            return (
-                <FlatList
-                    data={categories}
-                    renderItem={renderCate}
-                    keyExtractor={item => item.id.toString()}
-                    horizontal={true} // Đặt chiều nằm ngang
-                    showsHorizontalScrollIndicator={false} // Ẩn thanh cuộn ngang
-                />
-            );
-        };
-
-        // Hàm render cho từng sản phẩm
-        const renderItem = ({item, index}) => {
-            // Kiểm tra nếu đây là sản phẩm đầu tiên của danh mục
-            const isFirstInCategory =
-                index === 0 || item.categoryId !== sortedData[index - 1].categoryId;
-
-            // Tìm danh mục tương ứng với item.categoryId
-            const category = getCategoryNameById(item.categoryId);
-
-            if (!category) {
-                console.log(`Tên danh mục với id là: ${category}`);
-                return null;
-            }
-            return (
-                <View>
-                    {isFirstInCategory && (
-                        <Text style={stl.categoryTitle}>
-                            {category}
-                        </Text>
-                    )}
-                    <View
-                        style={[
-                            stl.border_bot,
-                            index === foodItems.length - 1 && {borderBottomWidth: 0}]}>
-                        <ItemCard item={item} navigation={navigation} isShopOwner={true}/>
-                    </View>
-                </View>
-            );
-        };
-
-        return (
-            <ScrollView>
-                <View style={{borderBottomWidth: 1.5, borderBottomColor: '#f2f3f5'}}>
-                    <CategoryList></CategoryList>
-                </View>
-                <FlatList
-                    ref={flatListRef}
-                    data={sortedData}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id.toString()}
-                    scrollEnabled={false} // Cho phép cuộn
-                    showsVerticalScrollIndicator={true} // Hiển thị thanh cuộn dọc
-                />
-            </ScrollView>
-        );
+  const handleItemPress = (item) => {
+    navigation.navigate('ProductDetailUser', { item }); // Chuyển item vào route
+  };
+  const handleAddToCart = async (product) => {
+    try {
+      const cartData = { productId: product.id, quantity: 1 };
+      const response = await addToCart(cartData); // Thêm sản phẩm với số lượng là 1
+      alert(`${product.name} added to cart!`);
+      console.log(response); // Đảm bảo bạn nhận được phản hồi từ API
+    } catch (error) {
+      alert('Failed to add to cart!');
+      console.error('Error:', error);
     }
-}
+  };
 
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={()=> navigation.goBack()}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Danh sách sản phẩm</Text>
+        <Text style={styles.headerTitle}></Text>
+        {/* Bạn có thể thêm các nút hoặc icon khác vào header nếu cần */}
+      </View>
+      <FlatList
+        data={product}
+        renderItem={({ item }) => (
+          <TouchableOpacity>
+            <Item
+              key={item?.id}
+              image={item?.imageLink?.[0]}
+              title={item?.name}
+              description={item?.des}
+              price={item?.price}
+              rating={item?.rating}
+              onPress={() => handleItemPress(item)}
+              onAddToCart={() => handleAddToCart(item)}
+            />
+
+          </TouchableOpacity>
+        )}
+        keyExtractor={(_, index) => index.toString()}
+        numColumns={1}
+      />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    top:50,
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  contentContainer: {
+    paddingBottom: 20,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  emptyText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#555',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+});
+
+export default ProductList;

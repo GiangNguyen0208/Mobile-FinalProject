@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Item from './Item';
 import { getNotificationsByShop } from "../../../../api/systemApi";
 import { useFocusEffect } from '@react-navigation/native';
+import ListItem from '../../../shopowner/screen/ListItem';
 
 export default function Notifications({ navigation ,route}) {
     const { shop } = route.params;
@@ -39,9 +40,9 @@ export default function Notifications({ navigation ,route}) {
             <FlatList
                 data={notifications}
                 renderItem={({ item }) => (
-                    <Item  title={item.title}  description={item.message} onPress={() => {
+                    <ListItem  item={item}  type={"notification"} handlePress={() => {
                         navigation.navigate("AddNotification", { shop: shop, notification: item });
-                    }}></Item>
+                    }}></ListItem>
                 )}
                 keyExtractor={(_, index) => index.toString()}
                 numColumns={1}

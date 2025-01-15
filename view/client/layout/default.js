@@ -65,8 +65,8 @@ const Default = () => {
     setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
   }, [route.name]);
 
-  const handleCategoryOfShopPress = (item) => {
-    navigation.navigate('ShopDetailUser', { item });
+  const handleCategoryOfShopPress = (category) => {
+    navigation.navigate('foodList', { category });
   }
 
   const handleItemPress = (item) => {
@@ -74,7 +74,7 @@ const Default = () => {
   };
 
   const handleSearch = (query) => {
-    console.log('Searching for:', query);
+    navigation.navigate('foodList', { query });
   };
 
   const handleAddToCart = async (product) => {
@@ -104,7 +104,6 @@ const Default = () => {
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
             <OnBoarding item={slides}/>
             <Intro items={categoryData} onItemPress={handleCategoryOfShopPress} />
-
             <View style={styles.collectionHeader}>
               <Text style={[styles.collectionTitle, { color: '#E95322', left: 16 }]}>FLASH SALE</Text>
               <Text style={styles.viewAllText}>View All</Text>

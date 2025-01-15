@@ -11,10 +11,14 @@ export const getAllCategory = async () => {
 };
 
 export const getProductsByCategory = async (categoryId) => {
-      const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
-      return response.data.result;
-  };
+    const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
+    return response.data.result;
+};
 
+export const getProductsByName = async (productName) => {
+    const response = await axiosInstance.get(`/products/findName/${productName}`);
+    return response.data.result;
+};
 
 export const getNotificationsByShop = async (shopId) => {
     const response = await axiosInstance.get(`/notifications/listNotification/${shopId}`);
@@ -27,3 +31,12 @@ export const getVouchersByShop = async (shopId) => {
 };
 
 
+export const getListCommentByProduct = async (productId) => {
+    const response = await axiosInstance.get(`/comments/list/product/${productId}`);
+    return response.data;
+};
+
+export const getListCommentByShop = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  };

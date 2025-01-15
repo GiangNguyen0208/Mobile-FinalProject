@@ -7,6 +7,7 @@ import { useAuth } from '../../context/Auth/AuthContext';
 
 const Home = ({navigation}) => {
     const {shopId} = useAuth();
+
     const [shop, setShop] = useState([]);
      useEffect(() => {
             const fetchshop = async () => {
