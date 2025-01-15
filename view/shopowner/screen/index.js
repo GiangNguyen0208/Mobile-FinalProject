@@ -2,10 +2,12 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
+import { useAuth } from "../../context/Auth/AuthContext";
 import { getShopById } from '../../../api/adminApi';
 
 const Home = ({navigation,route}) => {
-    const shopId = route.params?.shopId;
+    const { shopId } = useAuth();
+    console.log(shopId);
     const [shop, setShop] = useState([]);
      useEffect(() => {
             const fetchshop = async () => {
@@ -13,6 +15,7 @@ const Home = ({navigation,route}) => {
                     // Gọi API lấy dữ liệu theo shop id
                     const shopData = await getShopById(shopId);
                     setShop(shopData);
+                    console.log(shopData);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }

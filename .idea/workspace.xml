@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="AdminProfile">
-      <change afterPath="$PROJECT_DIR$/et --soft 6dc8eef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +70,7 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "21130551",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/projectMobile/Mobile-FinalProject/view/admin/screen",
+    "last_opened_file_path": "D:/projectMobile/Mobile-FinalProject/view/client/pages/Info",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,18 +83,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projectMobile\Mobile-FinalProject\view\client\pages\Info" />
       <recent name="D:\projectMobile\Mobile-FinalProject\view\admin\screen" />
       <recent name="D:\projectMobile\Mobile-FinalProject\api" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projectMobile\Mobile-FinalProject\loading" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
