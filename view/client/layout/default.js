@@ -37,7 +37,8 @@ const Default = () => {
         setSlides(data.result[5])
         setFoodData(data.result); 
         setLoading(false); // Đặt trạng thái loading thành false khi dữ liệu đã được tải
-
+        console.log(foodData[1]);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

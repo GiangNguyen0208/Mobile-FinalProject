@@ -32,6 +32,7 @@ import DetailOrderUser from '../view/client/components/Order/DetailOrderUser.js'
 
 import Promotion from '../view/client/pages/notifications/promotions.js';
 import News from '../view/client/pages/notifications/news.js';
+import AddRating from '../view/client/components/ListItem/AddRating.js';
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -69,6 +70,7 @@ const UserNavigator = () => (
     <UserStack.Screen name="Rating" component={Rating} />
     <UserStack.Screen name="Promotion" component={Promotion} />
     <UserStack.Screen name="News" component={News} />
+    <Stack.Screen name="AddRating" component={AddRating} />
   </UserStack.Navigator>
 );
 
