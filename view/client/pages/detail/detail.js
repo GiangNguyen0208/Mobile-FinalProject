@@ -9,6 +9,7 @@ import RelatedShopScreen from './shopRelated';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 import { addToCart } from '../../../../api/cartApi';
+import Feather from '@expo/vector-icons/Feather';
 
 const ProductDetailUser = () => {
   const navigation = useNavigation();
@@ -60,6 +61,9 @@ const ProductDetailUser = () => {
               <View style={styles.ratingContainer}>
                 <Text style={styles.description}>Đánh giá</Text>
                 <Rating rating={item.rating} />
+                <TouchableOpacity onPress={() => navigation.navigate('Rating', { productId: item.id })}>
+                  <Feather name="chevron-right" size={24} color="black" />
+                </TouchableOpacity>
               </View>
               <Text style={styles.promotionHeader}>Ưu đãi Thứ 3:</Text>
               <Text style={styles.promotionDetail}>
