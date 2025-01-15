@@ -6,6 +6,11 @@ export const register = async (userData) => {
   return response.data;
 };
 
+export const addComment = async (userData) => {
+  const response = await axiosInstance.post("/comments/add", userData);
+  return response.data;
+};
+
 export const getUserProfile = async (id) => {
   const response = await axiosInstance.get(`/users/findId/${id}`);
   return response.data;

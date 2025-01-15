@@ -1,17 +1,90 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import NavigationTop from '../../components/Navigation/NavigationTop';
-import Status from '../../components/Order/status';
-import RecommendedProducts from '../../components/Order/recommendProducts';
-import DropDown from '../../components/DropDown/dropDown';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import Shipping from '../../components/Order/shipping';
+import History from '../../components/Order/history';
+import { getOrderListDone, getOrderListPedding } from '../../../../api/shopApi';
 
 const Order = () => {
+  const [historyOrders, setHistoryOrders] = useState([]);
+  const [shippingOrders, setShippingOrders] = useState([]);
+  const [selectedOption, setSelectedOption] = useState('shipping');
+  const [loading, setLoading] = useState(true); // Thêm loading state
+  const [error, setError] = useState(null); // Thêm trạng thái lỗi
+
+  useEffect(() => {
+    const fetchHistoryAndShippingOrder = async () => {
+      try {
+        const historys = await getOrderListDone();
+        const shippings = await getOrderListPedding();
+        setHistoryOrders(historys.result || []);
+        setShippingOrders(shippings.result || []);
+      } catch (err) {
+        setError('Failed to fetch orders'); // Xử lý lỗi
+      } finally {
+        setLoading(false); // Đảm bảo trạng thái loading được cập nhật sau khi API trả về
+      }
+    };
+
+    fetchHistoryAndShippingOrder();
+    const intervalId = setInterval(fetchHistoryAndShippingOrder, 30000); // Gọi lại API mỗi 30 giây
+
+    return () => clearInterval(intervalId); // Dọn dẹp khi component unmount
+  }, []); // Chỉ gọi khi component mount
+
+  const navRoutes = [
+    { key: 'shipping', title: 'Shipping' },
+    { key: 'history', title: 'History' },
+  ];
+
+  const renderContent = () => {
+    if (loading) {
+      return <ActivityIndicator size="large" color="#007BFF" />; // Hiển thị loading spinner
+    }
+
+    if (error) {
+      return <Text style={styles.errorText}>{error}</Text>; // Hiển thị lỗi nếu có
+    }
+
+    switch (selectedOption) {
+      case 'shipping':
+        return <Shipping items={shippingOrders} />;
+      case 'history':
+        return <History items={historyOrders} />;
+      default:
+        return <Shipping items={shippingOrders} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
+      {/* Tiêu đề */}
       <Text style={styles.title}>My Orders</Text>
-      <View style={styles.navigationTop}>
-        <NavigationTop />
+
+      {/* Thanh điều hướng */}
+      <View style={styles.navContainer}>
+        {navRoutes.map((route) => (
+          <TouchableOpacity
+            key={route.key}
+            style={[
+              styles.navItem,
+              selectedOption === route.key && styles.activeNavItem,
+            ]}
+            onPress={() => setSelectedOption(route.key)}
+          >
+            <Text
+              style={[
+                styles.navText,
+                selectedOption === route.key && styles.activeNavText,
+              ]}
+            >
+              {route.title}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
+
+      {/* Nội dung */}
+      <View style={styles.contentContainer}>{renderContent()}</View>
     </View>
   );
 };
@@ -28,18 +101,34 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 16, // Khoảng cách trên và dưới
   },
-  navigationTop: {
-    height: 60,
+  navContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     backgroundColor: '#FFFFFF', // Màu nền trắng
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB', // Đường viền nhẹ nhàng
-    justifyContent: 'center',
-    paddingHorizontal: 16,
   },
-  mainContent: {
-    flex: 1,
-    marginTop: 8,
+  navItem: {
+    paddingVertical: 8,
     paddingHorizontal: 16,
+    borderRadius: 5,
+  },
+  activeNavItem: {
+    backgroundColor: '#007BFF', // Màu nền khi chọn
+  },
+  navText: {
+    fontSize: 16,
+    color: '#555',
+  },
+  activeNavText: {
+    color: '#FFFFFF', // Màu chữ khi chọn
+    fontWeight: 'bold',
+  },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 10,
     backgroundColor: '#FFFFFF', // Nền trắng cho nội dung chính
     borderRadius: 8, // Bo góc
     shadowColor: '#000', // Hiệu ứng bóng
@@ -48,6 +137,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2, // Đổ bóng trên Android
     paddingVertical: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
+    paddingTop: 20,
   },
 });
 

@@ -1,258 +1,177 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, Image, TextInput, Pressable, TouchableOpacity} from 'react-native';
-
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import COLORS from "../../../../constants/theme";
-
 import Button from "../../components/Button/Button";
+import { register } from '../../../../api/authApi';
 
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
+    const [userName, setUserName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [formValid, setFormValid] = useState(false);
+
+    // useEffect to validate form
+    useEffect(() => {
+        const isValid = userName && phoneNumber && firstname && lastname && password && passwordConfirm && email && password === passwordConfirm;
+        setFormValid(isValid);
+    }, [userName, phoneNumber, firstname, lastname, email, password, passwordConfirm]);
+
+    const handleSignUp = async () => {
+        if (!formValid) {
+            alert("Error", "Vui lòng điền đầy đủ thông tin và đảm bảo mật khẩu khớp.");
+            return;
+        }
+
+        // Dữ liệu cần gửi
+        const userData = {
+            userName,
+            email,
+            phoneNumber,
+            firstname,
+            lastname,
+            password,
+        };
+
+        try {
+            const response = await register(userData);
+            if (response.ok) {
+                alert("Success", `Account created for ${response.result.firstname} ${response.result.lastname}`);
+                navigation.navigate("Login");
+            } else {
+                alert("Error", response.message || "Something went wrong.");
+            }
+        } catch (error) {
+            alert("Error", "Failed to connect to the server.");
+        }
+    };
+
     return (
-        <View style={{
-            flex: 1,
-            backgroundColor: COLORS.white
-        }}
-        >
-            <View style={{
-                flex: 1
-            }}>
-                <View>
-                    <Image
-                        source={require("../../../../assets/Vector 1.png")}
-                        style={{
-                            bottom: 60,
-                            right: 40
-                        }}
-                    />
-                </View>
-            </View>
-
-            <View style={{
-                flex: 1,
-                position: 'relative',
-                justifyContent: 'center', // Căn giữa theo chiều ngang
-                alignItems: 'center', // Căn giữa theo chiều dọc,
-                bottom: 390
-
-            }}>
-                <Text style={{
-                    color: COLORS.black,
-                    fontSize: 90,
-                    fontWeight: 500,
-                }}>
-                    Register
-                </Text>
-                <Text
-                    style={{
-
-                        fontSize: 20,
-                        fontWeight: 500
-                    }}>
-                    Create your account.
-                </Text>
-            </View>
-            {/**/}
-            <View
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "relative",
-                    bottom: 500,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
+        <ScrollView contentContainerStyle={styles.container}>
+            {/* Header */}
+            <View style={styles.header}>
                 <Image
-                    source={require("../../../../assets/icons8-user-30.png")}
+                    source={require("../../../../assets/Vector 1.png")}
+                    style={styles.headerImage}
                 />
-                <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10
-                    }}
-                    placeholder="Enter user name"
-                />
+                <Text style={styles.title}>Register</Text>
+                <Text style={styles.subtitle}>Create your account</Text>
             </View>
 
-            {/*    */}
-            <View
-
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "relative",
-                    bottom: 500,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
-                <Image
-                    source={require("../../../../assets/icons8-phone-number-50.png")}
-                    style={{
-                        bottom: 5,
-                        width:30,
-                        height:30
-
-                    }}
-                />
+            {/* Form */}
+            <View style={styles.formContainer}>
                 <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10,
-
-                    }}
-                    placeholder="Enter phone number"
-                    keyboardType="number-pad"
-                />
-
-            </View>
-            {/*    */}
-            <View
-
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "absolute",
-                    bottom: 390,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
-                <Image
-                    source={require("../../../../assets/icons8-name-tag-30.png")}
-                    style={{
-
-                    }}
-                />
-                <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10,
-                    }}
+                    style={styles.input}
                     placeholder="First name"
-
-                />
-
-            </View>
-            {/**/}
-            <View
-
-                style={{
-                    backgroundColor: COLORS.white,
-                    position: "absolute",
-                    bottom: 280,
-                    flexDirection: 'row',
-                    borderRadius: 20,
-                    marginHorizontal: 40,
-                    elevation: 10,
-                    marginVertical: 20,
-                    padding: 20
-                }}
-            >
-                <Image
-                    source={require("../../../../assets/icons8-name-tag-30.png")}
-                    style={{
-
-                    }}
+                    value={firstname}
+                    onChangeText={setFirstName}
                 />
                 <TextInput
-                    style={{
-                        flex: 1,
-                        fontSize: 20,
-                        left: 10,
-                    }}
+                    style={styles.input}
                     placeholder="Last name"
-
+                    value={lastname}
+                    onChangeText={setLastName}
                 />
-
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={setEmail}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Username"
+                    value={userName}
+                    onChangeText={setUserName}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Phone number"
+                    value={phoneNumber}
+                    keyboardType="number-pad"
+                    onChangeText={setPhoneNumber}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    value={password}
+                    secureTextEntry
+                    onChangeText={setPassword}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Confirm Password"
+                    value={passwordConfirm}
+                    secureTextEntry
+                    onChangeText={setPasswordConfirm}
+                />
             </View>
-            {/**/}
-            <View style={{
-                position: "absolute",
-                top: 850
-            }}>
-                <Image
-                    source={require("../../../../assets/Vector 3.png")}/>
-            </View>
 
-            {/*    */}
-            <View style={{
-                position: "absolute",
-                top: 800,
-                left: 300
-            }}>
+            {/* Buttons */}
+            <View style={styles.buttonContainer}>
                 <Button
                     title="Sign up"
-                    onPress={()=>navigation.navigate("Verify")}
-                    style={{
-                        left: 120
-                    }}>
-                </Button>
-
+                    onPress={handleSignUp}
+                    disabled={!formValid} // Disable the button if form is invalid
+                />
+                <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                    <Text style={styles.signInLink}>Already have an account? Sign in</Text>
+                </TouchableOpacity>
             </View>
-            {/*    */}
-            <View style={{
-                position: "absolute",
-                top: 815,
-                left: 300,
-
-            }}>
-                <Text style={{
-                    fontSize: 30,
-                    fontWeight: 700
-                }}>
-
-                    Sign in
-                </Text>
-            </View>
-            <View style={{
-                position: "absolute",
-                top: 890,
-                left: 180
-            }}>
-                <Text style={{
-                    fontSize: 20,
-                    right: 50
-
-                }}>
-                    Or create account using social media
-                </Text>
-                <View style={{
-                    flexDirection: 'row', // Sắp xếp theo chiều ngang
-                    justifyContent: 'space-between', // Khoảng cách giữa các ảnh
-                    alignItems: 'center', // Căn giữa theo chiều dọc
-                    top:20,
-                    right:40
-                }}>
-                    <Image
-                        style={{  marginHorizontal: 40}}
-                        source={(require("../../../../assets/icons8-facebook-48.png"))}
-                    />
-                    <Image
-                        source={(require("../../../../assets/icons8-instagram-48.png"))}
-                    />
-                    <Image
-                        style={{  marginHorizontal: 40}}
-                        source={(require("../../../../assets/icons8-twitter-48.png"))}
-                    />
-
-
-                </View>
-            </View>
-        </View>
-
+        </ScrollView>
     );
-}
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+        backgroundColor: COLORS.white,
+        paddingHorizontal: 15,
+        justifyContent: 'center',
+    },
+    header: {
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    headerImage: {
+        width: 380,
+        height: 120,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: COLORS.black,
+        marginVertical: 5,
+    },
+    subtitle: {
+        fontSize: 14,
+        color: COLORS.gray,
+    },
+    formContainer: {
+        marginVertical: 10,
+    },
+    input: {
+        backgroundColor: COLORS.lightGray,
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        fontSize: 14,
+        marginBottom: 10,
+        elevation: 2,
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    signInLink: {
+        marginTop: 10,
+        fontSize: 14,
+        color: COLORS.primary,
+        textDecorationLine: 'underline',
+    },
+});
 
 export default Register;

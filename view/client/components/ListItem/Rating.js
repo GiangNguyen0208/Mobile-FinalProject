@@ -11,9 +11,10 @@ import { getListCommentByShop ,getListCommentByProduct} from "../../../../api/sy
 import { useAuth } from '../../../context/Auth/AuthContext';
 
 export default function Rating({ navigation, route }) {
-    const { shopId, productId } = route.params; // Lấy cả shopId và productId từ route.params
+    const { productId } = route.params; // Lấy cả shopId và productId từ route.params
     const [comments, setComments] = useState([]);
-
+    console.log("ShopId: " + shopId + ", ProductId: " + productId);
+    const shopId = 4;
     useEffect(() => {
         const fetchComments = async () => {
             try {
@@ -39,7 +40,9 @@ export default function Rating({ navigation, route }) {
         console.log("Fetched data:", comments); // Log dữ liệu của comments
     }, [comments]);
 
-
+    const handleAddComment = (newComment) => {
+        setComments((prevComments) => [newComment, ...prevComments]);
+    };
 
     return (
         <SafeAreaView >
@@ -48,7 +51,7 @@ export default function Rating({ navigation, route }) {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <AntDesign name="arrowleft" size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Danh sách Voucher</Text>
+                <Text style={styles.headerTitle}>Đánh giá sản phẩm</Text>
                 <Text style={styles.headerTitle}></Text>
                 {/* Bạn có thể thêm các nút hoặc icon khác vào header nếu cần */}
             </View>
@@ -60,6 +63,17 @@ export default function Rating({ navigation, route }) {
                 keyExtractor={(_, index) => index.toString()}
                 numColumns={1}
             />
+            <TouchableOpacity 
+                style={styles.button} 
+                onPress={() => navigation.navigate("AddRating", 
+                { 
+                    shopId: shopId,
+                    productId: productId,
+                    onAddComment: handleAddComment,
+                })}
+            >
+                <AntDesign name="plus" size={24} color="white" />
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
@@ -78,6 +92,22 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black',
+      },
+      button: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#E95322',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 16,
+        bottom: 16, // Thêm khoảng cách từ cạnh dưới
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
+        elevation: 5,
       },
 
 });

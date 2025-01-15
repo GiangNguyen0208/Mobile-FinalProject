@@ -19,3 +19,13 @@ export const introspectApi = async (token) => {
         throw error;
     }
 };
+
+export const register = async (userData) => {
+    try {
+        const response = await axiosInstance.post("/users/register", userData);
+        return response.data;
+    } catch (error) {
+        console.error("Register API Error", error); // Log error chi tiết
+        throw error;
+    }
+};

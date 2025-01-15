@@ -1,11 +1,32 @@
 import React from 'react';
-import {Text, View, StyleSheet } from 'react-native';
-import OrderList from './orderList';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons'; // Thêm thư viện icon
+import OrderListItem from './OrderListItem'; // Giả sử bạn có một component riêng cho mỗi đơn hàng
+import { useNavigation } from '@react-navigation/native';
 
 const Shipping = ({ items }) => {
+  const navigation = useNavigation();
+
+  const handleViewDetail = (orderId) => {
+    navigation.navigate('DetailOrderUser', { orderId });
+  };
   return (
     <View style={styles.container}>
-      <OrderList items={items} />
+      {/* Tiêu đề */}
+      <Text style={styles.title}>Orders Shipping</Text>
+      {/* Danh sách đơn hàng */}
+      <FlatList
+        data={items}
+        renderItem={({ item }) => (
+          <OrderListItem
+            item={item}
+            onDetailPress={handleViewDetail}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={styles.listContainer}
+        ListEmptyComponent={<Text style={styles.emptyText}>No orders found</Text>}
+      />
     </View>
   );
 };
@@ -13,8 +34,24 @@ const Shipping = ({ items }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#F5F5F5', // Màu nền nhẹ nhàng
+    paddingTop: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  listContainer: {
+    paddingHorizontal: 16,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: '#888',
+    textAlign: 'center',
+    marginTop: 50,
   },
 });
 

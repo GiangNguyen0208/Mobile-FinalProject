@@ -85,7 +85,7 @@ const Payment = ({ route }) => {
             <TextInput
               style={styles.input}
               placeholder="Nhập mã giảm giá"
-              value={voucher}
+              value={voucher.toString()}
               onChangeText={setVoucher}
             />
             <TouchableOpacity

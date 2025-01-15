@@ -1,21 +1,21 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import Shipping from '../Order/shipping';
 import History from '../Order/history';
 import { useTheme } from '../../../../themes/ThemeProvider';
 import { useNavigation } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const NavigationTop = () => {
   const navigation = useNavigation();
-  const { colors } = useTheme();
+  const colors = { primary: '#000', text: '#777', background: '#fff' }; // Sử dụng giá trị mặc định
 
   return (
     <Tab.Navigator
-      initialRouteName="Cart" // Tab mặc định là Cart (Draft)
+      initialRouteName="Shipping"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -25,12 +25,11 @@ const NavigationTop = () => {
           right: 0,
           left: 0,
           height: 60,
-          backgroundColor: colors.background || '#fff',
+          backgroundColor: colors.background,
           elevation: 0,
         },
       }}
     >
-      {/* Tab: Shipping */}
       <Tab.Screen
         name="Shipping"
         component={Shipping}
@@ -46,8 +45,6 @@ const NavigationTop = () => {
           ),
         }}
       />
-
-      {/* Tab: History */}
       <Tab.Screen
         name="History"
         component={History}

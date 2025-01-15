@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View,  Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
 import OnBoarding from '../../components/Onboarding/Onboarding';
 import NavigationRelative from '../../components/Navigation/NavigationRelative'; // Giữ nguyên hoặc thay đổi component nếu cần
 import Rating from '../../components/Rating/StartRender';
@@ -16,11 +17,16 @@ const ProductDetailUser = () => {
   const [selectedOption, setSelectedOption] = useState('foodRelated');
   const route = useRoute();
   const { item } = route.params || {}; // Lấy dữ liệu item từ params
-
+  console.log("ITEM: " + item);
+  
   const navRoutes = [
     { key: 'foodRelated', title: 'Món Ăn Liên Quan' },
     { key: 'ShopRelated', title: 'Cửa Hàng Liên Quan' },
   ];
+  
+  const BackHandler = () => {
+    navigation.navigate('UserHome');
+  };
 
   const handleAddToCart = async (product) => {
       try {
@@ -61,7 +67,7 @@ const ProductDetailUser = () => {
               <View style={styles.ratingContainer}>
                 <Text style={styles.description}>Đánh giá</Text>
                 <Rating rating={item.rating} />
-                <TouchableOpacity onPress={() => navigation.navigate('Rating', { productId: item.id })}>
+                <TouchableOpacity onPress={() => navigation.navigate('Rating', { productId: item.id, shopId: item.shopId })}>
                   <Feather name="chevron-right" size={24} color="black" />
                 </TouchableOpacity>
               </View>
@@ -103,14 +109,22 @@ const ProductDetailUser = () => {
       >
         <Icon name="shopping-cart" size={24} color="#fff" />
       </TouchableOpacity>
-    </View>
 
+      <Button onPress={() => BackHandler()} mode="outlined" style={styles.button}>
+        Quay lại
+      </Button>
+    </View>
+    
 
 
   );
 };
 
 const styles = StyleSheet.create({
+  button: {
+    marginTop: 20,
+    alignSelf: 'center',
+  },
   addButton: {
     backgroundColor: '#007BFF',
     paddingVertical: 10,

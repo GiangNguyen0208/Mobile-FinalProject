@@ -50,18 +50,6 @@ const BottomTabNavigation = () => {
                     },
                 }}
             />
-
-            <Tab.Screen
-                name="WishList"
-                component={WishList}
-                options={{
-                    tabBarIcon: ({ focused }) => {
-                        return (
-                            <View><AntDesign name="heart" size={24} color="black" /></View>)
-                    },
-                }}
-            />
-
             <Tab.Screen
                 name="Notifications"
                 component={Notifications}
