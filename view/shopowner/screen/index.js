@@ -2,10 +2,10 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
-import { getShopById } from '../../../api/adminApi';
-
-const Home = ({navigation,route}) => {
-    const shopId = route.params?.shopId;
+import { getShopById } from '../../../api/shopApi';
+import { useAuth } from '../../context/Auth/AuthContext';
+const Home = ({navigation}) => {
+    const {shopId} = useAuth();
     const [shop, setShop] = useState([]);
      useEffect(() => {
             const fetchshop = async () => {
@@ -85,7 +85,7 @@ const Home = ({navigation,route}) => {
                         />
                         <Text style={styles.funcName}>Khuyến mãi</Text>
                     </TouchableOpacity>
-                    <View style={[styles.function]}></View>
+                    <TouchableOpacity style={[styles.function]} ></TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>

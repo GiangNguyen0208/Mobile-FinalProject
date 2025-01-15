@@ -9,7 +9,7 @@ import Default from '../../layout/default'
 import Order from '../../pages/order'
 import WishList from '../../pages/wishlist'
 import Notifications from '../../pages/notifications'
-import Info from '../../pages/Info'
+import Info from '../../pages/Info/User'
 
 const Tab = createBottomTabNavigator()
 

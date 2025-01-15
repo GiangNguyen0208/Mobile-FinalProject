@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { shopProfile } from '../../../api/shopApi';
 import { getShopById } from '../../../api/adminApi';
 import { useFocusEffect } from '@react-navigation/native';
+import { AuthContext, useAuth } from "../../context/Auth/AuthContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function EditProfile({ navigation, route }) {
     const { shopId } = route.params;
-    // Quản lý trạng thái của các trường nhập liệu
+    const { logout } = useContext(AuthContext);
     const [errors, setErrors] = useState({});
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -51,10 +54,24 @@ export default function EditProfile({ navigation, route }) {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await logout();
+            await AsyncStorage.removeItem("token");
+            Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
+        } catch (error) {
+            console.error("Logout Failed!", error);
+            Alert.alert('Lỗi', 'Không thể đăng xuất. Vui lòng thử lại.');
+        }
+    };
+
+
     // Kiểm tra URL hợp lệ
     const isValidUrl = (url) => {
         return /^(http:\/\/|https:\/\/)/.test(url); // Kiểm tra URL bắt đầu bằng http:// hoặc https://
     };
+
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -98,6 +115,9 @@ export default function EditProfile({ navigation, route }) {
 
             <TouchableOpacity style={styles.button} onPress={handleSave}>
                 <Text style={styles.buttonText}>Lưu thông tin</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleLogout}>
+                <Text style={styles.buttonText}>Đăng xuất</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );

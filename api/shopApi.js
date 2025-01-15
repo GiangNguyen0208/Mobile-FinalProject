@@ -1,5 +1,12 @@
 import axiosInstance from './axiosInstance';
 
+// Lấy thông tin cửa hàng theo ID
+export const getShopById = async (shopId) => {
+  const response = await axiosInstance.get(`/shop/id/${shopId}`);
+  return response.data;
+};
+
+
 // Add Product
 export const addProduct = async (productData) => {
     try {
