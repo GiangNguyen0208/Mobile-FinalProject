@@ -9,7 +9,7 @@ const DetailOrderUser = ({ route }) => {
   const navigation = useNavigation();
   const [orderDetails, setOrderDetails] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  console.log("ID: "+orderId);
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
@@ -39,11 +39,12 @@ const DetailOrderUser = ({ route }) => {
   }
 
   const BackHandler = () => {
-    navigation.navigate('Order');
+    navigation.navigate('Orders');
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Thông tin hóa đơn</Text>
       {orderDetails.map((detail) => (
         <Card style={styles.card} key={detail.id}>
           {/* Hiển thị ảnh sản phẩm */}
@@ -54,11 +55,11 @@ const DetailOrderUser = ({ route }) => {
           )}
           <Card.Content>
             <Title style={styles.productName}>{detail.productName}</Title>
-            <Paragraph style={styles.text}>Mã đơn hàng: {detail.orderId}</Paragraph>
+            <Paragraph style={styles.text}>Mã đơn hàng: {detail.id}</Paragraph>
             <Paragraph style={styles.text}>Sản phẩm ID: {detail.productId}</Paragraph>
-            <Paragraph style={styles.text}>Giá: {detail.price} VND</Paragraph>
+            <Paragraph style={styles.text}>Giá: {detail.price} $</Paragraph>
             <Paragraph style={styles.text}>Số lượng: {detail.quantity}</Paragraph>
-            <Paragraph style={styles.text}>Tổng tiền: {detail.amount} VND</Paragraph>
+            <Paragraph style={styles.text}>Tổng tiền: {detail.amount} $</Paragraph>
           </Card.Content>
         </Card>
       ))}
@@ -74,6 +75,14 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#f5f5f5',
     padding: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop: 20,
   },
   card: {
     marginBottom: 20,

@@ -1,45 +1,73 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState ,useEffect} from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigate } from 'react-router-native';
-import { AuthContext } from "../../../context/Auth/AuthContext"; // Import AuthContext
-
+import { AuthContext, useAuth } from "../../../context/Auth/AuthContext"; // Import AuthContext
+import { useFocusEffect } from '@react-navigation/native';
+import { getUserProfile ,updateUserProfile} from '../../../../api/userApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const User = () => {
-  const [userInfo, setUserInfo] = useState({
-    name: 'Nguyen Van A',
-    age: '28',
-    email: 'nguyenvana@example.com',
-    address: '123 Đường ABC, Thành phố XYZ',
-    phoneNumber: '037147258',
-    rank: 'Vàng',
-    avatar: require('../../../../assets/test1.png'),
-  });
+  const { userId } = useAuth();
+  const [user, setUser] = useState({});
+  const [lastname, setLastname] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [isEditing ,setIsEditing] = useState(false);
+  const { logout } = useContext(AuthContext);   // Sử dụng useContext để lấy logout từ AuthContext
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUser = async () => {
+        try {
+          const userData = await getUserProfile(userId);
+          setUser(userData);
+          setLastname(userData.lastname);
+          setAddress(userData.address);
+          setAvatar(userData.avatar);
+          setEmail(userData.email);
+          setPhone(userData.phone);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchUser();
+    }, [userId])
+  );
 
-  const [isEditing, setIsEditing] = useState(false);
-  const navigate = useNavigate();
-  const { logout } = useContext(AuthContext); // Sử dụng useContext để lấy logout từ AuthContext
+  // Hàm xử lý khi nhấn nút "Save"
+      const handleSave = async () => {
+          const updatedUser = {
+              ...user, // Giữ nguyên các trường khác
+              lastname,    // Lấy từ state `name`
+              address, // Lấy từ state `address`
+              avatar,
+              email, 
+              phone,  // Lấy từ state `image`
+          };
+          const response = await updateUserProfile(user.id, updatedUser);
+          if (response.status === 200) {
+              alert('Cập nhật thành công!');
+              setUser(updatedUser); 
+              setLastname(updatedUser.lastname);
+              setAddress(updatedUser.address);
+              setPhone(updatedUser.phone);
+              setEmail(updatedUser.email);
+              setAvatar(updatedUser.avatar);
+              setIsEditing(false);
+          } else {
+              alert('Cập nhật  thất bại!');
+              setIsEditing(false);
+          }
+      };
 
-  const handleChange = (key, value) => {
-    setUserInfo({ ...userInfo, [key]: value });
-  };
-
-  const handleEditPress = () => {
-    setIsEditing(true);
-  };
-
-  const handleSavePress = () => {
-    setIsEditing(false);
-    Alert.alert('Thông báo', 'Thông tin của bạn đã được cập nhật!');
-  };
+  
 
   const handleLogout = async () => {
     try {
       await logout();
       await AsyncStorage.removeItem("token");
-      setIsLoggedIn(false);
-      setIsPrivate(true);
-      setRole(null);
-      navigate('/login');
+
       Alert.alert('Đăng xuất', 'Bạn đã đăng xuất thành công!');
     } catch (error) {
       console.error("Logout Failed!", error);
@@ -50,44 +78,32 @@ const User = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Thông tin người dùng</Text>
       <View style={styles.avatarContainer}>
-        <Image source={userInfo.avatar} style={styles.avatar} />
+        <Image source={{ uri: 'https://i.pinimg.com/736x/97/bb/06/97bb067e30ff6b89f4fbb7b9141025ca.jpg' }} style={styles.avatar} />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Họ tên:</Text>
         {isEditing ? (
           <TextInput
             style={styles.input}
-            value={userInfo.name}
-            onChangeText={(text) => handleChange('name', text)}
+            value={lastname}
+            onChangeText={setLastname}
           />
         ) : (
-          <Text style={styles.value}>{userInfo.name}</Text>
+          <Text style={styles.value}>{lastname}</Text>
         )}
       </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.label}>Tuổi:</Text>
-        {isEditing ? (
-          <TextInput
-            style={styles.input}
-            value={userInfo.age}
-            keyboardType="numeric"
-            onChangeText={(text) => handleChange('age', text)}
-          />
-        ) : (
-          <Text style={styles.value}>{userInfo.age}</Text>
-        )}
-      </View>
+    
       <View style={styles.infoContainer}>
         <Text style={styles.label}>Email:</Text>
         {isEditing ? (
           <TextInput
             style={styles.input}
-            value={userInfo.email}
+            value={email}
             keyboardType="email-address"
-            onChangeText={(text) => handleChange('email', text)}
+            onChangeText={setEmail}
           />
         ) : (
-          <Text style={styles.value}>{userInfo.email}</Text>
+          <Text style={styles.value}>{email}</Text>
         )}
       </View>
       <View style={styles.infoContainer}>
@@ -95,11 +111,11 @@ const User = () => {
         {isEditing ? (
           <TextInput
             style={styles.input}
-            value={userInfo.address}
-            onChangeText={(text) => handleChange('address', text)}
+            value={address}
+            onChangeText={setAddress}
           />
         ) : (
-          <Text style={styles.value}>{userInfo.address}</Text>
+          <Text style={styles.value}>{address}</Text>
         )}
       </View>
       <View style={styles.infoContainer}>
@@ -107,29 +123,31 @@ const User = () => {
         {isEditing ? (
           <TextInput
             style={styles.input}
-            value={userInfo.phoneNumber}
+            value={phone}
             keyboardType="phone-pad"
-            onChangeText={(text) => handleChange('phoneNumber', text)}
+            onChangeText={setPhone}
           />
         ) : (
-          <Text style={styles.value}>{userInfo.phoneNumber}</Text>
+          <Text style={styles.value}>{phone}</Text>
         )}
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.label}>Hạng:</Text>
-        <Text style={styles.rankValue}>
-          {userInfo.rank}
-          {'  '}
-          {userInfo.rank === 'Bạc' && <FontAwesome name="star" size={20} color="silver" />}
-          {userInfo.rank === 'Vàng' && <FontAwesome name="star" size={20} color="gold" />}
-          {userInfo.rank === 'Kim Cương' && <FontAwesome name="star" size={20} color="blue" />}
-        </Text>
+        <Text style={styles.label}>URL Avatar:</Text>
+        {isEditing ? (
+          <TextInput
+            style={styles.input}
+            value={avatar}
+            onChangeText={setAvatar}
+          />
+        ) : (
+          <Text style={styles.value}>{avatar}</Text>
+        )}
       </View>
       <View style={styles.buttonContainer}>
         {isEditing ? (
-          <Button title="Lưu thông tin" onPress={handleSavePress} />
+          <Button title="Lưu thông tin" onPress={()=>handleSave()} />
         ) : (
-          <Button title="Chỉnh sửa thông tin" onPress={handleEditPress} />
+          <Button title="Chỉnh sửa thông tin" onPress={()=>setIsEditing(true)} />
         )}
       </View>
       {/* Logout Button */}
@@ -161,6 +179,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
+
   },
   title: {
     fontSize: 28,
@@ -184,6 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     flex: 1,
     color: '#333',
+    flexWrap:'wrap'
   },
   input: {
     borderWidth: 1,

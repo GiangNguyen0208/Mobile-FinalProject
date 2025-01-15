@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { Appbar, IconButton } from 'react-native-paper';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigation } from '@react-navigation/native';
 
 const Notifications = () => {
-  const navigation = useNavigate();
+  const navigation = useNavigation(); // Sử dụng từ react-navigation
   const [index, setIndex] = React.useState(0);
-  const [isOptionSelected, setIsOptionSelected] = React.useState(false);
 
   const optionRoutes = [
     {
@@ -14,23 +13,22 @@ const Notifications = () => {
       title: 'Promotions',
       description: 'Latest promotions and offers',
       icon: 'star',
-      path: 'promotions',
+      path: 'Promotion', // Tên màn hình trong navigator
     },
     {
       key: 'news',
       title: 'News',
       description: 'No news yet',
       icon: 'newspaper',
-      path: 'news',
+      path: 'News', // Tên màn hình trong navigator
     },
   ];
 
   const handleIndexChange = (newIndex) => {
     const selectedRoute = optionRoutes[newIndex];
-    console.log('Navigating to:', `/notifications/${selectedRoute.path}`);
+    console.log('Navigating to:', selectedRoute.path);
     setIndex(newIndex);
-    setIsOptionSelected(true);
-    navigation(`/notifications/${selectedRoute.path}`);
+    navigation.navigate(selectedRoute.path); // Điều hướng theo tên màn hình
   };
 
   const renderOption = ({ item, index }) => (
@@ -63,12 +61,6 @@ const Notifications = () => {
           contentContainerStyle={styles.list}
         />
       </View>
-
-      {isOptionSelected && (
-        <View style={styles.outletContainer}>
-          <Outlet />
-        </View>
-      )}
     </>
   );
 };
@@ -102,13 +94,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
     color: '#666',
-  },
-  outletContainer: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#FFF',
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
   },
 });
 

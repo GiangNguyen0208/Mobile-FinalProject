@@ -26,9 +26,11 @@ import Pay from '../view/client/pages/payment/payment';
 import OrderList from '../view/shopowner/screen/OrderList';
 import OrderDetailShop from '../view/shopowner/screen/OrderDetailShop.js';
 import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
-import Order from '../view/client/pages/order/index.js';
 import DetailOrderUser from '../view/client/components/Order/DetailOrderUser.js';
 
+
+import Promotion from '../view/client/pages/notifications/promotions.js';
+import News from '../view/client/pages/notifications/news.js';
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -37,7 +39,7 @@ const UserStack = createNativeStackNavigator();
 // Shop Navigator
 const ShopNavigator = () => (
   <ShopStack.Navigator screenOptions={{ headerShown: false }}>
-    <ShopStack.Screen name="ShopHome" initialParams={{ shopId: 4 }}  component={ShopScreen} />
+    <ShopStack.Screen name="ShopHome"  component={ShopScreen} />
     <ShopStack.Screen name="Menu" component={Menu} />
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
@@ -62,6 +64,8 @@ const UserNavigator = () => (
     <UserStack.Screen name="Cart" component={Cart} />
     <UserStack.Screen name="Pay" component={Pay} />
     <UserStack.Screen name="DetailOrderUser" component={DetailOrderUser} />
+    <UserStack.Screen name="Promotion" component={Promotion} />
+    <UserStack.Screen name="News" component={News} />
   </UserStack.Navigator>
 );
 

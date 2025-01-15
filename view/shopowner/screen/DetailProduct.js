@@ -68,7 +68,7 @@ const DetailProductShopScreen = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Chi Tiết Sản Phẩm</Text>
         </View>
-        <OnBoarding images={images} />
+        <OnBoarding item={product} />
         <View style={styles.container}>
           {product ? (
             <>

@@ -17,6 +17,7 @@ const Login = ({ setIsPrivateRoutes }) => {
     const [loading, setLoading] = useState(false);
     const { login, role } = useContext(AuthContext);
     const navigate = useNavigate();
+    const navigation = useNavigation();
 
     const [displayedText, setDisplayedText] = useState(""); // Dùng để hiển thị chữ từng chữ một
     const fullText = "Welcome to Best Food App";

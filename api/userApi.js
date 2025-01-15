@@ -7,13 +7,13 @@ export const register = async (userData) => {
 };
 
 export const getUserProfile = async (id) => {
-  const response = await axiosInstance.get("/users", id);
+  const response = await axiosInstance.get(`/users/findId/${id}`);
   return response.data;
 };
 
-export const updateUserProfile = async (id) => {
-  const response = await axiosInstance.put("/users", id);
-  return response.data;
+export const updateUserProfile = async (id,userData) => {
+  const response = await axiosInstance.put(`/users/${id}`,userData);
+  return response;
 };
 
 export const getProductCommentList = async (id) => {
@@ -33,6 +33,25 @@ export const getCategoryList = async () => {
   } catch (error) {
       console.error("Error fetching product comments:", error);
       throw error; // Để xử lý lỗi nếu cần
+  }
+};
+export const getListVoucher = async () => {
+  try {
+    const response = await axiosInstance.get(`/vouchers/listVoucher`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching voucher list:", error);
+    throw error;
+  }
+};
+
+export const getListNotification = async () => {
+  try {
+    const response = await axiosInstance.get(`/notifications/listNotification`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching notifications list:", error);
+    throw error; // Để xử lý lỗi nếu cần
   }
 };
 
