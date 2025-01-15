@@ -35,5 +35,24 @@ export const getCategoryList = async () => {
       throw error; // Để xử lý lỗi nếu cần
   }
 };
+export const getListVoucher = async () => {
+  try {
+    const response = await axiosInstance.get(`/vouchers/listVoucher`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching voucher list:", error);
+    throw error;
+  }
+};
+
+export const getListNotification = async () => {
+  try {
+    const response = await axiosInstance.get(`/notifications/listNotification`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching notifications list:", error);
+    throw error; // Để xử lý lỗi nếu cần
+  }
+};
 
 // export default userApi;
