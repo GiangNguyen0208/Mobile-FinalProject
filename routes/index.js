@@ -26,6 +26,8 @@ import Pay from '../view/client/pages/payment/payment';
 import OrderList from '../view/shopowner/screen/OrderList';
 import OrderDetailShop from '../view/shopowner/screen/OrderDetailShop.js';
 import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
+import Order from '../view/client/pages/order/index.js';
+import DetailOrderUser from '../view/client/components/Order/DetailOrderUser.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -48,7 +50,6 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="AddVoucher" component={AddVoucher} />
     <ShopStack.Screen name="VoucherList" component={VoucherList} />
     <ShopStack.Screen name="EditProfile" component={EditProfile} />
-
   </ShopStack.Navigator>
 );
 
@@ -60,6 +61,7 @@ const UserNavigator = () => (
     <UserStack.Screen name="ShopDetailUser" component={ShopDetailUser} />
     <UserStack.Screen name="Cart" component={Cart} />
     <UserStack.Screen name="Pay" component={Pay} />
+    <UserStack.Screen name="DetailOrderUser" component={DetailOrderUser} />
   </UserStack.Navigator>
 );
 
