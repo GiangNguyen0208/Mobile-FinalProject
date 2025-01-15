@@ -1,5 +1,16 @@
 import axiosInstance from "./axiosInstance";
 
+// Lấy thông tin cửa hàng theo ID
+export const getShopById = async (shopId) => {
+    const response = await axiosInstance.get(`/shop/id/${shopId}`);
+    return response.data;
+};
+
+export const getListProductByShopId = async (shopId) => {
+    const response = await axiosInstance.get(`/products/listProduct/shop/${shopId}`);
+    return response.data;
+}
+
 export const getAllProduct = async () => {
     const response = await axiosInstance.get("/products/listProduct");
     return response.data;
@@ -37,6 +48,6 @@ export const getListCommentByProduct = async (productId) => {
 };
 
 export const getListCommentByShop = async (id) => {
-    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    const response = await axiosInstance.get("/comments/list/shop/" + id);
     return response.data;
-  };
+};
