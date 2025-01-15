@@ -11,9 +11,15 @@ export const getAllCategory = async () => {
 };
 
 export const getProductsByCategory = async (categoryId) => {
-      const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
-      return response.data.result;
-  };
+    const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
+    return response.data.result;
+};
+
+export const getProductsByName = async (productName) => {
+    const response = await axiosInstance.get(`/products/findName/${productName}`);
+    return response.data.result;
+};
+
 
 
 export const getNotificationsByShop = async (shopId) => {

@@ -1,9 +1,10 @@
-import { useState, useEffect ,useCallback} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, SafeAreaView, TouchableOpacity, Text, Alert, FlatList } from 'react-native';
 import ItemCard from './ItemCard';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { getVouchersByShop } from "../../../../api/systemApi";
 import { useFocusEffect } from '@react-navigation/native';
+import ListItem from '../../../shopowner/screen/ListItem';
 
 export default function VoucherList({ navigation, route }) {
     const { shop } = route.params;
@@ -32,16 +33,22 @@ export default function VoucherList({ navigation, route }) {
 
     return (
         <SafeAreaView style={styles.container}>
+            {/* Header */}
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Mã giảm giá</Text>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <AntDesign name="arrowleft" size={24} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Danh sách Voucher</Text>
+                <Text style={styles.headerTitle}></Text>
+                {/* Bạn có thể thêm các nút hoặc icon khác vào header nếu cần */}
             </View>
             <FlatList
                 data={voucher}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => console.log('edit')}>
-                        <ItemCard type={'voucher'} item={item} navigation={navigation} isShopOwner={true}
+                        <ListItem type={'voucher'} item={item} navigation={navigation}
                             handlePress={() => navigation.navigate('AddVoucher', { shop: shop, voucher: item })}>
-                        </ItemCard>
+                        </ListItem>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(_, index) => index.toString()}
@@ -78,16 +85,16 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 15,
-        backgroundColor: '#E95322',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
-    },
-    headerTitle: {
+      },
+      headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginLeft: 10,
-        color: '#fff',
-    },
+        color: 'black',
+      },
 });
 

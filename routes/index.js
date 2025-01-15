@@ -16,6 +16,7 @@ import Notification from '../view/client/components/ListItem/Notifications.js';
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetailUser from '../view/client/pages/detail/detail.js';
 import ShopDetailUser from '../view/client/pages/detail/shopDetail.js';
+import foodList from '../view/client/components/ListItem/ProductList.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import AddNotification from '../view/shopowner/screen/AddNotification.js';
 import AddVoucher from '../view/shopowner/screen/AddVoucher.js';
@@ -60,6 +61,7 @@ const UserNavigator = () => (
     <UserStack.Screen name="UserHome" component={BottomTabNavigation} />
     <UserStack.Screen name="ProductDetailUser" component={ProductDetailUser} />
     <UserStack.Screen name="ShopDetailUser" component={ShopDetailUser} />
+    <UserStack.Screen name="foodList" component={foodList} />
     <UserStack.Screen name="Cart" component={Cart} />
     <UserStack.Screen name="Pay" component={Pay} />
       <UserStack.Screen name="Promotion" component={Promotion} />
