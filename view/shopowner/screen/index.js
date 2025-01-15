@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "../../context/Auth/AuthContext";
 import { getShopById } from '../../../api/adminApi';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
 
 const Home = ({navigation,route}) => {
     const { shopId } = useAuth();
@@ -31,6 +33,7 @@ const Home = ({navigation,route}) => {
     return (
         <SafeAreaView>
             <View style={[styles.row,styles.header]}>
+
             <Text style={[styles.shopName]}>{shop.name ? shop.name.toUpperCase() : ''}</Text>
                 <TouchableOpacity style={[styles.personalAndNoti]} onPress={() => navigation.navigate('EditProfile', { shopId: shop.id })}>
                     <Ionicons name="person-circle-outline" size={32} color="black" />
@@ -46,7 +49,10 @@ const Home = ({navigation,route}) => {
             </View>
             <View style={styles.container}>
                 <View style={[styles.row,{justifyContent:'space-around'}]}>
-                    <TouchableOpacity style={[styles.function]}>
+                    <TouchableOpacity 
+                        style={[styles.function]}
+                        onPress={() => navigation.navigate('OrderList')} 
+                    >
                         <Image
                             source={require("./../../../assets/img/order-food.png")}
                             style={styles.image}

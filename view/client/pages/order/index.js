@@ -9,15 +9,8 @@ const Order = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Orders</Text>
-
       <View style={styles.navigationTop}>
         <NavigationTop />
-      </View>
-
-      <View style={styles.mainContent}>
-        <DropDown />
-        <Status />
-        <RecommendedProducts />
       </View>
     </View>
   );

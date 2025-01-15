@@ -26,10 +26,6 @@ export const getListProductByShopName = async (name) => {
     return response.data;
   }
 
-  
-
-
-
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
   const response = await axiosInstance.post("admin/user/add", userCreationReq);
@@ -90,6 +86,7 @@ export const deleteShop = async (shopId) => {
 };
 
 
+
 // Lấy thông tin cửa hàng theo ID
 export const getShopById = async (shopId) => {
   const response = await axiosInstance.get(`admin/shop/id/${shopId}`);
@@ -101,4 +98,3 @@ export const getShopByName = async (shopName) => {
   const response = await axiosInstance.get(`admin/shop/name/${shopName}`);
   return response.data;
 };
-
