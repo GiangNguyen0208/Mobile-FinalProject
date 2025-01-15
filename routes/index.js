@@ -1,3 +1,4 @@
+
 import React from 'react'; 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'; 
 import { NavigationContainer } from '@react-navigation/native'; 
@@ -9,16 +10,26 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
+<<<<<<< HEAD
+=======
+import VoucherList from '../view/client/components/ListItem/VoucherList.js'; 
+import Notification from '../view/client/components/ListItem/Notifications.js'; 
+>>>>>>> main
 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetailUser from '../view/client/pages/detail/detail.js';
 import ShopDetailUser from '../view/client/pages/detail/shopDetail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
+import AddNotification from '../view/shopowner/screen/AddNotification.js';
+import AddVoucher from '../view/shopowner/screen/AddVoucher.js';
+import EditProfile from '../view/shopowner/screen/EditProfile.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
 import Cart from '../view/client/pages/Cart/index';
 import Pay from '../view/client/pages/payment/payment';
 import OrderList from '../view/shopowner/screen/OrderList';
 import OrderDetailShop from '../view/shopowner/screen/OrderDetailShop.js';
+import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
+
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -27,7 +38,7 @@ const UserStack = createNativeStackNavigator();
 // Shop Navigator
 const ShopNavigator = () => (
   <ShopStack.Navigator screenOptions={{ headerShown: false }}>
-    <ShopStack.Screen name="ShopHome" component={ShopScreen} />
+    <ShopStack.Screen name="ShopHome" initialParams={{ shopId: 4 }}  component={ShopScreen} />
     <ShopStack.Screen name="Menu" component={Menu} />
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />
@@ -35,6 +46,12 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
     <ShopStack.Screen name="OrderList" component={OrderList} />
     <ShopStack.Screen name="OrderDetailShop" component={OrderDetailShop} />
+    <ShopStack.Screen name="Notification" component={Notification} />
+    <ShopStack.Screen name="AddNotification" component={AddNotification} />
+    <ShopStack.Screen name="AddVoucher" component={AddVoucher} />
+    <ShopStack.Screen name="VoucherList" component={VoucherList} />
+    <ShopStack.Screen name="EditProfile" component={EditProfile} />
+
   </ShopStack.Navigator>
 );
 
@@ -60,10 +77,13 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             )}
             {role === 'Shop' && (
               <Stack.Screen name="Shop" component={ShopNavigator} />
+              
             )}
             {role === 'USER' && (
               <Stack.Screen name="User" component={UserNavigator} />
             )}
+            {/* Đặt EditShop ở đây ngoài ShopNavigator */}
+            <Stack.Screen name="EditShop" component={EditShopScreen} />
           </>
         ) : (
           <>

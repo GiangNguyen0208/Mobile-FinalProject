@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet, Alert, Dimensions } from 'react-native';
 import { getAllUser, addUser, updateUser, deleteUser } from '../../../api/adminApi'; // Cập nhật đường dẫn import API
-
+import { useAuth } from "../../context/Auth/AuthContext";
+import { useNavigate } from 'react-router-native';
 const ManageUsersScreen = () => {
+  const { userId } = useAuth(); // Lấy userId từ AuthContext
   const [userList, setUserList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -12,11 +14,11 @@ const ManageUsersScreen = () => {
       setLoading(true);
       try {
         const data = await getAllUser(); // Gọi API getAllUser
+        console.log(data);
         setUserList(data.result); // Cập nhật state với dữ liệu nhận được
       } catch (error) {
         console.error('Error fetching users:', error);
         Alert.alert('Lỗi', 'Không thể tải danh sách người dùng ,............');
-
       } finally {
         setLoading(false);
       }
@@ -117,9 +119,10 @@ const ManageUsersScreen = () => {
   return (
     <View style={[styles.container, { width: containerWidth }]}>
       <Text style={styles.title}>Quản lý User</Text>
+
       <FlatList
         data={userList}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id ? item.id.toString() : item.email || Math.random().toString()}
         renderItem={({ item }) => (
           <View style={styles.userItem}>
             <Text style={styles.userName}>{item.name}</Text>

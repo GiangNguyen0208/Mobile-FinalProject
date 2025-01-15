@@ -1,13 +1,5 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-// <<<<<<< HEAD
-// import StarRender from "../../components/Rating/StartRender"
-
-
-// // const Item = ({ image, title, description, date, rating,onPress }) => {
-// //     // Ensure image is a valid string URL or a local image
-// //     const imageSource = typeof image === 'string' ? { uri: image } : image;
-// =======
 import Rating from '../Rating/StartRender';
 
 
@@ -17,28 +9,29 @@ const Item = ({ image, title, description, price, rating, onPress, onAddToCart }
 
     return (
 
-        <View style={styles.container}>
-            <TouchableOpacity onPress={onPress} style={styles.itemContent}>
-                {imageSource ? (
-                    <Image
-                        source={{ uri: image }}
-                        style={styles.image}
-                    />
-                ) : (
-                    <Text>No Image Available</Text>
-                )}
-                <View style={styles.textContainer}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.description}>{description}</Text>
-                    <Text style={styles.price}>{price}</Text>
-                    <Rating rating={rating} />
-                    <TouchableOpacity style={styles.addButton} onPress={onAddToCart}>
-                        <Text style={styles.addButtonText}>Add to Cart</Text>
-                    </TouchableOpacity>
-                </View>
-            </TouchableOpacity>
+        <TouchableOpacity
+            onPress={onPress}
+            style={styles.container}
+        >
+            {/* Chỉ hiển thị hình ảnh nếu có `imageSource` */}
+            {imageSource ? (
+                <Image
+                    source={{ uri: image }}
+                    style={styles.image}
+                />
+            ) : null}
 
-        </View>
+            {/* Kiểm tra từng phần dữ liệu */}
+            {(title || description || price || rating) && (
+                <View style={styles.textContainer}>
+                    {title && <Text style={styles.title}>{title}</Text>}
+                    {description && <Text style={styles.description}>{description}</Text>}
+                    {price && <Text style={styles.date}>{price}</Text>}
+                    {rating && <Rating rating={rating} />}
+                </View>
+            )}
+        </TouchableOpacity>
+
     );
 };
 const styles = StyleSheet.create({
@@ -48,15 +41,10 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         padding: 12,
         borderBottomWidth: 1,
-        borderBottomColor: '#dcdcdc',
-        marginBottom: 12,
-        borderRadius: 8,
-        backgroundColor: '#fefefe',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 2,
+
+        borderBottomColor: '#ccc',
+        marginBottom: 2, // Adjusted for better spacing
+        backgroundColor: 'white',
     },
     image: {
         width: 75,
@@ -67,7 +55,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         flex: 1,
-        justifyContent: 'space-between',
+        paddingHorizontal: 16
     },
     title: {
         fontSize: 16,

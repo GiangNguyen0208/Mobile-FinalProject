@@ -1,19 +1,22 @@
-import { TouchableOpacity, View, StyleSheet, FlatList, Text, Alert } from "react-native";
+import { TouchableOpacity, View, StyleSheet, FlatList, Text, Modal } from "react-native";
 import React, { useState, useEffect } from "react";
 import ItemCard from "../../client/components/ListItem/ItemCard";
 import Ionicons from '@expo/vector-icons/Ionicons';
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getListProductByShopId, getListCategoryByShopId, deleteCategory } from "../../../api/shopApi";
 import { useAuth } from "../../context/Auth/AuthContext";
 import { useNavigation } from '@react-navigation/native';
 
+
 const Menu = () => {
     const [selectedCategory, setSelectedCategory] = useState('food');
     const [products, setProducts] = useState([]);
-    const [category, setCategory] = useState([]); 
+    const [category, setCategory] = useState([]);
     const { shopId } = useAuth();
-    const navigation = useNavigation();
+
+    const navigation = useNavigation();  // Initialize useNavigation hook
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
     useEffect(() => {
         const fetchProductsAndCategories = async () => {
@@ -40,74 +43,55 @@ const Menu = () => {
     }, [category]); // Sửa lại đây để theo dõi sự thay đổi của category
 
 
-    const handleAddFood = () => {
-        console.log("Thêm món mới");
-       
+    const handleOpenModal = (categoryId) => {
+        setSelectedCategoryId(categoryId);
+        setIsModalVisible(true);
+        console.log(categoryId)
     };
-    
-    const handleAddCategory = () => {
-        console.log("Thêm danh mục mới");
-        // Thêm logic để xử lý khi người dùng nhấn "Thêm danh mục"
-    }
+
+    // Hàm đóng modal
+    const handleCloseModal = () => {
+        setIsModalVisible(false);
+        setSelectedCategoryId(null);
+    };
+
+    const handleDelCategory = async () => {
+        try {
+            console.log("Deleting category with ID:", selectedCategoryId);
+            const result = await deleteCategory(selectedCategoryId);
+            console.log('Category deleted:', result);
+            setCategory(prevCategories => prevCategories.filter(category => category.id !== selectedCategoryId));
+            // Sau khi xóa thành công, đóng modal và thực hiện các hành động khác nếu cần
+        } catch (error) {
+            console.error('Error deleting category:', error);
+            // Xử lý lỗi nếu cần
+        }
+    };
+
     const handleAddProduct = () => {
 
-        navigation.navigate('AddProduct');
-    };
-
-    const handleDeleteCategory = (categoryId) => {
-        // Hiển thị hộp thoại xác nhận trước khi xóa
-        Alert.alert(
-            "Xóa danh mục",
-            "Bạn có chắc chắn muốn xóa danh mục này?",
-            [
-                { text: "Hủy", style: "cancel" },  // Thoát
-                { 
-                    text: "Xóa",  // Thực hiện xóa
-                    onPress: async () => {
-                        try {
-                            await deleteCategory(categoryId);  // Gọi API để xóa danh mục
-                            // Tải lại danh sách category sau khi xóa thành công
-                            const categoryData = await getListCategoryByShopId(shopId);
-                            setCategory(categoryData.result || []);
-                            Alert.alert("Thành công", "Danh mục đã được xóa.");
-                        } catch (error) {
-                            Alert.alert("Lỗi", "Không thể xóa danh mục. Vui lòng thử lại.");
-                        }
-                    }
-                }
-            ]
-        );
+        navigation.navigate('AddProduct');  // Điều hướng đến AddProduct khi nhấn "Thêm món"
     };
 
     const renderFood = ({ item }) => (
-
-        // <ItemCard type={'product'} item={item} navigation={navigation} isShopOwner={false}></ItemCard>
-
-        <TouchableOpacity 
-            onPress={() => navigation.navigate('DetailProductShopScreen', { item })}
-            style={{ padding: 10, borderBottomWidth: 1, borderColor: '#ccc' }}
-        >
-            <ItemCard 
-                type={'product'} 
+        <TouchableOpacity style={{ paddingHorizontal: 10, paddingVertical: 4 }}>
+            <ItemCard
+                type={'product'}
                 key={item.id}
                 item={item}
                 shopId={shopId}
-                isShopOwner={true}>
-                navigation={navigation}
-            </ItemCard>
+                isShopOwner={true}
+                handlePress={() => navigation.navigate('DetailProductShopScreen', { item, shopId })}
+            />
+
         </TouchableOpacity>
 
     );
 
     const renderCategory = ({ item }) => (
-        <View style={styles.categoryCard}>
-            <Text style={styles.categoryName}>{item.name}</Text>
-            <TouchableOpacity 
-                style={styles.deleteButton}
-                onPress={() => handleDeleteCategory(item.id)}  // Gọi hàm xóa khi nhấn nút
-            >
-                <Text style={styles.deleteButtonText}>Xóa</Text>
-            </TouchableOpacity>
+        <View style={[{ padding: 16, flexDirection: 'row', justifyContent: "space-between" }]}>
+            <Text>{item.name}</Text>
+            <TouchableOpacity onPress={() => handleOpenModal(item.id)}><Ionicons name="trash-bin" size={24} color="#E95322" /></TouchableOpacity>
         </View>
     );
 
@@ -135,56 +119,93 @@ const Menu = () => {
                 style={{ height: '100%' }}
                 contentContainerStyle={{ paddingBottom: 120 }}
             />
-            <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.addFoodBtn} onPress={handleAddProduct}>
-                    <Text style={{ color: "white", fontSize: 16, textAlign: 'center' }}>
-                        Thêm món
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            {selectedCategory === "food" && (
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity
+                        style={styles.addFoodBtn}
+                        onPress={handleAddProduct}
+                    >
+                        <Text style={{ color: "white", fontSize: 16, textAlign: "center" }}>
+                            Thêm món
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+            <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType="slide"
+                onRequestClose={handleCloseModal} // Đóng modal khi nhấn nút back trên Android
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <Text style={styles.modalText}>Bạn có chắc chắn muốn xóa danh mục này không?</Text>
+                        <View style={styles.modalActions}>
+                            <TouchableOpacity
+                                style={[styles.modalButton, styles.cancelButton]}
+                                onPress={handleCloseModal}
+                            >
+                                <Text style={styles.modalButtonText}>Hủy</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.modalButton, styles.confirmButton]}
+                                onPress={() => {
+                                    handleCloseModal(); // Đóng modal
+                                    handleDelCategory(); // Xử lý xóa danh mục
+                                }}
+                            >
+                                <Text style={styles.modalButtonText}>Xác nhận</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
 
-//     row: {
-//         flexDirection: 'row',
-//     },
-//     funcContainer: {
-//         height: 56,
-//         marginHorizontal: 8,
-//         alignItems: 'center',
-//     },
-//     funcName: {
-//         fontSize: 16,
-//         paddingHorizontal: 70,
-//     },
-//     selected: {
-//         borderBottomWidth: 1,
-//         borderBottomColor: '#E95322',
-//     },
-//     item: {
-//         backgroundColor: 'white',
-//         borderBottomWidth: 0.5,
-//     },
-//     btnContainer: {
-//         width: '100%',
-//         backgroundColor: 'white',
-//         alignItems: 'center',
-//         elevation: 5,
-//         height: 120,
-//         position: 'absolute',
-//         bottom: 0,
-//     },
-//     addFoodBtn: {
-//         width: '95%',
-//         paddingVertical: 8,
-//         marginVertical: 14,
-//         backgroundColor: '#E95322',
-//         borderRadius: 8,
-//     },
-// })
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContainer: {
+        width: '80%',
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 16,
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    modalActions: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    modalButton: {
+        flex: 1,
+        padding: 10,
+        marginHorizontal: 5,
+        borderRadius: 5,
+    },
+    cancelButton: {
+        backgroundColor: 'gray',
+    },
+    confirmButton: {
+        backgroundColor: '#E95322',
+    },
+    modalButtonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 14,
+    },
 
     row: { flexDirection: 'row' },
     funcContainer: { height: 56, marginHorizontal: 8, alignItems: 'center' },

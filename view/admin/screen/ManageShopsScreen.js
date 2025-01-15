@@ -1,30 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, Alert, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAllShops, addShop, updateShop, deleteShop } from '../../../api/adminApi'; // Import API
+import { getAllShops, getAllShopsClosed, addShop, deleteShop } from '../../../api/adminApi'; // Import API
 
 const ManageShopsScreen = () => {
   const [shopList, setShopList] = useState([]);
   const navigation = useNavigation(); // Hook để điều hướng
   const [loading, setLoading] = useState(false);
 
-  // Lấy danh sách cửa hàng từ API
-  useEffect(() => {
-    const fetchShops = async () => {
-      setLoading(true);
-      try {
-        const data = await getAllShops(); // Gọi API lấy tất cả cửa hàng
-        setShopList(data.result); // Cập nhật danh sách cửa hàng
-      } catch (error) {
-        console.error('Error fetching shops:', error);
-        Alert.alert('Lỗi', 'Không thể tải danh sách cửa hàng');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchShops = async () => {
+    setLoading(true);
+    try {
+      const activeShops = await getAllShops(); // Lấy danh sách cửa hàng đang hoạt động
+      const closedShops = await getAllShopsClosed(); // Lấy danh sách cửa hàng đã đóng
 
-    fetchShops();
-  }, []);
+      // Gắn cờ cho từng loại shop
+      const combinedList = [
+        ...activeShops.result.map((shop) => ({ ...shop, closed: false })),
+        ...closedShops.result.map((shop) => ({ ...shop, closed: true })),
+      ];
+
+      setShopList(combinedList);
+
+           // In kết quả của getAllShops vào console
+            console.log('Active Shops:', activeShops);
+            console.log('Closed Shops:', closedShops);
+
+    } catch (error) {
+      console.error('Error fetching shops:', error);
+      Alert.alert('Lỗi', 'Không thể tải danh sách cửa hàng');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchShops(); // Gọi lại fetchShops khi màn hình được focus lại
+    });
+
+    fetchShops(); // Lấy dữ liệu ngay khi màn hình load lần đầu tiên
+
+    return unsubscribe;
+  }, [navigation]);
 
   const handleDelete = (shopId) => {
     Alert.alert(
@@ -40,7 +58,7 @@ const ManageShopsScreen = () => {
   const deleteShopById = async (shopId) => {
     try {
       await deleteShop(shopId); // Gọi API xóa cửa hàng
-      setShopList(shopList.filter(shop => shop.id !== shopId)); // Cập nhật lại danh sách cửa hàng
+      setShopList(shopList.filter((shop) => shop.id !== shopId)); // Cập nhật danh sách cửa hàng
       Alert.alert('Thành công', 'Cửa hàng đã được xóa.');
     } catch (error) {
       console.error('Error deleting shop:', error);
@@ -49,8 +67,7 @@ const ManageShopsScreen = () => {
   };
 
   const handleEdit = (shopId) => {
-    Alert.alert('Chỉnh sửa cửa hàng', `Chỉnh sửa thông tin của cửa hàng ID: ${shopId}`);
-    // Bạn có thể thêm logic để điều hướng tới trang chỉnh sửa cửa hàng nếu cần
+    navigation.navigate('EditShop', { shopId }); // Điều hướng tới màn hình chỉnh sửa
   };
 
   const handleManage = (shop) => {
@@ -64,7 +81,7 @@ const ManageShopsScreen = () => {
     };
     try {
       const addedShop = await addShop(newShop); // Gọi API thêm cửa hàng
-      setShopList([...shopList, addedShop]); // Thêm cửa hàng mới vào danh sách
+      setShopList([...shopList, { ...addedShop, closed: false }]); // Thêm vào danh sách
       Alert.alert('Thành công', 'Cửa hàng đã được thêm.');
     } catch (error) {
       console.error('Error adding shop:', error);
@@ -85,21 +102,39 @@ const ManageShopsScreen = () => {
           data={shopList}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.shopItem}>
-              <View>
-                <Text style={styles.shopName}>{item.name}</Text>
-                <Text style={styles.shopLocation}>{item.location}</Text>
+            <View style={[styles.shopItem, item.closed && styles.closedShop]}>
+              <View style={styles.shopInfo}>
+                {/* Hiển thị hình ảnh */}
+                <Image
+                  source={{ uri: item.image }} // Lấy URL hình ảnh từ API
+                  style={styles.shopImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.shopDetails}>
+                  <Text style={styles.shopName}>{item.name}</Text>
+                  <Text style={styles.shopLocation}>{item.address}</Text>
+                </View>
               </View>
+
               <View style={styles.buttonGroup}>
-                <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => handleEdit(item.id)}>
+                <TouchableOpacity
+                  style={[styles.button, styles.editButton, item.closed && styles.activeEditButton]}
+                  onPress={() => handleEdit(item.id)}
+                >
                   <Text style={styles.buttonText}>Chỉnh sửa</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.manageButton]} onPress={() => handleManage(item)}>
-                  <Text style={styles.buttonText}>Quản lý</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(item.id)}>
-                  <Text style={styles.buttonText}>Xóa</Text>
-                </TouchableOpacity>
+
+                {/* Các nút khác chỉ hiển thị khi cửa hàng mở */}
+                {!item.closed && (
+                  <>
+                    <TouchableOpacity style={[styles.button, styles.manageButton]} onPress={() => handleManage(item)}>
+                      <Text style={styles.buttonText}>Quản lý</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, styles.deleteButton]} onPress={() => handleDelete(item.id)}>
+                      <Text style={styles.buttonText}>Xóa</Text>
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             </View>
           )}
@@ -118,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 20,
     alignSelf: 'center',
-    paddingLeft : 15,
+    paddingLeft: 15,
   },
   title: {
     fontSize: 28,
@@ -128,9 +163,9 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   shopItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     padding: 15,
     backgroundColor: '#f9f9f9',
     borderRadius: 10,
@@ -141,21 +176,50 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
   },
+  closedShop: {
+    opacity: 0.5, // Làm mờ các cửa hàng đã đóng
+  },
+  activeEditButton: {
+    opacity: 1.5, // Giữ nút chỉnh sửa không bị làm mờ khi cửa hàng đóng
+  },
+  shopInfo: {
+    flexDirection: 'row', // Đặt hình và thông tin nằm ngang
+    alignItems: 'center', // Căn giữa theo chiều dọc
+    justifyContent: 'flex-start', // Căn trái cho hình ảnh
+    marginBottom: 10,
+  },
+  shopImage: {
+    width: 120, // Kích thước hình ảnh
+    height: 120,
+    borderRadius: 10,
+    marginRight: 10, // Khoảng cách giữa hình ảnh và tên shop
+  },
+  shopDetails: {
+    flexDirection: 'column',
+    justifyContent: 'center', // Căn giữa tên shop và địa chỉ theo chiều dọc
+    alignItems: 'flex-start', // Căn trái cho tên shop và địa chỉ
+  },
   shopName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom: 5,
   },
   shopLocation: {
     fontSize: 14,
     color: '#666',
+    marginBottom: 10,
   },
   buttonGroup: {
-    flexDirection: 'row',
+    flexDirection: 'row', // Các nút nằm ngang
+    justifyContent: 'center', // Căn giữa các nút
+    width: '100%',
+    marginTop: 10,
   },
   button: {
     padding: 10,
     borderRadius: 5,
+    width: '30%',
     marginHorizontal: 5,
   },
   editButton: {
@@ -171,6 +235,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   addButton: {
     marginTop: 20,
@@ -190,5 +255,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+
 
 export default ManageShopsScreen;

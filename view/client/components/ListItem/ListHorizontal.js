@@ -5,6 +5,7 @@ import ItemCard from './ItemCard'; // Import the ItemCard component
 const ListHorizontal = ({ items, onItemPress }) => {
 
     return (
+
         <View style={styles.container}>
             <FlatList
                 data={items}
@@ -16,6 +17,7 @@ const ListHorizontal = ({ items, onItemPress }) => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.listContainer}
                 ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
+
             />
         </View>
     );

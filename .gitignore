@@ -41,3 +41,5 @@ yarn-error.*
 api/constant.js
 
 yarn.lock
+/package.json
+/package-lock.json

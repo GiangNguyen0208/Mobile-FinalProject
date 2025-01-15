@@ -5,17 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e24c0b-c3e3-48f1-b26c-51250ba21817" name="Changes" comment="add uer feature and shop owner function">
-      <change afterPath="$PROJECT_DIR$/view/client/pages/Cart/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/AddToCardModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/ItemCard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/components/PopularDish.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ProductList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/ShopDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/client/pages/VoucherList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Mobile-FinalProject.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/systemApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/systemApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/components/ListItem/Item.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/components/ListItem/Item.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/client/layout/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/client/layout/default.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="21130338" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -68,42 +69,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;21130312&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Project_frontend_mobile/Mobile-FinalProject/api&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2023.3.5\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "Merging 21130576",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "E:/TTMobile/New folder/Mobile-FinalProject/assets/img",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Project_frontend_mobile\Mobile-FinalProject\api" />
+
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner\screen" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\ListItem" />
+      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
+
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projectMobile\Mobile-FinalProject\loading" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -143,7 +145,31 @@
       <option name="project" value="LOCAL" />
       <updated>1731815090621</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736582690872</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1736582690872</updated>
+    </task>
+    <task id="LOCAL-00003" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736583848218</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736583848218</updated>
+    </task>
+    <task id="LOCAL-00004" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736835551787</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736835551787</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,12 +202,20 @@
     <MESSAGE value="AdminProfile" />
     <option name="LAST_COMMIT_MESSAGE" value="AdminProfile" />
   </component>
+
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/view/shopowner/screen/EditProduct.js</url>
+          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/App.js</url>
+          <line>2</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
