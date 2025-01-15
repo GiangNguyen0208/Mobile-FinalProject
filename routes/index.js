@@ -36,7 +36,7 @@ const UserStack = createNativeStackNavigator();
 // Shop Navigator
 const ShopNavigator = () => (
   <ShopStack.Navigator screenOptions={{ headerShown: false }}>
-    <ShopStack.Screen name="ShopHome" initialParams={{ shopId: 4 }}  component={ShopScreen} />
+    <ShopStack.Screen name="ShopHome"  component={ShopScreen} />
     <ShopStack.Screen name="Menu" component={Menu} />
     <ShopStack.Screen name="EditProduct" component={EditProduct} />
     <ShopStack.Screen name="Rating" component={Rating} />

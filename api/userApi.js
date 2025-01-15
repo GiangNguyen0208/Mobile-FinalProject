@@ -7,13 +7,13 @@ export const register = async (userData) => {
 };
 
 export const getUserProfile = async (id) => {
-  const response = await axiosInstance.get("/users", id);
+  const response = await axiosInstance.get(`/users/findId/${id}`);
   return response.data;
 };
 
-export const updateUserProfile = async (id) => {
-  const response = await axiosInstance.put("/users", id);
-  return response.data;
+export const updateUserProfile = async (id,userData) => {
+  const response = await axiosInstance.put(`/users/${id}`,userData);
+  return response;
 };
 
 export const getProductCommentList = async (id) => {
