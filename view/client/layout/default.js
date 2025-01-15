@@ -107,7 +107,7 @@ const Default = () => {
             <Intro items={categoryData} onItemPress={handleCategoryOfShopPress} />
             <View style={styles.collectionHeader}>
               <Text style={[styles.collectionTitle, { color: '#E95322', left: 16 }]}>FLASH SALE</Text>
-              <TouchableOpacity style={styles.viewAllText} onPress={()=>navigation.navigate('ShopDetailUser')}><Text>View All</Text></TouchableOpacity>
+              <TouchableOpacity style={styles.viewAllText} onPress={()=>navigation.navigate('ShopDetailUser')}><Text>View Shop</Text></TouchableOpacity>
             </View>
             <View style={styles.container}>
               {loading ? (

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   viewAllText: {
-    fontSize: 14,
+    fontSize: 25,
     color: 'blue',
   },
   containerScrollView: {

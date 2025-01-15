@@ -25,7 +25,7 @@ import { addToCart } from '../../../../api/cartApi';
 
 
 const { width, height } = Dimensions.get('window');
-const ProductDetail = ({ route, navigation }) => {
+const ShopDetailUser = ({ route, navigation }) => {
     // const { shopId } = route.params;
     const [shop, setShop] = useState([]); // Dữ liệu sản phẩm
     const [products, setProducts] = useState([]);
@@ -315,4 +315,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ProductDetail;
+export default ShopDetailUser;

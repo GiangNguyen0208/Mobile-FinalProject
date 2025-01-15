@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         right: 16,
-        bottom: 16, // Thêm khoảng cách từ cạnh dưới
+        bottom: 150, // Thêm khoảng cách từ cạnh dưới
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,

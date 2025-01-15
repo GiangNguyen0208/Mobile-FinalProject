@@ -37,6 +37,7 @@ import AddRating from '../view/client/components/ListItem/AddRating.js';
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
 const UserStack = createNativeStackNavigator();
+const AdminStack = createNativeStackNavigator();
 
 // Shop Navigator
 const ShopNavigator = () => (
@@ -70,8 +71,15 @@ const UserNavigator = () => (
     <UserStack.Screen name="Rating" component={Rating} />
     <UserStack.Screen name="Promotion" component={Promotion} />
     <UserStack.Screen name="News" component={News} />
-    <Stack.Screen name="AddRating" component={AddRating} />
+    <UserStack.Screen name="AddRating" component={AddRating} />
   </UserStack.Navigator>
+);
+
+const AdminNavigator = () => (
+  <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+    <AdminStack.Screen name="Admin" component={AdminScreen} />
+    <AdminStack.Screen name="EditShop" component={EditShopScreen} />
+  </AdminStack.Navigator>
 );
 
 const AppNavigator = ({ isLoggedIn, role }) => {
@@ -81,7 +89,7 @@ const AppNavigator = ({ isLoggedIn, role }) => {
         {isLoggedIn ? (
           <>
             {role === 'ADMIN' && (
-              <Stack.Screen name="Admin" component={AdminScreen} />
+              <Stack.Screen name="Admin" component={AdminNavigator} />
             )}
             {role === 'Shop' && (
               <Stack.Screen name="Shop" component={ShopNavigator} />
@@ -90,8 +98,6 @@ const AppNavigator = ({ isLoggedIn, role }) => {
             {role === 'USER' && (
               <Stack.Screen name="User" component={UserNavigator} />
             )}
-            {/* Đặt EditShop ở đây ngoài ShopNavigator */}
-            <Stack.Screen name="EditShop" component={EditShopScreen} />
           </>
         ) : (
           <>
