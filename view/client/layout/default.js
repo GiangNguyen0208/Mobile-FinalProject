@@ -105,7 +105,6 @@ const Default = () => {
             <OnBoarding item={slides}/>
             <Intro items={categoryData} onItemPress={handleCategoryOfShopPress} />
 
-
             <View style={styles.collectionHeader}>
               <Text style={[styles.collectionTitle, { color: '#E95322', left: 16 }]}>FLASH SALE</Text>
               <Text style={styles.viewAllText}>View All</Text>
