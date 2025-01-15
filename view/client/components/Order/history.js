@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import OrderItems from '../../pages/order/orderItem';
 
 const History = ({ orderItems }) => {
   return (
     <View style={styles.container}>
-      <OrderItems orderItems={orderItems} />
+      <Text>History</Text>
     </View>
   );
 };

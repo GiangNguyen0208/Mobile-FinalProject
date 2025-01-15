@@ -9,7 +9,7 @@ const List = ({ items,navigation ,type}) => {
             <FlatList
                 data={items}
                 renderItem={({ item }) => (
-                    <ItemCard type={type} item={item} navigation={navigation} isShopOwner={true}></ItemCard>
+                    <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false}></ItemCard>
                 )}
                 keyExtractor={(_, index) => index.toString()}
                 numColumns={1}

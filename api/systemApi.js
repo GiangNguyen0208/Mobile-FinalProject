@@ -6,14 +6,21 @@ export const getAllProduct = async () => {
 };
 
 export const getAllCategory = async () => {
-    const response = await axiosInstance.get("/users/categories");
+    const response = await axiosInstance.get("/categories/listCategory");
     return response.data;
 };
 
 export const getProductsByCategory = async (categoryId) => {
-      const response = await axios.get(`/getByCategory/${categoryId}`);
-      return response.data.result;
+    const response = await axiosInstance.get(`/products/getByCategory/${categoryId}`);
+    return response.data.result;
 };
+
+export const getProductsByName = async (productName) => {
+    const response = await axiosInstance.get(`/products/findName/${productName}`);
+    return response.data.result;
+};
+
+
 
 export const getNotificationsByShop = async (shopId) => {
     const response = await axiosInstance.get(`/notifications/listNotification/${shopId}`);
@@ -24,3 +31,5 @@ export const getVouchersByShop = async (shopId) => {
     const response = await axiosInstance.get(`/vouchers/list/shop/${shopId}`);
     return response.data;
 };
+
+

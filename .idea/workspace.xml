@@ -19,7 +19,6 @@
       <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
-
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="21130338" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -90,7 +89,7 @@
     "settings.editor.selected.configurable": "vcs.Git",
     "vue.rearranger.settings.migration": "true"
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
 
@@ -102,11 +101,11 @@
 
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\projectMobile\Mobile-FinalProject\loading" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\components\Cart" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages\shop" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\client\pages" />
       <recent name="E:\TTMobile\New folder\Mobile-FinalProject\assets\img" />
-      <recent name="E:\TTMobile\New folder\Mobile-FinalProject\view\shopowner" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -124,13 +123,19 @@
       <workItem from="1731682412690" duration="93000" />
       <workItem from="1731752877253" duration="19000" />
       <workItem from="1731811162679" duration="5720000" />
-
       <workItem from="1735180260050" duration="8000" />
       <workItem from="1736073926762" duration="5973000" />
       <workItem from="1736079921338" duration="774000" />
       <workItem from="1736084891074" duration="2922000" />
       <workItem from="1736087899657" duration="4371000" />
       <workItem from="1736126484066" duration="4226000" />
+      <workItem from="1736337884380" duration="4414000" />
+      <workItem from="1736561256193" duration="333000" />
+      <workItem from="1736568817785" duration="2697000" />
+      <workItem from="1736587160808" duration="572000" />
+      <workItem from="1736588093797" duration="14788000" />
+      <workItem from="1736610014260" duration="3974000" />
+      <workItem from="1736643707735" duration="2162000" />
     </task>
     <task id="LOCAL-00001" summary="add uer feature and shop owner function">
       <option name="closed" value="true" />
@@ -140,7 +145,31 @@
       <option name="project" value="LOCAL" />
       <updated>1731815090621</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736582690872</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1736582690872</updated>
+    </task>
+    <task id="LOCAL-00003" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736583848218</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736583848218</updated>
+    </task>
+    <task id="LOCAL-00004" summary="AdminProfile">
+      <option name="closed" value="true" />
+      <created>1736835551787</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736835551787</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -6,9 +6,16 @@ import AddToCartModal from "../Modal/AddToCardModal";
 import Rating from "../Rating/StartRender";
 import { useNavigation } from '@react-navigation/native';
 
-const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
-    const navigation = useNavigation(); // Khởi tạo navigation từ hook
-
+const ItemCard = ({type, item, shopId ,isShopOwner}) => {
+    const navigation = useNavigation();
+    const handlePress = () => {
+        if (isShopOwner) {
+            navigation.navigate('DetailProductShopScreen', { item, shopId });
+            console.log('edit');
+        } else {
+            console.log('Bạn không có quyền của Shop');
+        }
+    };
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,7 +38,8 @@ const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
     };
 
     return (
-        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]} onPress={ handlePress }>
+        <TouchableOpacity style={[styles.card,type === 'product' && {flexDirection:"row",height:120}]}onPress={type === 'product' ? handlePress : null}>
+
             {(type==='product')&&(
                 <TouchableOpacity style={{flex:5}} >
                     <Image 
@@ -50,12 +58,12 @@ const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
                     )}
                     <TouchableOpacity >
                         <Text style={styles.name}>
-                            {type === 'comment' ? item.userName : item.name}
+                            {type === 'comment' ? item?.userName : item?.name}
                         </Text>
                     </TouchableOpacity>
                 </View>
                 {!(type === 'voucher') && (
-                    <Rating rating={item.rating} />
+                    <Rating rating={item?.rating} />
                 )}
                 <View style={[styles.priceContainer, type === 'product' && styles.row]}>
                     {(type === 'product') && (

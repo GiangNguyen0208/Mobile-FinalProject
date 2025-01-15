@@ -1,22 +1,23 @@
 import React from 'react';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
-import ItemCard from './ItemCard'; // Import the Item component
+import ItemCard from './ItemCard'; // Import the ItemCard component
 
-const ListHorizontal = ({navigation, items ,type}) => {
+const ListHorizontal = ({ items, onItemPress }) => {
+
     return (
 
         <View style={styles.container}>
             <FlatList
                 data={items}
                 renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false} />
-                    </View>
+                    <ItemCard type={type} item={item} navigation={navigation} isShopOwner={false}></ItemCard>
                 )}
-                keyExtractor={(_, index) => index.toString()}
-                horizontal={true}  // Thiết lập chiều ngang
-                showsHorizontalScrollIndicator={false}  // Ẩn thanh cuộn ngang
-                contentContainerStyle={styles.flatList}  // Tùy chỉnh style của FlatList
+                keyExtractor={(item) => item.id.toString()} // Ensure id is a string
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.listContainer}
+                ListEmptyComponent={<Text>No items available</Text>} // Handle empty state
+
             />
         </View>
     );
@@ -36,11 +37,13 @@ const styles = StyleSheet.create({
         elevation: 3,
         overflow: 'hidden',
         width: 300,
-        height:110,
+        height: 110,
         margin: 8,
-        justifyContent:'center'
+        justifyContent: 'center'
+    },
+    listContainer: {
+        paddingHorizontal: 8, // Khoảng cách trái phải cho FlatList
     },
 });
-
 
 export default ListHorizontal;

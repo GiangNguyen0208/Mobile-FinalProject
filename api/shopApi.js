@@ -51,11 +51,12 @@ export const deleteProduct = async (productId) => {
     try {
         const response = await axiosInstance.delete(`products/${productId}`);
         return response.data;
-    } catch (error) {
+    } catch (error) {r
         console.error('Error deleting image:', error);
         throw error;
     }
 };
+
 
 // Lấy ra danh sách hình ảnh của sản phẩm
 export const getListImageByProductID = async (productID) => {
@@ -88,6 +89,35 @@ export const getProductById = async (productId) => {
       }
 }
 
+export const getOrderListPedding = async () => {
+  try {
+      const response = await axiosInstance.get(`/orders/shipping`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+}
+
+export const getOrderListDone = async () => {
+  try {
+      const response = await axiosInstance.get(`/orders/history`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+}
+
+export const updateOrderStatus = async (orderId) => {
+  try {
+    const response = await axiosInstance.put(`/orders/update/${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error during API call:', error);
+  }
+}
+
 // delete category
 export const deleteCategory = async (categoryId) => {
   try {
@@ -100,6 +130,15 @@ export const deleteCategory = async (categoryId) => {
   }
 };
 
+export const viewDetail = async (orderId) => {
+  try {
+      const response = await axiosInstance.get(`/orders/detail/${orderId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error during API call:', error);
+      throw error;
+    }
+};
 // crud notification
 export const deleteNotification = async (notificationId) => {
   try {

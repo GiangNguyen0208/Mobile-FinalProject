@@ -26,10 +26,6 @@ export const getListProductByShopName = async (name) => {
     return response.data;
   }
 
-  
-
-
-
 // Thêm người dùng mới
 export const addUser = async (userCreationReq) => {
   const response = await axiosInstance.post("admin/user/add", userCreationReq);
@@ -62,6 +58,11 @@ export const getAllShops = async () => {
   return response.data;
 };
 
+export const getAllShopsClosed = async () => {
+  const response = await axiosInstance.get("admin/shop/listClosed");
+  return response.data;
+};
+
 // Thêm cửa hàng mới
 export const addShop = async (shopCreationReq) => {
   const response = await axiosInstance.post("admin/shop/add", shopCreationReq);
@@ -73,12 +74,17 @@ export const updateShop = async (shopId, shopUpdateData) => {
   const response = await axiosInstance.put(`admin/shop/update/${shopId}`, shopUpdateData);
   return response.data;
 };
+export const updateShopOpen = async (shopId, shopUpdateData) => {
+  const response = await axiosInstance.put(`admin/shop/updateOpen/${shopId}`, shopUpdateData);
+  return response.data;
+};
 
 // Xóa cửa hàng
 export const deleteShop = async (shopId) => {
   const response = await axiosInstance.delete(`admin/shop/delete/${shopId}`);
   return response.data;
 };
+
 
 
 // Lấy thông tin cửa hàng theo ID
@@ -92,4 +98,3 @@ export const getShopByName = async (shopName) => {
   const response = await axiosInstance.get(`admin/shop/name/${shopName}`);
   return response.data;
 };
-
