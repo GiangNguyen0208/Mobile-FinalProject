@@ -62,6 +62,7 @@ const UserNavigator = () => (
     <UserStack.Screen name="foodList" component={foodList} />
     <UserStack.Screen name="Cart" component={Cart} />
     <UserStack.Screen name="Pay" component={Pay} />
+    <UserStack.Screen name="Rating" component={Rating} />
   </UserStack.Navigator>
 );
 

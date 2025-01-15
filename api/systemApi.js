@@ -20,8 +20,6 @@ export const getProductsByName = async (productName) => {
     return response.data.result;
 };
 
-
-
 export const getNotificationsByShop = async (shopId) => {
     const response = await axiosInstance.get(`/notifications/listNotification/${shopId}`);
     return response.data;
@@ -33,3 +31,12 @@ export const getVouchersByShop = async (shopId) => {
 };
 
 
+export const getListCommentByProduct = async (productId) => {
+    const response = await axiosInstance.get(`/comments/list/product/${productId}`);
+    return response.data;
+};
+
+export const getListCommentByShop = async (id) => {
+    const response = await axiosInstance.get("/comments/list/shop/"+id);
+    return response.data;
+  };
