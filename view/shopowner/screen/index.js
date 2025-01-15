@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
 import { getShopById } from '../../../api/shopApi';
 import { useAuth } from '../../context/Auth/AuthContext';
+
 const Home = ({navigation}) => {
     const {shopId} = useAuth();
 
