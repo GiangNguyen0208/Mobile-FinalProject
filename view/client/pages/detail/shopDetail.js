@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import OnBoarding from '../../components/Onboarding/Onboarding';
+import slideDetail from '../../partials/SlideDetail/slideDetail';
 import NavigationRelative from '../../components/Navigation/NavigationRelative'; // Giữ nguyên hoặc thay đổi component nếu cần
 import Rating from '../../components/Rating/StartRender';
 import RelatedFoodScreen from './foodRelated';
 import RelatedShopScreen from './shopRelated';
-import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
-import { addToCart } from '../../../../api/cartApi';
 
-const ProductDetailUser = () => {
-  const navigation = useNavigation();
+const ShopDetailUser = () => {
   const [selectedOption, setSelectedOption] = useState('foodRelated');
   const route = useRoute();
   const { item } = route.params || {}; // Lấy dữ liệu item từ params
@@ -21,26 +18,14 @@ const ProductDetailUser = () => {
     { key: 'ShopRelated', title: 'Cửa Hàng Liên Quan' },
   ];
 
-  const handleAddToCart = async (product) => {
-      try {
-        const cartData = { productId: product.id, quantity: 1 };
-        const response = await addToCart(cartData); // Thêm sản phẩm với số lượng là 1
-        alert(`${product.name} added to cart!`);
-        console.log(response); // Đảm bảo bạn nhận được phản hồi từ API
-      } catch (error) {
-        alert('Failed to add to cart!');
-        console.error('Error:', error);
-      }
-    };
-
   const renderContent = () => {
     switch (selectedOption) {
       case 'foodRelated':
-        return <RelatedFoodScreen item={item} />;
+        return <RelatedFoodScreen categoryId={item?.categoryId} />;
       case 'ShopRelated':
-        return <RelatedShopScreen item={item} />;
+        return <RelatedShopScreen categoryId={item?.categoryId} />;
       default:
-        return <RelatedFoodScreen item={item} />;
+        return <RelatedFoodScreen categoryId={item?.categoryId} />;
     }
   };
 
@@ -50,7 +35,7 @@ const ProductDetailUser = () => {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Chi Tiết Sản Phẩm</Text>
         </View>
-        <OnBoarding item={item} />
+        <OnBoarding slides={slideDetail} />
         <View style={styles.container}>
           {item ? (
             <>
@@ -65,11 +50,6 @@ const ProductDetailUser = () => {
               <Text style={styles.promotionDetail}>
                 - Nhập mã <Text style={styles.bold}>VANAN40</Text>, <Text style={styles.bold}>VANMCN40K</Text> hoặc <Text style={styles.bold}>VANMCN40S</Text> để được giảm 40.000đ, áp dụng cho đơn từ 119.000đ.
               </Text>
-              <TouchableOpacity 
-                style={styles.addButton} 
-              >
-                <Text style={styles.addButtonText} onPress={() => handleAddToCart(item)}>Add to Cart</Text>
-              </TouchableOpacity>
             </>
           ) : (
             <Text style={styles.noDetails}>Không có thông tin chi tiết sản phẩm.</Text>
@@ -93,46 +73,11 @@ const ProductDetailUser = () => {
           {renderContent()}
         </View>
       </ScrollView>
-
-      <TouchableOpacity  style={styles.cartButton}
-        onPress={() => navigation.navigate('Cart')} 
-      >
-        <Icon name="shopping-cart" size={24} color="#fff" />
-      </TouchableOpacity>
     </View>
-
-
-
   );
 };
 
 const styles = StyleSheet.create({
-  addButton: {
-    backgroundColor: '#007BFF',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-    maxWidth: 130
-  },
-  addButtonText: {
-      color: '#fff',
-      fontSize: 14,
-      fontWeight: '600',
-  },
-  cartButton: {
-    position: 'absolute',
-    bottom: 100,
-    right: 20,
-    backgroundColor: 'orange', // Màu nền nút giỏ hàng
-    borderRadius: 30,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1,
-  },
   mainContainer: {
     flex: 1,
     backgroundColor: '#fff',
@@ -223,4 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailUser;
+export default ShopDetailUser;

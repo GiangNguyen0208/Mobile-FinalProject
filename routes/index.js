@@ -14,13 +14,19 @@ import VoucherList from '../view/client/components/ListItem/VoucherList.js';
 import Notification from '../view/client/components/ListItem/Notifications.js'; 
 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
-import ProductDetail from '../view/client/pages/detail/detail.js';
+import ProductDetailUser from '../view/client/pages/detail/detail.js';
+import ShopDetailUser from '../view/client/pages/detail/shopDetail.js';
 import AddProduct from '../view/shopowner/screen/AddProduct.js';
 import AddNotification from '../view/shopowner/screen/AddNotification.js';
 import AddVoucher from '../view/shopowner/screen/AddVoucher.js';
 import EditProfile from '../view/shopowner/screen/EditProfile.js';
 import DetailProductShopScreen from '../view/shopowner/screen/DetailProduct.js';
+import Cart from '../view/client/pages/Cart/index';
+import Pay from '../view/client/pages/payment/payment';
+import OrderList from '../view/shopowner/screen/OrderList';
+import OrderDetailShop from '../view/shopowner/screen/OrderDetailShop.js';
 import EditShopScreen from '../view/admin/screen/EditShopScreen'; // Thêm import EditShopScreen
+
 
 const Stack = createNativeStackNavigator();
 const ShopStack = createNativeStackNavigator();
@@ -35,11 +41,14 @@ const ShopNavigator = () => (
     <ShopStack.Screen name="Rating" component={Rating} />
     <ShopStack.Screen name="AddProduct" component={AddProduct} />
     <ShopStack.Screen name="DetailProductShopScreen" component={DetailProductShopScreen} />
+    <ShopStack.Screen name="OrderList" component={OrderList} />
+    <ShopStack.Screen name="OrderDetailShop" component={OrderDetailShop} />
     <ShopStack.Screen name="Notification" component={Notification} />
     <ShopStack.Screen name="AddNotification" component={AddNotification} />
     <ShopStack.Screen name="AddVoucher" component={AddVoucher} />
     <ShopStack.Screen name="VoucherList" component={VoucherList} />
     <ShopStack.Screen name="EditProfile" component={EditProfile} />
+
   </ShopStack.Navigator>
 );
 
@@ -47,7 +56,10 @@ const ShopNavigator = () => (
 const UserNavigator = () => (
   <UserStack.Navigator screenOptions={{ headerShown: false }}>
     <UserStack.Screen name="UserHome" component={BottomTabNavigation} />
-    <UserStack.Screen name="ProductDetail" component={ProductDetail} />
+    <UserStack.Screen name="ProductDetailUser" component={ProductDetailUser} />
+    <UserStack.Screen name="ShopDetailUser" component={ShopDetailUser} />
+    <UserStack.Screen name="Cart" component={Cart} />
+    <UserStack.Screen name="Pay" component={Pay} />
   </UserStack.Navigator>
 );
 

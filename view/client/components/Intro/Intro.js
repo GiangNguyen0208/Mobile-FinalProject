@@ -4,7 +4,8 @@ import IntroItem from './IntroItem';
 
 const Intro = ({ items, onItemPress }) => {
 
-    const categories = items.slice(0, 10);
+    const categories = Array.isArray(items?.result) ? items.result.slice(0, 10) : [];
+
     const imageList = [
         require('../../../../assets/img/fruit.png'),
         require('../../../../assets/img/vegetable.png'),
@@ -17,25 +18,20 @@ const Intro = ({ items, onItemPress }) => {
         require('../../../../assets/img/fish.png'),
         require('../../../../assets/img/cereals.png'),
     ];
-    
+
     const categoriesWithImages = categories.map((category, index) => ({
         ...category,
         image: imageList[index], // Thêm thuộc tính `image` từ imageList
     }));
 
-    // Calculate number of rows needed (5 items per row)
-    const itemsToDisplay = items.slice(0, 10);
-
     const itemsPerRow = 5;
-    const rows = [];
     
-
-    // for (let i = 0; i < categoriesWithImages.length; i += itemsPerRow) {
-    //     rows.push(categoriesWithImages.slice(i, i + itemsPerRow));
-
-    // }
-    for (let i = 0; i < items.length; i += itemsPerRow) {
-    }
+    const rows = categoriesWithImages.reduce((acc, item, index) => {
+        const rowIndex = Math.floor(index / itemsPerRow); // Chia các phần tử thành từng nhóm 5
+        if (!acc[rowIndex]) acc[rowIndex] = [];
+        acc[rowIndex].push(item);
+        return acc;
+    }, []);
 
     return (
         <ScrollView 

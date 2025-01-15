@@ -8,6 +8,9 @@ node_modules/
 dist/
 web-build/
 
+# Constant URL Call API
+api/constant.js
+
 # Native
 *.orig.*
 *.jks

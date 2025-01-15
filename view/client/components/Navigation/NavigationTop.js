@@ -1,20 +1,21 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import Shipping from '../Order/shipping';
 import History from '../Order/history';
-import Rating from '../Order/rating';
-import Draft from '../Order/draft';
 import { useTheme } from '../../../../themes/ThemeProvider';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 const NavigationTop = () => {
+  const navigation = useNavigation();
   const { colors } = useTheme();
 
   return (
     <Tab.Navigator
+      initialRouteName="Cart" // Tab mặc định là Cart (Draft)
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
@@ -29,23 +30,6 @@ const NavigationTop = () => {
         },
       }}
     >
-      {/* Tab: Cart */}
-      <Tab.Screen
-        name="Cart"
-        component={Draft}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View>
-              <FontAwesome5
-                name="cart-arrow-down"
-                size={24}
-                color={focused ? colors.primary : colors.text}
-              />
-            </View>
-          ),
-        }}
-      />
-
       {/* Tab: Shipping */}
       <Tab.Screen
         name="Shipping"
@@ -72,23 +56,6 @@ const NavigationTop = () => {
             <View>
               <FontAwesome5
                 name="history"
-                size={24}
-                color={focused ? colors.primary : colors.text}
-              />
-            </View>
-          ),
-        }}
-      />
-
-      {/* Tab: Wishlist */}
-      <Tab.Screen
-        name="Rating"
-        component={Rating}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <View>
-              <MaterialIcons
-                name="star-rate"
                 size={24}
                 color={focused ? colors.primary : colors.text}
               />
