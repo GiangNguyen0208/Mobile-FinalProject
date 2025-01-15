@@ -62,6 +62,11 @@ export const getAllShops = async () => {
   return response.data;
 };
 
+export const getAllShopsClosed = async () => {
+  const response = await axiosInstance.get("admin/shop/listClosed");
+  return response.data;
+};
+
 // Thêm cửa hàng mới
 export const addShop = async (shopCreationReq) => {
   const response = await axiosInstance.post("admin/shop/add", shopCreationReq);
@@ -71,6 +76,10 @@ export const addShop = async (shopCreationReq) => {
 // Cập nhật thông tin cửa hàng
 export const updateShop = async (shopId, shopUpdateData) => {
   const response = await axiosInstance.put(`admin/shop/update/${shopId}`, shopUpdateData);
+  return response.data;
+};
+export const updateShopOpen = async (shopId, shopUpdateData) => {
+  const response = await axiosInstance.put(`admin/shop/updateOpen/${shopId}`, shopUpdateData);
   return response.data;
 };
 

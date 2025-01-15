@@ -13,6 +13,7 @@ const Home = ({navigation}) => {
                     // Gọi API lấy dữ liệu theo shop id
                     const shopData = await getShopById(shopId);
                     setShop(shopData);
+                    console.log(shopData);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
