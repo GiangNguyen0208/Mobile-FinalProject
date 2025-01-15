@@ -2,7 +2,6 @@ import axiosInstance from "./axiosInstance";
 
 export const getAllProduct = async () => {
     const response = await axiosInstance.get("/products/listProduct");
-    console.log(response);
     return response.data;
 };
 

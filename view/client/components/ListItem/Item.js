@@ -2,60 +2,78 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Rating from '../Rating/StartRender';
 
-
 const Item = ({ image, title, description, price, rating, onPress, onAddToCart }) => {
-    const imageSource = image ? { uri: image } : null; // Dùng base64Image nếu có
-
+    const imageSource = image ? { uri: image } : null;
 
     return (
-
-        <TouchableOpacity
-            onPress={onPress}
-            style={styles.container}
-        >
-            {/* Chỉ hiển thị hình ảnh nếu có `imageSource` */}
-            {imageSource ? (
-                <Image
-                    source={{ uri: image }}
-                    style={styles.image}
-                />
-            ) : null}
-
-            {/* Kiểm tra từng phần dữ liệu */}
-            {(title || description || price || rating) && (
+        <View style={styles.card}>
+            <TouchableOpacity onPress={onPress} style={styles.itemContent}>
+                {imageSource ? (
+                    <Image
+                        source={{ uri: image }}
+                        style={styles.image}
+                    />
+                ) : (
+                    <View style={styles.placeholderContainer}>
+                        <Text style={styles.placeholderText}>No Image</Text>
+                    </View>
+                )}
                 <View style={styles.textContainer}>
-                    {title && <Text style={styles.title}>{title}</Text>}
-                    {description && <Text style={styles.description}>{description}</Text>}
-                    {price && <Text style={styles.date}>{price}</Text>}
-                    {rating && <Rating rating={rating} />}
+                    <Text style={styles.title} numberOfLines={1}>{title}</Text>
+                    <Text style={styles.description} numberOfLines={2}>{description}</Text>
+                    <Text style={styles.price}>${price}</Text>
+                    <Rating rating={rating} />
+                    <View style={styles.buttonRow}>
+                        <TouchableOpacity style={styles.addButton} onPress={onAddToCart}>
+                            <Text style={styles.addButtonText}>Add to Cart</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.detailButton} onPress={onPress}>
+                            <Text style={styles.detailButtonText}>Xem chi tiết</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            )}
-        </TouchableOpacity>
-
+            </TouchableOpacity>
+        </View>
     );
 };
+
 const styles = StyleSheet.create({
-    container: {
+    card: {
+        margin: 8,
+        borderRadius: 12,
+        overflow: 'hidden',
+        backgroundColor: '#ffffff',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 5, // Tạo hiệu ứng bóng cho Android
+    },
+    itemContent: {
         flexDirection: 'row',
-
-        alignItems: 'flex-start',
         padding: 12,
-        borderBottomWidth: 1,
-
-        borderBottomColor: '#ccc',
-        marginBottom: 2, // Adjusted for better spacing
-        backgroundColor: 'white',
+        alignItems: 'center',
     },
     image: {
-        width: 75,
-        height: 75,
+        width: 80,
+        height: 80,
         borderRadius: 10,
-        marginRight: 15,
-        backgroundColor: '#e0e0e0',
+        marginRight: 12,
+    },
+    placeholderContainer: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        backgroundColor: '#f0f0f0',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    placeholderText: {
+        color: '#bbb',
+        fontSize: 14,
     },
     textContainer: {
         flex: 1,
-        paddingHorizontal: 16
     },
     title: {
         fontSize: 16,
@@ -65,30 +83,49 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
-        color: '#555',
-        marginBottom: 6,
+        color: '#777',
+        marginBottom: 8,
     },
     price: {
         fontSize: 16,
-        color: '#007BFF',
         fontWeight: 'bold',
+        color: '#FF6F61',
+        marginBottom: 8,
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 8,
     },
     addButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
+        backgroundColor: '#FF6F61',
+        paddingVertical: 8,
         paddingHorizontal: 16,
-        borderRadius: 5,
+        borderRadius: 20,
+        flex: 1,
+        marginRight: 8,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 10,
-        maxWidth: 130
     },
     addButtonText: {
         color: '#fff',
         fontSize: 14,
-        fontWeight: '600',
+        fontWeight: 'bold',
+    },
+    detailButton: {
+        backgroundColor: '#4CAF50',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        borderRadius: 20,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    detailButtonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
     },
 });
-
 
 export default Item;

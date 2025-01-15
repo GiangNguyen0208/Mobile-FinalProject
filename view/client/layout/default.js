@@ -5,18 +5,12 @@ import OnBoarding from '../components/Onboarding/Onboarding';
 import Intro from '../components/Intro/Intro';
 import SearchBox from '../components/Search';
 import styles from '../../../public/client/stylesheet/default.style';
-import ListHorizontal from '../components/ListItem/ListHorizontal';
 import { getAllCategory, getAllProduct } from '../../../api/systemApi';
+import { addToCart } from '../../../api/cartApi';
+
 import Item from '../components/ListItem/Item';
 import { Outlet } from 'react-router-native';
-
-import { getCategoryList } from "../../../api/userApi";
-import { getListProductByShopName ,getListShop} from "../../../api/adminApi";
-
-import { getAllCategory, getAllProduct } from '../../../api/systemApi';
-
-import ProductDetail from '../pages/detail/detail';
-import slides from '../partials/Slide/slide';
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 
 
@@ -24,68 +18,26 @@ const Default = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [showOutlet, setShowOutlet] = useState(false);
-
-  const [selected, setSelected] = useState('nearBy');
-
+  const [slides, setSlides] = useState([]); 
   const [foodData, setFoodData] = useState([]); 
   const [categoryData, setCategoryData] = useState([]);
-
   const [loading, setLoading] = useState(true); // Thêm trạng thái loading
 
+  const [selected, setSelected] = useState('nearBy');
+  // const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
+  // const [category, setCategory] = useState([]);
+  const [shops, setShops] = useState([]);
+  // const shopName = 'Nhà hàng Lẩu'
 
-// 
-//   const [products, setProducts] = useState([]); // Dữ liệu sản phẩm
-//   const [category, setCategory] = useState([]);
-//   const [shops, setShops] = useState([]);
-//   const shopName = 'Nhà hàng Lẩu'
-//   useEffect(() => {
-//     const fetchProductsAndCategories = async () => {
-//       try {
-//         // Gọi API lấy dữ liệu sản phẩm theo tên shop
-//         const productsData = await getListProductByShopName(shopName);
-//         // Gọi API lấy dữ liệu danh mục theo shop ID
-//         const categoryData = await getCategoryList();
-//         const shopData = await getListShop();
 
-//         // Lấy danh sách kết quả từ API (đảm bảo dữ liệu không undefined)
-//         const productsArray = productsData.result || [];
-//         const categoryArray = categoryData.result || [];
-//         const shopArray = shopData.result || [];
-//         // Cập nhật state
-//         setProducts(productsArray);
-//         setCategory(categoryArray);
-//         setShops(shopArray);
-//       } catch (error) {
-//         console.error("Error fetching data:", error);
-//       }
-//     };
-
-//     fetchProductsAndCategories(); 
-//   }, [shopName]);
-
-//    useEffect(() => {
-//           console.log("Fetched category data:", shops); // Log dữ liệu của category
-//       }, [shops]); // Sửa lại đây để theo dõi sự thay đổi của category
-  
-
-//   const handleNavigation = (name) => {
-//     setShowOutlet(true);
-//     navigation.navigate(name); // Dùng navigation.navigate thay vì useNavigate
-//   }
-
-  // Call API to get all products
   useEffect(() => {
-    const fetchProductsAndCategories = async () => {
+    const fetchFoodData = async () => {
       try {
         const data = await getAllProduct();
-        const processedData = data.result.map(item => {
-          const base64Image = item.images && item.images.length > 0 && item.images[0].imageUrl
-          ? `data:image/jpeg;base64,${item.images[0].imageUrl}`
-          : null;
-          return { ...item, base64Image };
-        });
-        setFoodData(processedData); 
+        setSlides(data.result[5])
+        setFoodData(data.result); 
         setLoading(false); // Đặt trạng thái loading thành false khi dữ liệu đã được tải
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -102,7 +54,12 @@ const Default = () => {
     fetchFoodData();
     fetchCategoryData();
   }, []);
-  
+
+
+  useEffect(() => {
+    console.log("Fetched data:", shops); // Log dữ liệu của category
+  }, [shops]); // Sửa lại đây để theo dõi sự thay đổi của category
+
 
   useEffect(() => {
     setShowOutlet(route.name !== 'Default'); // Hiển thị Outlet nếu không phải trang Home
@@ -145,17 +102,8 @@ const Default = () => {
         <ScrollView style={styles.containerScrollView}>
           <View style={styles.contentContainer}>
             <SearchBox placeholder="Search Food..." onSearch={handleSearch} />
-
-            <OnBoarding slides={slides}/>
-
-
-            {/* Intro */}
-{/*
-            <Intro items={category} onItemPress={handleItemPress} />
-*/}
-            {/* List Horizontal */}
-
-            <Intro items={foodData} onItemPress={handleItemPress} />
+            <OnBoarding item={slides}/>
+            <Intro items={categoryData} onItemPress={handleCategoryOfShopPress} />
 
 
             <View style={styles.collectionHeader}>
@@ -163,55 +111,24 @@ const Default = () => {
               <Text style={styles.viewAllText}>View All</Text>
             </View>
             <View style={styles.container}>
-{/* 
-                <View style={[styles2.row, { backgroundColor: 'white' }]}>
-                  <TouchableOpacity style={[styles2.funcContainer, styles2.row, selected === 'nearBy' && styles2.selected]} onPress={() => setSelected('nearBy')}>
-                    <Text style={[styles2.funcName, selected === 'NearBy' && { color: '#E95322', }]} numberOfLines={1} ellipsizeMode="tail">
-                      Gần tôi
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={[styles2.funcContainer, styles2.row, selected === 'rating' && styles2.selected]} onPress={() => setSelected('rating')}>
-                    <Text style={[styles2.funcName, selected === 'rating' && { color: '#E95322', }]} numberOfLines={1} ellipsizeMode="tail">
-                      Đánh giá
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <FlatList
-                  data={selected === 'nearBy'
-                    ? shops.slice(0, 5)
-                    : shops.slice().sort((a, b) => b.rating - a.rating).slice(0, 5)}
-                  renderItem={({ item }) => (
-                    <View style={styles.card}>
-                      <Item image={item.image} title={item.name} rating={item.rating}  ></Item>
-                    </View>
-                  )}
-                  keyExtractor={(item) => item.id}
-                  style={{ height: '100%' }}
-                  contentContainerStyle={{ paddingBottom: 120 }}
-                  scrollEnabled = {false}
-                /> */}
-                
-
-              {/* {foodData.length > 0 ? ( */}
-
               {loading ? (
                 <ActivityIndicator size="large" color="#0000ff" />
               ) : foodData.length > 0 ? (
                 foodData.map((item) => (
                   <Item
-                    key={item.id}
-                    image={item.base64Image} 
-                    title={item.name}
-                    description={item.des} 
-                    price={item.price}
-                    rating={item.rating}
+                    key={item?.id}
+                    image={item?.imageLink?.[0]} 
+                    title={item?.name}
+                    description={item?.des} 
+                    price={item?.price}
+                    rating={item?.rating}
                     onPress={() => handleItemPress(item)}
+                    onAddToCart={() => handleAddToCart(item)}
                   />
                 ))
               ) : (
                 <Text>Can't upload data from db.</Text>
-              )}
-
+              )}    
             </View>
           </View>
         </ScrollView>

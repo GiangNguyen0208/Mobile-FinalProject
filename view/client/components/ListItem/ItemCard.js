@@ -6,8 +6,8 @@ import AddToCartModal from "../Modal/AddToCardModal";
 import Rating from "../Rating/StartRender";
 import { useNavigation } from '@react-navigation/native';
 
-const ItemCard = ({type, item, shopId ,isShopOwner , handlePress}) => {
-    const navigation = useNavigation(); // Khởi tạo navigation từ hook
+const ItemCard = ({type, item, shopId ,isShopOwner}) => {
+    const navigation = useNavigation();
     const handlePress = () => {
         if (isShopOwner) {
             navigation.navigate('DetailProductShopScreen', { item, shopId });

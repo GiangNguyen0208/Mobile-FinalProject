@@ -10,11 +10,8 @@ import ShopScreen from '../view/shopowner/screen/index.js';
 import Menu from '../view/shopowner/screen/Menu.js'; 
 import EditProduct from '../view/shopowner/screen/EditProduct.js'; 
 import Rating from '../view/client/components/ListItem/Rating.js'; 
-<<<<<<< HEAD
-=======
 import VoucherList from '../view/client/components/ListItem/VoucherList.js'; 
 import Notification from '../view/client/components/ListItem/Notifications.js'; 
->>>>>>> main
 
 import AdminScreen from '../view/admin/screen/AdminScreen.js';
 import ProductDetailUser from '../view/client/pages/detail/detail.js';
