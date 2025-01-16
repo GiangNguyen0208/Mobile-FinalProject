@@ -22,10 +22,9 @@ const ManageShopsScreen = () => {
 
       setShopList(combinedList);
 
-           // In kết quả của getAllShops vào console
-            console.log('Active Shops:', activeShops);
-            console.log('Closed Shops:', closedShops);
-
+      // In kết quả của getAllShops vào console
+      console.log('Active Shops:', activeShops);
+      console.log('Closed Shops:', closedShops);
     } catch (error) {
       console.error('Error fetching shops:', error);
       Alert.alert('Lỗi', 'Không thể tải danh sách cửa hàng');
@@ -73,21 +72,36 @@ const ManageShopsScreen = () => {
   const handleManage = (shop) => {
     navigation.navigate('ManageShopProducts', { shopName: shop.name });
   };
-
-  const handleAddShop = async () => {
-    const newShop = {
-      name: `Shop ${String.fromCharCode(65 + shopList.length)}`,
-      location: 'Địa điểm mới',
-    };
-    try {
-      const addedShop = await addShop(newShop); // Gọi API thêm cửa hàng
-      setShopList([...shopList, { ...addedShop, closed: false }]); // Thêm vào danh sách
-      Alert.alert('Thành công', 'Cửa hàng đã được thêm.');
-    } catch (error) {
-      console.error('Error adding shop:', error);
-      Alert.alert('Lỗi', 'Không thể thêm cửa hàng');
-    }
+const handleAddShop = async () => {
+  const newShop = {
+    id: shopList.length + 1, // Tạo id giả định dựa trên danh sách hiện tại
+    name: `Shop ${shopList.length + 1}`, // Tên là chuỗi "Shop" kèm số
+    address: `Address ${shopList.length + 1}`, // Địa chỉ là chuỗi kèm số
+    rating: '0.0', // Giá trị rating mặc định
+    status: 'OPEN', // Trạng thái mặc định
+    image: 'https://via.placeholder.com/120', // URL hình ảnh mẫu
   };
+
+  console.log('New Shop:', newShop); // Kiểm tra tất cả các trường trong newShop
+
+  // Kiểm tra tất cả các trường để chắc chắn không có giá trị undefined
+  if (!newShop.name || !newShop.address || !newShop.id || !newShop.rating) {
+    Alert.alert('Lỗi', 'Dữ liệu cửa hàng không hợp lệ');
+    return;
+  }
+
+  try {
+    const addedShop = await addShop(newShop); // Gọi API thêm cửa hàng
+    setShopList([...shopList, { ...addedShop, closed: false }]); // Thêm vào danh sách hiển thị
+    Alert.alert('Thành công', 'Cửa hàng đã được thêm.');
+  } catch (error) {
+    console.error('Error adding shop:', error); // In lỗi ra console
+    Alert.alert('Lỗi', 'Không thể thêm cửa hàng');
+  }
+};
+
+
+
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -255,7 +269,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-
 
 export default ManageShopsScreen;

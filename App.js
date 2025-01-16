@@ -21,7 +21,7 @@ export default function App() {
 function MainApp() {
     const { resetAuth, isLoggedIn, role } = useContext(AuthContext)
 
-  // KHÔNG ĐƯỢC XÓA, NẾU ĐĂNG NHẬP LỖI => KHÔNG LOGOUT ĐƯỢC => MỞ LẠI CODE CHẠY LẠI CHƯƠNG TRÌNH ĐỂ LOGIN LẠI.
+//  // KHÔNG ĐƯỢC XÓA, NẾU ĐĂNG NHẬP LỖI => KHÔNG LOGOUT ĐƯỢC => MỞ LẠI CODE CHẠY LẠI CHƯƠNG TRÌNH ĐỂ LOGIN LẠI.
 //   useEffect(() => {
 //     resetAuth();
 //   }, [resetAuth]);
